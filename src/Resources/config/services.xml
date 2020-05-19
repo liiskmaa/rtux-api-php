@@ -52,10 +52,6 @@
         <service id="Boxalino\RealTimeUserExperienceApi\Service\Api\ApiCookieSubscriber">
             <tag name="kernel.event_subscriber"/>
         </service>
-
-        <!-- Generic interfaces required to be mapped to already provided classes, customized and implemented -->
-        <service id="Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestTransformerInterface"/>
-        <service id="Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ContextInterface"/>
     </services>
 
 </container>

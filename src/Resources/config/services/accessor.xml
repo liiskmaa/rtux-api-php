@@ -4,6 +4,11 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+        <service id="Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorInterface"
+                 class="Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\Accessor">
+            <argument type="service" id="Boxalino\RealTimeUserExperienceApi\Service\Api\Util\AccessorHandlerInterface"/>
+        </service>
+
         <!-- Suggested parent class declaration for the AccessorHandlerInterface -->
         <service id="Boxalino\RealTimeUserExperienceApi\Service\Api\Util\AccessorHandler">
             <call method="addAccessor">
@@ -65,10 +70,6 @@
             </call>
         </service>
 
-        <service id="Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorInterface"
-                 class="Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\Accessor">
-            <argument type="service" id="Boxalino\RealTimeUserExperienceApi\Service\Api\Util\AccessorHandlerInterface"/>
-        </service>
     </services>
 
 </container>
