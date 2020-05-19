@@ -28,12 +28,7 @@ abstract class ApiPageLoaderAbstract extends ApiLoaderAbstract
     public function load(Request $request): ApiResponsePageInterface
     {
         $this->call($request);
-        if($this->apiCallService->isFallback())
-        {
-            throw new \Exception($this->apiCallService->getFallbackMessage());
-        }
 
-        /** set view properties */
         $page = $this->getApiResponsePage();
         $page->setBlocks($this->apiCallService->getApiResponse()->getBlocks());
         $page->setRequestId($this->apiCallService->getApiResponse()->getRequestId());
@@ -43,7 +38,7 @@ abstract class ApiPageLoaderAbstract extends ApiLoaderAbstract
         $page->setRedirectUrl($this->apiCallService->getApiResponse()->getRedirectUrl());
         $page->setTotalHitCount($this->apiCallService->getApiResponse()->getHitCount());
         $page->setSearchTerm(
-            (string) $request->query->get($this->getQueryParameter(), "")
+            (string) $request->query->get($this->getSearchParameter(), "")
         );
         if($this->apiCallService->getApiResponse()->isCorrectedSearchQuery())
         {
@@ -64,5 +59,12 @@ abstract class ApiPageLoaderAbstract extends ApiLoaderAbstract
     /**
      * @return string
      */
-    abstract protected function getQueryParameter() : string;
+    abstract public function getSearchParameter() : string;
+
+
+    /**
+     * @return ApiResponsePageInterface
+     */
+    abstract public function getApiResponsePage(Request $request) : ApiResponsePageInterface;
+
 }

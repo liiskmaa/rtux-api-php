@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @package Boxalino\RealTimeUserExperienceApi\Service\Api\Content\Page
  */
-abstract class ApiCmsLoaderAbstract extends ApiLoader
+abstract class ApiCmsLoaderAbstract extends ApiLoaderAbstract
 {
     use CreateFromTrait;
 
@@ -31,12 +31,7 @@ abstract class ApiCmsLoaderAbstract extends ApiLoader
     public function load(Request $request): ApiCmsModel
     {
         $this->addProperties();
-        $this->call($request, $salesChannelContext);
-
-        if($this->apiCallService->isFallback())
-        {
-            throw new \Exception($this->apiCallService->getFallbackMessage());
-        }
+        $this->call($request);
 
         $page = $this->getCmsPage();
         $page->setBlocks($this->apiCallService->getApiResponse()->getBlocks())
@@ -50,7 +45,7 @@ abstract class ApiCmsLoaderAbstract extends ApiLoader
             ->setNavigationId($this->getNavigationId($request))
             ->setTotalHitCount($this->apiCallService->getApiResponse()->getHitCount());
 
-        return $content;
+        return $page;
     }
 
     /**

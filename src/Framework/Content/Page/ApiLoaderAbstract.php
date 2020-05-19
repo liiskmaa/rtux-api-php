@@ -59,23 +59,30 @@ abstract class ApiLoaderAbstract
      */
     protected function call(Request $request) : void
     {
+        $this->prepareContext($this->apiContextInterface);
         $this->apiCallService->call(
             $this->apiContextInterface->get($request),
             $this->configuration->getRestApiEndpoint($this->getContextId())
         );
 
+        $this->validateCall($this->apiCallService);
         return;
     }
+
+    /**
+     * @return mixed
+     */
+    abstract protected function validateCall(ApiCallServiceInterface $apiCallService) : void;
+
+    /**
+     * Prepare the context
+     */
+    abstract protected function prepareContext(ContextInterface $context) : void;
 
     /**
      * @return string
      */
     abstract public function getContextId() : string;
-
-    /**
-     * @return ApiResponsePageInterface
-     */
-    abstract public function getApiResponsePage() : ApiResponsePageInterface;
 
     /**
      * @return string
@@ -101,6 +108,14 @@ abstract class ApiLoaderAbstract
     {
         $this->apiContextInterface = $apiContextInterface;
         return $this;
+    }
+
+    /**
+     * @return ContextInterface
+     */
+    public function getApiContextInterface() : ContextInterface
+    {
+        return $this->apiContextInterface;
     }
 
     /**
