@@ -2,6 +2,7 @@
 namespace Boxalino\RealTimeUserExperienceApi\Framework\Request;
 
 use Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiSortingModel;
+use Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiSortingModelInterface;
 use Boxalino\RealTimeUserExperienceApi\Framework\SalesChannelContextTrait;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\ApiCookieSubscriber;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactory;
@@ -16,7 +17,7 @@ use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class RequestTransformer
+ * Class RequestTransformerAbstract
  *
  * Adds system-specific request parameters toa boxalino request
  * Sets request variables dependent on the channel
@@ -52,9 +53,9 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
     protected $parameterFactory;
 
     /**
-     * @var ApiSortingModelAbstract
+     * @var ApiSortingModelInterface
      */
-    protected $sortingModelAbstract;
+    protected $sortingModel;
 
     /**
      * @var int
@@ -62,20 +63,21 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
     protected $limit = 0;
 
     /**
-     * RequestTransformer constructor.
+     * RequestTransformerAbstract constructor.
      * @param Connection $connection
      * @param ParameterFactory $parameterFactory
      * @param ConfigurationInterface $configuration
+     * @param ApiSortingModelInterface $sortingModel
      * @param LoggerInterface $logger
      */
     public function __construct(
         Connection $connection,
         ParameterFactory $parameterFactory,
         ConfigurationInterface $configuration,
-        ApiSortingModelAbstract $sortingModelAbstract,
+        ApiSortingModelInterface $sortingModel,
         LoggerInterface $logger
     ) {
-        $this->sortingModelAbstract = $sortingModelAbstract;
+        $this->sortingModel = $sortingModel;
         $this->connection = $connection;
         $this->configuration = $configuration;
         $this->parameterFactory = $parameterFactory;
@@ -286,14 +288,14 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
     /**
      * @return string | null
      */
-    protected function addSorting(Request $request)
+    protected function addSorting(Request $request) : void
     {
-        $key = $request->get($this->getSortParameter(), ApiSortingModel::BOXALINO_DEFAULT_SORT_FIELD);
-        if (!$key || $key === ApiSortingModel::BOXALINO_DEFAULT_SORT_FIELD) {
+        $key = $request->get($this->getSortParameter(), $this->sortingModel->getDefaultSortField());
+        if (!$key || $key === $this->sortingModel->getDefaultSortField()) {
             return;
         }
 
-        $sorting = $this->sortingModelAbstract->requestTransform($key);
+        $sorting = $this->sortingModel->requestTransform($key);
         foreach($sorting as $sort)
         {
             $this->requestDefinition->addSort(

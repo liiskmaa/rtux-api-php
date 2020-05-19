@@ -7,7 +7,6 @@ use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactory;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestDefinitionInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\MissingDependencyException;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\WrongDependencyTypeException;
-use PhpParser\Error;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -67,7 +66,7 @@ abstract class ItemContextAbstract
         /**
          * setting subProduct elements (ex: for basket requests)
          */
-        foreach($this->subProductIds as $subProductId)
+        foreach($this->getSubProductIds() as $subProductId)
         {
             $this->getApiRequest()
                 ->addItems(
@@ -78,7 +77,7 @@ abstract class ItemContextAbstract
 
         if($this->useConfiguredProductsAsContextParameters())
         {
-            foreach($this->contextItemIds as $type => $ids)
+            foreach($this->getContextItemIds() as $type => $ids)
             {
                 $this->getApiRequest()
                     ->addParameters(
@@ -124,6 +123,14 @@ abstract class ItemContextAbstract
     }
 
     /**
+     * @return array
+     */
+    public function getContextItemIds() : array
+    {
+        return $this->contextItemIds;
+    }
+
+    /**
      * @param bool $value
      * @return $this
      */
@@ -154,10 +161,27 @@ abstract class ItemContextAbstract
     }
 
     /**
+     * @return array
+     */
+    public function getSubProductIds() : array
+    {
+        return $this->subProductIds;
+    }
+
+    /**
+     * @return this
+     */
+    public function setSubProductIds(array $ids) : self
+    {
+        $this->subProductIds = $ids;
+        return $this;
+    }
+
+    /**
      * Enforce a dependency type for the ItemContext requests
      *
      * @param RequestDefinitionInterface $requestDefinition
-     * @return self | Error
+     * @return self
      */
     public function setRequestDefinition(RequestDefinitionInterface $requestDefinition)
     {

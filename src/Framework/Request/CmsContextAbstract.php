@@ -6,6 +6,7 @@ use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactory;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * Class CmsContextAbstract
  * Boxalino Cms Request handler
  *
  * Allows to set the configurations from the Boxalino Narrative CMS block
@@ -30,10 +31,8 @@ abstract class CmsContextAbstract
         $this->getApiRequest()
             ->setHitCount($this->getHitCount())
             ->addFilters(
-                $this->parameterFactory->get(ParameterFactory::BOXALINO_API_REQUEST_PARAMETER_TYPE_FILTER)
-                    ->add("products_visibility", $this->getContextVisibility()),
-                $this->parameterFactory->get(ParameterFactory::BOXALINO_API_REQUEST_PARAMETER_TYPE_FILTER)
-                    ->add("products_active", [1])
+                $this->getVisibilityFilter(),
+                $this->getActiveFilter()
             );
 
         $categoryIds = $this->getContextNavigationId($request);

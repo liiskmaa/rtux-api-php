@@ -4,43 +4,42 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <!-- Specifically designed elements - connectors to Boxalino Narrative API service -->
+        <!-- Designed elements - connectors to Boxalino Narrative API service - to be extended or used as base -->
         <service id="boxalino.api.request.transformer" class="Boxalino\RealTimeUserExperienceApi\Framework\Request\RequestTransformerAbstract"
-                 parent="Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestTransformerInterface"
                  abstract="true">
             <argument type="service" id="Doctrine\DBAL\Connection"/>
             <argument type="service" id="boxalino.api.request.parameter.factory"/>
             <argument type="service" id="Boxalino\RealTimeUserExperienceApi\Service\Api\Util\ConfigurationInterface"/>
-            <argument type="service" id="Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiSortingModelAbstract"/>
-            <argument type="service" id="monolog.logger.boxalino"/>
+            <argument type="service" id="Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiSortingModelInterface"/>
+            <argument type="service" id="monolog.logger.boxalino-api"/>
         </service>
-        <service id="Boxalino\RealTimeUserExperienceApi\Framework\Request\ContextAbstract" abstract="true">
-            <argument type="service" id="boxalino.api.request.transformer"/>
+        <service id="boxalino.api.request.context.abstract" class="Boxalino\RealTimeUserExperienceApi\Framework\Request\ContextAbstract" abstract="true">
+            <argument type="service" id="Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestTransformerInterface"/>
             <argument type="service" id="boxalino.api.request.parameter.factory"/>
         </service>
-        <service id="Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Context\ItemContextInterface"
+        <service id="boxalino.api.request.context.item"
                  class="Boxalino\RealTimeUserExperienceApi\Framework\Request\ItemContextAbstract"
-                 parent="Boxalino\RealTimeUserExperienceApi\Framework\Request\ShopwareApiContextInterface"
+                 parent="boxalino.api.request.context.abstract"
                  abstract="true">
         </service>
-        <service id="Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Context\AutocompleteContextInterface"
+        <service id="boxalino.api.request.context.autocomplete"
                  class="Boxalino\RealTimeUserExperienceApi\Framework\Request\AutocompleteContextAbstract"
-                 parent="Boxalino\RealTimeUserExperienceApi\Framework\Request\ShopwareApiContextInterface"
+                 parent="boxalino.api.request.context.abstract"
                  abstract="true">
         </service>
-        <service id="Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Context\ListingContextInterface"
+        <service id="boxalino.api.request.context.listing"
                  class="Boxalino\RealTimeUserExperienceApi\Framework\Request\ListingContextAbstract"
-                 parent="Boxalino\RealTimeUserExperienceApi\Framework\Request\ShopwareApiContextInterface"
+                 parent="boxalino.api.request.context.abstract"
                  abstract="true">
         </service>
-        <service id="Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Context\SearchContextInterface"
+        <service id="boxalino.api.request.context.search"
                  class="Boxalino\RealTimeUserExperienceApi\Framework\Request\SearchContextAbstract"
-                 parent="Boxalino\RealTimeUserExperienceApi\Framework\Request\ShopwareApiContextInterface"
+                 parent="boxalino.api.request.context.abstract"
                  abstract="true">
         </service>
-        <service id="boxalino.request.context.cms"
+        <service id="boxalino.api.request.context.cms"
                  class="Boxalino\RealTimeUserExperienceApi\Framework\Request\CmsContextAbstract"
-                 parent="Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Context\ListingContextInterface"
+                 parent="boxalino.api.request.context.listing"
                  abstract="true">
         </service>
     </services>

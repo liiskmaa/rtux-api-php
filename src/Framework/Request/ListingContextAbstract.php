@@ -1,13 +1,12 @@
 <?php declare(strict_types=1);
 namespace Boxalino\RealTimeUserExperienceApi\Framework\Request;
 
-use Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiFacetModel;
+use Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiFacetModelAbstract;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Context\ListingContextInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Definition\ListingRequestDefinitionInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactory;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestDefinitionInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\WrongDependencyTypeException;
-use PhpParser\Error;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -47,7 +46,7 @@ abstract class ListingContextAbstract
         foreach($request->query->all() as $param => $values)
         {
             //it`s a store property
-            if(strpos($param, ApiFacetModel::BOXALINO_STORE_FACET_PREFIX)===0)
+            if(strpos($param, ApiFacetModelAbstract::BOXALINO_STORE_FACET_PREFIX)===0)
             {
                 if (in_array($param, array_keys($this->getRangeProperties())))
                 {

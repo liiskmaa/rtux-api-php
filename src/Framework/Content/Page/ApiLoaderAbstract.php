@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @package Boxalino\RealTimeUserExperienceApi\Service\Api\Content\Page
  */
-class ApiLoader
+abstract class ApiLoaderAbstract
 {
 
     /**
@@ -71,6 +71,11 @@ class ApiLoader
      * @return string
      */
     abstract public function getContextId() : string;
+
+    /**
+     * @return ApiResponsePageInterface
+     */
+    abstract public function getApiResponsePage() : ApiResponsePageInterface;
 
     /**
      * @return string

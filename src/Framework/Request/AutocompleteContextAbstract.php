@@ -5,7 +5,6 @@ use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Context\AutocompleteC
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Definition\AutocompleteRequestDefinitionInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestDefinitionInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\WrongDependencyTypeException;
-use PhpParser\Error;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -149,7 +148,7 @@ abstract class AutocompleteContextAbstract
      * Enforce a dependency type for the AutocompleteContext requests
      *
      * @param RequestDefinitionInterface $requestDefinition
-     * @return self | Error
+     * @return self
      */
     public function setRequestDefinition(RequestDefinitionInterface $requestDefinition)
     {

@@ -8,7 +8,6 @@ use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Definition\SearchRequ
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactory;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestDefinitionInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\WrongDependencyTypeException;
-use PhpParser\Error;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -31,6 +30,11 @@ abstract class SearchContextAbstract
      * @var null | int
      */
     protected $subPhrasesProductsCount;
+
+    /**
+     * @return string
+     */
+    abstract public function getSearchParameter() : string;
 
     /**
      * Adding additional subphrases details for the search request
@@ -64,7 +68,7 @@ abstract class SearchContextAbstract
         parent::addContextParameters($request);
         $this->getApiRequest()->addHeaderParameters(
             $this->parameterFactory->get(ParameterFactory::BOXALINO_API_REQUEST_PARAMETER_TYPE_HEADER)
-                ->add("query", $request->get($this->requestTransformer->getSearchParameter(), ""))
+                ->add("query", $request->get($this->getSearchParameter(), ""))
         );
     }
 
@@ -108,7 +112,7 @@ abstract class SearchContextAbstract
      * Enforce a dependency type for the SearchContext requests
      *
      * @param RequestDefinitionInterface $requestDefinition
-     * @return self | Error
+     * @return self
      */
     public function setRequestDefinition(RequestDefinitionInterface $requestDefinition)
     {

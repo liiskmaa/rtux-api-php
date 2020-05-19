@@ -1,8 +1,6 @@
 <?php declare(strict_types=1);
 namespace Boxalino\RealTimeUserExperienceApi\Framework\Content;
 
-use Shopware\Core\Framework\Struct\Struct;
-
 /**
  * Trait CreateFromTrait
  * Generation of a class by using a different object as basse

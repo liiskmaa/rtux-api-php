@@ -23,7 +23,6 @@ use Psr\Log\LoggerInterface;
 abstract class ApiFacetModelAbstract implements AccessorFacetModelInterface
 {
     use ResponseHydratorTrait;
-    use SalesChannelContextTrait;
 
     public const BOXALINO_STORE_FACET_PREFIX = "products_";
     public const BOXALINO_SYSTEM_FACET_PREFIX = "bx_";

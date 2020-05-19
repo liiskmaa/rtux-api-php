@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <!-- Generic View  -->
+        <service id="boxalino.api.content.loader" class="Boxalino\RealTimeUserExperienceApi\Framework\Content\Page\ApiLoaderAbstract" abstract="true">
+            <argument type="service" id="Boxalino\RealTimeUserExperienceApi\Service\Api\ApiCallServiceInterface"/>
+            <argument type="service" id="Boxalino\RealTimeUserExperienceApi\Service\Api\Util\ConfigurationInterface"/>
+            <argument type="service" id="event_dispatcher"/>
+        </service>
+
+        <!-- Generic Api content loader on the page -->
+        <service id="boxalino.api.content.loader.page" class="Boxalino\RealTimeUserExperienceApi\Framework\Content\Page\ApiPageLoaderAbstract"
+                 parent="boxalino.api.content.loader" shared="false" abstract="true">
+        </service>
+
+        <!-- Generic CMS loader extension with API call -->
+        <service id="boxalino.api.content.loader.cms" class="Boxalino\RealTimeUserExperienceApi\Framework\Content\Page\ApiCmsLoaderAbstract"
+                 parent="boxalino.api.content.loader" shared="false" abstract="true">
+        </service>
+
+        <!-- Abstract Entity displaying how to access hit IDs from the response -->
+        <service id="boxalino.api.content.listing.collection" class="Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiEntityCollectionModelAbstract"
+                 public="true" shared="false" abstract="true"/>
+
+        <!-- Boxalino facet handler model (used in layout block definition) -->
+        <service id="boxalino.api.content.listing.facet" class="Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiFacetModelAbstract"
+                 public="true" abstract="true">
+            <argument type="service" id="Doctrine\DBAL\Connection"/>
+        </service>
+
+        <!-- other classes to be defined is the one for the Sorting-->
+
+    </services>
+
+</container>

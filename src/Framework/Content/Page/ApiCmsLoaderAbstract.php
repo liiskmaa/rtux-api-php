@@ -3,6 +3,7 @@ namespace Boxalino\RealTimeUserExperienceApi\Framework\Content\Page;
 
 use Boxalino\RealTimeUserExperienceApi\Framework\Content\CreateFromTrait;
 use Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiCmsModel;
+use Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiCmsModelInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\ApiCallServiceInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\Block;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\UndefinedPropertyError;
@@ -10,21 +11,26 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class ApiCmsLoader
+ * Class ApiCmsLoaderAbstract
  * Sample based on a familiar block component
  *
  * @package Boxalino\RealTimeUserExperienceApi\Service\Api\Content\Page
  */
-class ApiCmsLoader extends ApiLoader
+abstract class ApiCmsLoaderAbstract extends ApiLoader
 {
     use CreateFromTrait;
 
     /**
+     * @var array
+     */
+    protected $cmsConfig = [];
+
+    /**
      * Loads the content of an API Response page
      */
-    public function load(Request $request, SalesChannelContext $salesChannelContext, CmsSlotEntity $slot): Struct
+    public function load(Request $request): ApiCmsModel
     {
-        $this->addProperties($slot);
+        $this->addProperties();
         $this->call($request, $salesChannelContext);
 
         if($this->apiCallService->isFallback())
@@ -32,8 +38,8 @@ class ApiCmsLoader extends ApiLoader
             throw new \Exception($this->apiCallService->getFallbackMessage());
         }
 
-        $content = new ApiCmsModel();
-        $content->setBlocks($this->apiCallService->getApiResponse()->getBlocks())
+        $page = $this->getCmsPage();
+        $page->setBlocks($this->apiCallService->getApiResponse()->getBlocks())
             ->setLeft($this->apiCallService->getApiResponse()->getLeft())
             ->setTop($this->apiCallService->getApiResponse()->getTop())
             ->setBottom($this->apiCallService->getApiResponse()->getBottom())
@@ -41,18 +47,48 @@ class ApiCmsLoader extends ApiLoader
             ->setRequestId($this->apiCallService->getApiResponse()->getRequestId())
             ->setGroupBy($this->getGroupBy())
             ->setVariantUuid($this->getVariantUuid())
+            ->setNavigationId($this->getNavigationId($request))
             ->setTotalHitCount($this->apiCallService->getApiResponse()->getHitCount());
 
         return $content;
     }
 
     /**
-     * Adds properties to the CmsContextAbstract
-     * @param array $config
+     * @return ApiCmsModelInterface
      */
-    protected function addProperties(array $config)
+    abstract protected function getCmsPage() : ApiCmsModelInterface;
+
+    /**
+     * Accessing the navigation/page ID
+     * @param Request $request
+     * @return string
+     */
+    abstract protected function getNavigationId(Request $request) : string;
+
+    /**
+     * @param array $config
+     * @return $this
+     */
+    public function setCmsConfig(array $config)
     {
-        foreach($config as $key => $value)
+        $this->cmsCconfig = $config;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCmsConfig() : array
+    {
+        return $this->cmsConfig;
+    }
+
+    /**
+     * Adds properties to the CmsContextAbstract
+     */
+    protected function addProperties()
+    {
+        foreach($this->getCmsConfig() as $key => $value)
         {
             if($key == 'widget')
             {
@@ -101,9 +137,10 @@ class ApiCmsLoader extends ApiLoader
     }
 
     /**
-     * This function can be used to access parts of the response\
+     * This function can be used to access parts of the response
      * and isolate them in different sections
      * ex: a single narrative request on a page with 3 sections
+     *
      * @param string $property
      * @param string $value
      * @param string $segment

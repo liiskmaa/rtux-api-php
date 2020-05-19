@@ -9,10 +9,9 @@ use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\MissingDependencyExc
  * Class ApiSortingModelAbstract
  * @package Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing
  */
-abstract class ApiSortingModelAbstract implements AccessorModelInterface
+abstract class ApiSortingModelAbstract
+    implements ApiSortingModelInterface
 {
-
-    const BOXALINO_DEFAULT_SORT_FIELD = "score";
     const SORT_ASCENDING = "ASC";
     const SORT_DESCENDING = "DESC";
 
@@ -43,7 +42,7 @@ abstract class ApiSortingModelAbstract implements AccessorModelInterface
     }
 
     /**
-     * Retrieving the declared Boxalino field linked to Shopware6 sorting declaration
+     * Retrieving the declared Boxalino field linked to e-shop sorting declaration
      *
      * @param string $field
      * @return string
@@ -59,7 +58,7 @@ abstract class ApiSortingModelAbstract implements AccessorModelInterface
     }
 
     /**
-     * Retrieving the declared Shopware field linked to Boxalino fields
+     * Retrieving the declared e-shop field linked to Boxalino fields
      *
      * @param string $field
      * @return string
@@ -92,6 +91,23 @@ abstract class ApiSortingModelAbstract implements AccessorModelInterface
     abstract public function has(string $key): bool;
 
     /**
+     * Accessing the sortings available for a setup
+     *
+     * @return array
+     */
+    abstract public function getSortings(): array;
+
+    /**
+     * Based on the response, transform the response field+direction into a e-shop valid sorting
+     */
+    abstract public function getCurrent() : string;
+
+    /**
+     * @return string
+     */
+    abstract public function getDefaultSortField() : string;
+
+    /**
      * Transform a request key to a valid API sort
      * @param string $key
      * @return array
@@ -115,13 +131,6 @@ abstract class ApiSortingModelAbstract implements AccessorModelInterface
     }
 
     /**
-     * Accessing the sortings available for a setup
-     *
-     * @return array
-     */
-    abstract public function getSortings(): array;
-
-    /**
      * Adds mapping between a system field definition (as inserted via local e-shop tagging)
      * and a valid Boxalino field
      * (ex: price => discountedPrice, etc)
@@ -138,32 +147,6 @@ abstract class ApiSortingModelAbstract implements AccessorModelInterface
         }
 
         return $this;
-    }
-
-    /**
-     * Based on the response, transform the response field+direction into a Shopware6 valid sorting
-     */
-    public function getCurrent() : string
-    {
-        $responseField = $this->activeSorting->getField();
-        if(!empty($responseField))
-        {
-            $direction = $this->activeSorting->getReverse() === true ? mb_strtolower(self::SORT_DESCENDING)
-                : mb_strtolower(self::SORT_ASCENDING);
-            $field = $this->getResponseField($responseField);
-            foreach($this->getSortings() as $sorting)
-            {
-                foreach($sorting->getFields() as $sortingField=>$sortingDirection)
-                {
-                    if($sortingField == $field && $sortingDirection == $direction)
-                    {
-                        return $sorting->getKey();
-                    }
-                }
-            }
-        }
-
-        return $this->get(self::BOXALINO_DEFAULT_SORT_FIELD)->getKey();
     }
 
     /**

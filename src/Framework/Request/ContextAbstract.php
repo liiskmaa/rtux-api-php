@@ -3,12 +3,10 @@ namespace Boxalino\RealTimeUserExperienceApi\Framework\Request;
 
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ContextInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactory;
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestDefinitionInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestTransformerInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\MissingDependencyException;
-use GuzzleHttp\Client;
-use JsonSerializable;
-use Psr\Http\Message\RequestInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -87,6 +85,7 @@ abstract class ContextAbstract
      */
     public function get(Request $request) : RequestDefinitionInterface
     {
+        $this->validate($request);
         $this->requestTransformer->setRequestDefinition($this->getApiRequest())
             ->transform($request);
 
@@ -99,11 +98,14 @@ abstract class ContextAbstract
         $this->addFilters($request);
         $this->addContextParameters($request);
 
-
         return $this->getApiRequest();
     }
 
+    abstract public function validate(Request $request);
     abstract function getContextNavigationId(Request $request): array;
+    abstract function getVisibilityFilter() : ParameterInterface;
+    abstract function getCategoryFilter() : ParameterInterface;
+    abstract function getActiveFilter() : ParameterInterface;
     abstract function getContextVisibility() : int;
     abstract function getReturnFields() : array;
 
@@ -132,12 +134,9 @@ abstract class ContextAbstract
     {
         $this->getApiRequest()
             ->addFilters(
-                $this->parameterFactory->get(ParameterFactory::BOXALINO_API_REQUEST_PARAMETER_TYPE_FILTER)
-                    ->add("category_id", $this->getContextNavigationId($request, $this->salesChannelContext)),
-                $this->parameterFactory->get(ParameterFactory::BOXALINO_API_REQUEST_PARAMETER_TYPE_FILTER)
-                    ->add("products_visibility", $this->getContextVisibility()),
-                $this->parameterFactory->get(ParameterFactory::BOXALINO_API_REQUEST_PARAMETER_TYPE_FILTER)
-                    ->add("products_active", [1])
+                $this->getVisibilityFilter(),
+                $this->getCategoryFilter(),
+                $this->getActiveFilter()
             );
     }
 
