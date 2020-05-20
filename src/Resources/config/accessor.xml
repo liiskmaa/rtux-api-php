@@ -10,7 +10,7 @@
         </service>
 
         <!-- Suggested parent class declaration for the AccessorHandlerInterface -->
-        <service id="Boxalino\RealTimeUserExperienceApi\Service\Api\Util\AccessorHandler">
+        <service class="Boxalino\RealTimeUserExperienceApi\Service\Api\Util\AccessorHandler" id="boxalino.api.accessor">
             <call method="addAccessor">
                 <argument>bx-sort</argument>
                 <argument>sorting</argument>
