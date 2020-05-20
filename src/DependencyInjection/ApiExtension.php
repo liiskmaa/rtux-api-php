@@ -4,14 +4,11 @@ namespace Boxalino\RealTimeUserExperienceApi\DependencyInjection;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 
-class BoxalinoRealTimeUserExperienceApiExtension extends Extension
+class ApiExtension extends Extension
 {
-    private const ALIAS = 'boxalino.api';
+    private const ALIAS = 'boxalino_realtimeuserexperienceapi';
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getAlias(): string
+    public function getAlias() : string
     {
         return self::ALIAS;
     }
@@ -27,5 +24,9 @@ class BoxalinoRealTimeUserExperienceApiExtension extends Extension
             new FileLocator(__DIR__.'/../Resources/config')
         );
         $loader->load('services.xml');
+        $loader->load('accessor.xml');
+        $loader->load('context.xml');
+        $loader->load('definition.xml');
+        $loader->load('page.xml');
     }
 }

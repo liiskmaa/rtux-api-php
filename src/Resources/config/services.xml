@@ -16,13 +16,6 @@
         </monolog:handler>
     </monolog:config>
 
-    <imports>
-        <import resource="accessor.xml"/>
-        <import resource="context.xml"/>
-        <import resource="definition.xml"/>
-        <import resource="page.xml"/>
-    </imports>
-
     <services>
         <service id="boxalino.api.request.parameter.factory" class="Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactory">
             <argument type="service" id="Psr\Container\ContainerInterface" />
