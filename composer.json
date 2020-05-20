@@ -1,7 +1,8 @@
 {
     "name": "boxalino/rtux-api-php",
     "description": "Boxalino Real Time User Experience (RTUX) API",
-    "license": "proprietary",
+    "license": "MIT",
+    "keywords": ["boxalino", "api", "real-time user experience"],
     "authors": [
         {
             "name": "Boxalino AG",
