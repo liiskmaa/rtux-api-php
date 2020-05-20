@@ -25,4 +25,6 @@ class BoxalinoRealTimeUserExperienceApi extends Bundle
     {
         return new ApiExtension();
     }
+
+
 }

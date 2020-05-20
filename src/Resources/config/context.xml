@@ -11,7 +11,7 @@
             <argument type="service" id="boxalino.api.request.parameter.factory"/>
             <argument type="service" id="Boxalino\RealTimeUserExperienceApi\Service\Api\Util\ConfigurationInterface"/>
             <argument type="service" id="Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiSortingModelInterface"/>
-            <argument type="service" id="monolog.logger.boxalino-api"/>
+            <argument type="service" id="monolog.logger"/>
         </service>
         <service id="boxalino.api.request.context.abstract" class="Boxalino\RealTimeUserExperienceApi\Framework\Request\ContextAbstract" abstract="true">
             <argument type="service" id="Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestTransformerInterface"/>

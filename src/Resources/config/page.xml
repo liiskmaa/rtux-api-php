@@ -32,7 +32,8 @@
         </service>
 
         <!-- other classes to be defined is the one for the Sorting-->
-        <service id="Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiSortingModelAbstract" public="true" abstract="true"/>
+        <service id="boxalino.api.content.listing.sorting" class="Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiSortingModelAbstract"
+                 public="true" abstract="true"/>
     </services>
 
 </container>
