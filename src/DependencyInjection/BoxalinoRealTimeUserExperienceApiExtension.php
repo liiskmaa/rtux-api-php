@@ -4,7 +4,7 @@ namespace Boxalino\RealTimeUserExperienceApi\DependencyInjection;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 
-class RealTimeUserExperienceApiExtension extends Extension
+class BoxalinoRealTimeUserExperienceApiExtension extends Extension
 {
     private const ALIAS = 'boxalino.api';
 
