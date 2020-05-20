@@ -85,7 +85,7 @@ abstract class ContextAbstract
      */
     public function get(Request $request) : RequestDefinitionInterface
     {
-        $this->validate($request);
+        $this->validateRequest($request);
         $this->requestTransformer->setRequestDefinition($this->getApiRequest())
             ->transform($request);
 
@@ -101,11 +101,11 @@ abstract class ContextAbstract
         return $this->getApiRequest();
     }
 
-    abstract public function validate(Request $request);
-    abstract function getContextNavigationId(Request $request): array;
-    abstract function getVisibilityFilter() : ParameterInterface;
-    abstract function getCategoryFilter() : ParameterInterface;
-    abstract function getActiveFilter() : ParameterInterface;
+    abstract public function validateRequest(Request $request) : void;
+    abstract function getContextNavigationId(Request $request) : array;
+    abstract function getVisibilityFilter(Request $request) : ParameterInterface;
+    abstract function getCategoryFilter(Request $request) : ParameterInterface;
+    abstract function getActiveFilter(Request $request) : ParameterInterface;
     abstract function getContextVisibility() : int;
     abstract function getReturnFields() : array;
 
@@ -134,9 +134,9 @@ abstract class ContextAbstract
     {
         $this->getApiRequest()
             ->addFilters(
-                $this->getVisibilityFilter(),
-                $this->getCategoryFilter(),
-                $this->getActiveFilter()
+                $this->getVisibilityFilter($request),
+                $this->getCategoryFilter($request),
+                $this->getActiveFilter($request)
             );
     }
 

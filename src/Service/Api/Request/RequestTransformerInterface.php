@@ -33,12 +33,12 @@ interface RequestTransformerInterface
     /**
      * The value stored in the CEMS cookie
      */
-    public function getSessionId(Request $request);
+    public function getSessionId(Request $request) : string;
 
     /**
      * The value stored in the CEMV cookie
      */
-    public function getProfileId(Request $request);
+    public function getProfileId(Request $request) : string;
 
     /**
      * @param RequestDefinitionInterface $requestDefinition

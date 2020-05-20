@@ -159,7 +159,7 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
     /**
      * The value stored in the CEMS cookie
      */
-    public function getSessionId(Request $request)
+    public function getSessionId(Request $request) : string
     {
         if($request->cookies->has(ApiCookieSubscriber::BOXALINO_API_COOKIE_SESSION))
         {
@@ -175,7 +175,7 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
     /**
      * The value stored in the CEMV cookie
      */
-    public function getProfileId(Request $request)
+    public function getProfileId(Request $request) : string
     {
         if($request->cookies->has(ApiCookieSubscriber::BOXALINO_API_COOKIE_VISITOR))
         {
@@ -247,7 +247,7 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
      * @param int $page
      * @return int
      */
-    public function addOffset(Request $request) : RequestTransformer
+    public function addOffset(Request $request) : RequestTransformerAbstract
     {
         $page = $this->getPage($request);
         $this->requestDefinition->setOffset(($page-1) * $this->getLimit($request));
@@ -261,7 +261,7 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
      * @param Request $request
      * @return $this
      */
-    public function addHitCount(Request $request) : RequestTransformer
+    public function addHitCount(Request $request) : RequestTransformerAbstract
     {
         $this->requestDefinition->setHitCount($this->getLimit($request));
         return $this;
