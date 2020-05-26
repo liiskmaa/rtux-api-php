@@ -29,7 +29,7 @@ abstract class ApiPageLoaderAbstract extends ApiLoaderAbstract
     {
         $this->call($request);
 
-        $page = $this->getApiResponsePage();
+        $page = $this->getApiResponsePage($request);
         $page->setBlocks($this->apiCallService->getApiResponse()->getBlocks());
         $page->setRequestId($this->apiCallService->getApiResponse()->getRequestId());
         $page->setGroupBy($this->getGroupBy());
