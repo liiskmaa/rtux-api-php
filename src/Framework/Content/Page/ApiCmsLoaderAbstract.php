@@ -28,7 +28,7 @@ abstract class ApiCmsLoaderAbstract extends ApiLoaderAbstract
     /**
      * Loads the content of an API Response page
      */
-    public function load(Request $request): ApiCmsModel
+    public function load(Request $request): ApiCmsModelInterface
     {
         $this->addProperties();
         $this->call($request);
