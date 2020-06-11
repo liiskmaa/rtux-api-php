@@ -106,7 +106,7 @@ abstract class ContextAbstract
     abstract function getVisibilityFilter(Request $request) : ParameterInterface;
     abstract function getCategoryFilter(Request $request) : ParameterInterface;
     abstract function getActiveFilter(Request $request) : ParameterInterface;
-    abstract function getContextVisibility() : int;
+    abstract function getContextVisibility() : array;
     abstract function getReturnFields() : array;
 
     /**
