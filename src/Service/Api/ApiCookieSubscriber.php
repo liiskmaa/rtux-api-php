@@ -41,15 +41,25 @@ class ApiCookieSubscriber implements EventSubscriberInterface
 
         if($request->cookies->has(self::BOXALINO_API_INIT_SESSION))
         {
-            $response->headers->setCookie(Cookie::create(self::BOXALINO_API_COOKIE_SESSION,
-                $request->cookies->get(self::BOXALINO_API_INIT_SESSION), 0));
+            $response->headers->setCookie(
+                Cookie::create(
+                    self::BOXALINO_API_COOKIE_SESSION,
+                    $request->cookies->get(self::BOXALINO_API_INIT_SESSION), 0,
+                    null, null, null, false
+                )
+            );
             $response->headers->removeCookie(self::BOXALINO_API_INIT_SESSION);
         }
 
         if($request->cookies->has(self::BOXALINO_API_INIT_VISITOR))
         {
-            $response->headers->setCookie(Cookie::create(self::BOXALINO_API_COOKIE_VISITOR,
-                $request->cookies->get(self::BOXALINO_API_INIT_VISITOR), time() + self::VISITOR_COOKIE_TIME ));
+            $response->headers->setCookie(
+                Cookie::create(
+                    self::BOXALINO_API_COOKIE_VISITOR,
+                    $request->cookies->get(self::BOXALINO_API_INIT_VISITOR), time() + self::VISITOR_COOKIE_TIME,
+                    null, null, null, false
+                )
+            );
             $response->headers->removeCookie(self::BOXALINO_API_INIT_VISITOR);
         }
     }
