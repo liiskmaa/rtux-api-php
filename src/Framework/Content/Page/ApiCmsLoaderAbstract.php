@@ -2,7 +2,6 @@
 namespace Boxalino\RealTimeUserExperienceApi\Framework\Content\Page;
 
 use Boxalino\RealTimeUserExperienceApi\Framework\Content\CreateFromTrait;
-use Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiCmsModel;
 use Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiCmsModelInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\ApiCallServiceInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\Block;
@@ -106,29 +105,6 @@ abstract class ApiCmsLoaderAbstract extends ApiLoaderAbstract
                 $this->apiContextInterface->set($key, $value);
             }
         }
-    }
-
-    /**
-     * Replicates the narrative content in order to generate the top/bottom/right/left slots
-     *
-     * @param Struct $apiCmsModel
-     * @return Struct
-     */
-    public function createSectionFrom(Struct $apiCmsModel, string $position) : Struct
-    {
-        if(in_array($position, $this->apiCallService->getApiResponse()->getResponseSegments()) && $apiCmsModel instanceof ApiCmsModel)
-        {
-            /** @var ApiCmsModel $segmentNarrativeBlock */
-            $segmentNarrativeBlock = $this->createFromObject($apiCmsModel, ['blocks', $position]);
-            $getterFunction = "get".ucfirst($position);
-            $setterFunction = "set".ucfirst($position);
-            $segmentNarrativeBlock->setBlocks($apiCmsModel->$getterFunction());
-            $segmentNarrativeBlock->$setterFunction(new \ArrayIterator());
-
-            return $segmentNarrativeBlock;
-        }
-
-        return new ApiCmsModel();
     }
 
     /**
