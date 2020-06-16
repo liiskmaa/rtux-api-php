@@ -8,7 +8,6 @@
         <service id="boxalino.api.content.loader" class="Boxalino\RealTimeUserExperienceApi\Framework\Content\Page\ApiLoaderAbstract" abstract="true">
             <argument type="service" id="Boxalino\RealTimeUserExperienceApi\Service\Api\ApiCallServiceInterface"/>
             <argument type="service" id="Boxalino\RealTimeUserExperienceApi\Service\Api\Util\ConfigurationInterface"/>
-            <argument type="service" id="event_dispatcher"/>
         </service>
 
         <!-- Generic Api content loader on the page -->

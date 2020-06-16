@@ -4,7 +4,6 @@ namespace Boxalino\RealTimeUserExperienceApi\Framework\Content\Page;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\ApiCallServiceInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ContextInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Util\ConfigurationInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -31,23 +30,16 @@ abstract class ApiLoaderAbstract
     protected $configuration;
 
     /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
-
-    /**
      * @var \ArrayIterator
      */
     protected $apiContextInterfaceList;
 
     public function __construct(
         ApiCallServiceInterface $apiCallService,
-        ConfigurationInterface $configuration,
-        EventDispatcherInterface $eventDispatcher
+        ConfigurationInterface $configuration
     ) {
         $this->configuration = $configuration;
         $this->apiCallService = $apiCallService;
-        $this->eventDispatcher = $eventDispatcher;
         $this->apiContextInterfaceList = new \ArrayIterator();
     }
 
