@@ -1,14 +1,11 @@
 <?php declare(strict_types=1);
 namespace Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing;
 
-use Boxalino\RealTimeUserExperienceApi\Framework\SalesChannelContextTrait;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorFacetModelInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorModelInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\ResponseHydratorTrait;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Util\AccessorHandlerInterface;
-use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\ParameterType;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -43,18 +40,12 @@ abstract class ApiFacetModelAbstract implements AccessorFacetModelInterface
     protected $accessorHandler;
 
     /**
-     * @var Connection
-     */
-    protected $connection;
-
-    /**
      * @var null | string
      */
     protected $defaultLanguageId = null;
 
-    public function __construct(Connection $connection)
+    public function __construct()
     {
-        $this->connection = $connection;
         $this->selectedFacets = new \ArrayIterator();
     }
 

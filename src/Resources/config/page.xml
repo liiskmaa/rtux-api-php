@@ -26,9 +26,7 @@
 
         <!-- Boxalino facet handler model (used in layout block definition) -->
         <service id="boxalino.api.content.listing.facet" class="Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiFacetModelAbstract"
-                 public="true" abstract="true">
-            <argument type="service" id="Doctrine\DBAL\Connection"/>
-        </service>
+                 public="true" abstract="true"/>
 
         <!-- other classes to be defined is the one for the Sorting-->
         <service id="boxalino.api.content.listing.sorting" class="Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiSortingModelAbstract"
