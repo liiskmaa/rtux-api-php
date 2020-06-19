@@ -61,7 +61,6 @@ abstract class ApiPageLoaderAbstract extends ApiLoaderAbstract
      */
     abstract public function getSearchParameter() : string;
 
-
     /**
      * @return ApiResponsePageInterface
      */

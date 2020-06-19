@@ -1,8 +1,6 @@
 <?php declare(strict_types=1);
 namespace Boxalino\RealTimeUserExperienceApi\Service\Api\Request;
 
-use Symfony\Component\HttpFoundation\Request;
-
 /**
  * Class RequestTransformerInterface
  *
@@ -19,26 +17,26 @@ interface RequestTransformerInterface
      * Sets context parameters (credentials, server, etc)
      * Adds parameters per request query elements
      *
-     * @param Request $request
+     * @param RequestInterface $request
      * @return RequestDefinitionInterface
      */
-    public function transform(Request $request): RequestDefinitionInterface;
+    public function transform(RequestInterface $request): RequestDefinitionInterface;
 
     /**
-     * @param Request $request
+     * @param RequestInterface $request
      * @return string
      */
-    public function getCustomerId(Request $request) : string;
+    public function getCustomerId(RequestInterface $request) : string;
 
     /**
      * The value stored in the CEMS cookie
      */
-    public function getSessionId(Request $request) : string;
+    public function getSessionId(RequestInterface $request) : string;
 
     /**
      * The value stored in the CEMV cookie
      */
-    public function getProfileId(Request $request) : string;
+    public function getProfileId(RequestInterface $request) : string;
 
     /**
      * @param RequestDefinitionInterface $requestDefinition

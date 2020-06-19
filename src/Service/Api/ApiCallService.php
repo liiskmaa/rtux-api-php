@@ -76,6 +76,7 @@ class ApiCallService implements ApiCallServiceInterface
                 $apiRequest->jsonSerialize()
             );
 
+            /** @var  \GuzzleHttp\Psr7\Response $response */
             $response = $this->restClient->send($request);
             $this->setApiResponse($this->responseDefinition->setResponse($response));
 

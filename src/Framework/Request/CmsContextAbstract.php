@@ -2,7 +2,7 @@
 namespace Boxalino\RealTimeUserExperienceApi\Framework\Request;
 
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Context\ListingContextInterface;
-use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactory;
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -39,7 +39,7 @@ abstract class CmsContextAbstract
         if(!empty($categoryIds))
         {
             $this->getApiRequest()->addFilters(
-                $this->parameterFactory->get(ParameterFactory::BOXALINO_API_REQUEST_PARAMETER_TYPE_FILTER)
+                $this->parameterFactory->get(ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_FILTER)
                     ->add("category_id", $categoryIds)
             );
         }
@@ -51,7 +51,7 @@ abstract class CmsContextAbstract
             {
                 $params = explode("=", $filter);
                 $this->getApiRequest()->addFilters(
-                    $this->parameterFactory->get(ParameterFactory::BOXALINO_API_REQUEST_PARAMETER_TYPE_FILTER)
+                    $this->parameterFactory->get(ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_FILTER)
                         ->add($params[0], array_map("html_entity_decode",  explode("|", $params[1])))
                 );
             }
@@ -83,7 +83,7 @@ abstract class CmsContextAbstract
                     continue;
                 }
                 $this->getApiRequest()->addFacets(
-                    $this->parameterFactory->get(ParameterFactory::BOXALINO_API_REQUEST_PARAMETER_TYPE_FACET)
+                    $this->parameterFactory->get(ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_FACET)
                         ->addWithValues($params[0], array_map("html_entity_decode",  explode("|", $params[1])))
                 );
             }

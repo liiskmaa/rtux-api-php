@@ -18,9 +18,11 @@
 <!--    </monolog:config>-->
 
     <services>
-        <service id="boxalino.api.request.parameter.factory" class="Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactory">
-            <argument type="service" id="Psr\Container\ContainerInterface" />
+        <service id="Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactoryInterface" class="Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactory">
             <argument type="service" id="monolog.logger"/>
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
         </service>
         <service id="boxalino.api.request.parameter.definition" class="Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterDefinition"
                  public="true" shared="false">

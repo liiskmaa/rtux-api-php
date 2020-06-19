@@ -3,8 +3,7 @@ namespace Boxalino\RealTimeUserExperienceApi\Framework\Request;
 
 use Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiFacetModelAbstract;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Context\ListingContextInterface;
-use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Definition\ListingRequestDefinitionInterface;
-use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactory;
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactoryInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestDefinitionInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\WrongDependencyTypeException;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,7 +54,7 @@ abstract class ListingContextAbstract
                 $values = is_array($values) ? $values : explode("|", $values);
                 $values = array_map("html_entity_decode", $values);
                 $this->getApiRequest()->addFacets(
-                    $this->parameterFactory->get(ParameterFactory::BOXALINO_API_REQUEST_PARAMETER_TYPE_FACET)
+                    $this->parameterFactory->get(ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_FACET)
                         ->addWithValues($param, $values)
                 );
             }
@@ -79,7 +78,7 @@ abstract class ListingContextAbstract
             if($from > 0 || $to > 0)
             {
                 $this->getApiRequest()->addFacets(
-                    $this->parameterFactory->get(ParameterFactory::BOXALINO_API_REQUEST_PARAMETER_TYPE_FACET)
+                    $this->parameterFactory->get(ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_FACET)
                         ->addRange($propertyName, $from, $to)
                 );
             }

@@ -10,16 +10,9 @@ use Psr\Log\LoggerInterface;
  *
  * @package Boxalino\RealTimeUserExperienceApi\Service\Api\Request
  */
-class ParameterFactory
+class ParameterFactory implements ParameterFactoryInterface
 {
     CONST BOXALINO_API_REQUEST_PARAMETER_SERVICE_PREFIX = "boxalino.api.request.parameter.";
-    CONST BOXALINO_API_REQUEST_PARAMETER_TYPE_FACET = "facet";
-    CONST BOXALINO_API_REQUEST_PARAMETER_TYPE_FILTER = "filter";
-    CONST BOXALINO_API_REQUEST_PARAMETER_TYPE_ITEM = "item";
-    CONST BOXALINO_API_REQUEST_PARAMETER_TYPE_SORT = "sort";
-    CONST BOXALINO_API_REQUEST_PARAMETER_TYPE_USER = "user";
-    CONST BOXALINO_API_REQUEST_PARAMETER_TYPE_HEADER = "header";
-    CONST BOXALINO_API_REQUEST_PARAMETER_DEFINITION = "definition";
 
     /**
      * @var ContainerInterface
@@ -32,10 +25,8 @@ class ParameterFactory
     protected $logger;
 
     public function __construct(
-        ContainerInterface $container,
         LoggerInterface $boxalinoLogger
     ){
-        $this->container = $container;
         $this->logger = $boxalinoLogger;
     }
 
@@ -66,7 +57,16 @@ class ParameterFactory
      */
     public function getDefaultParameterServerId() : string
     {
-        return self::BOXALINO_API_REQUEST_PARAMETER_SERVICE_PREFIX . self::BOXALINO_API_REQUEST_PARAMETER_DEFINITION;
+        return self::BOXALINO_API_REQUEST_PARAMETER_SERVICE_PREFIX . ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_DEFINITION;
     }
 
+    /**
+     * @internal
+     * @required
+     */
+    public function setContainer(ContainerInterface $container): ?ContainerInterface
+    {
+        $this->container = $container;
+        return $this->container;
+    }
 }

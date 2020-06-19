@@ -29,6 +29,7 @@ abstract class ApiLoaderAbstract
      */
     protected $configuration;
 
+
     /**
      * @var \ArrayIterator
      */

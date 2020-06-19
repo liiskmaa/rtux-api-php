@@ -7,14 +7,14 @@
         <!-- Designed elements - connectors to Boxalino Narrative API service - to be extended or used as base -->
         <service id="boxalino.api.request.transformer" class="Boxalino\RealTimeUserExperienceApi\Framework\Request\RequestTransformerAbstract"
                  abstract="true">
-            <argument type="service" id="boxalino.api.request.parameter.factory"/>
+            <argument type="service" id="Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactoryInterface"/>
             <argument type="service" id="Boxalino\RealTimeUserExperienceApi\Service\Api\Util\ConfigurationInterface"/>
             <argument type="service" id="Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiSortingModelInterface"/>
             <argument type="service" id="monolog.logger"/>
         </service>
         <service id="boxalino.api.request.context.abstract" class="Boxalino\RealTimeUserExperienceApi\Framework\Request\ContextAbstract" abstract="true">
             <argument type="service" id="Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestTransformerInterface"/>
-            <argument type="service" id="boxalino.api.request.parameter.factory"/>
+            <argument type="service" id="Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactoryInterface"/>
         </service>
         <service id="boxalino.api.request.context.item"
                  class="Boxalino\RealTimeUserExperienceApi\Framework\Request\ItemContextAbstract"

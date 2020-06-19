@@ -4,7 +4,7 @@ namespace Boxalino\RealTimeUserExperienceApi\Framework\Request;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Context\ListingContextInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Context\SearchContextInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Definition\SearchRequestDefinitionInterface;
-use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactory;
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactoryInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestDefinitionInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\WrongDependencyTypeException;
 use Symfony\Component\HttpFoundation\Request;
@@ -66,7 +66,7 @@ abstract class SearchContextAbstract
     {
         parent::addContextParameters($request);
         $this->getApiRequest()->addHeaderParameters(
-            $this->parameterFactory->get(ParameterFactory::BOXALINO_API_REQUEST_PARAMETER_TYPE_HEADER)
+            $this->parameterFactory->get(ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_HEADER)
                 ->add("query", $request->get($this->getSearchParameter(), ""))
         );
     }

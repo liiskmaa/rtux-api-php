@@ -3,7 +3,7 @@ namespace Boxalino\RealTimeUserExperienceApi\Framework\Request;
 
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Definition\ItemRequestDefinitionInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Context\ItemContextInterface;
-use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactory;
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactoryInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestDefinitionInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\MissingDependencyException;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\WrongDependencyTypeException;
@@ -59,7 +59,7 @@ abstract class ItemContextAbstract
         parent::get($request);
         $this->getApiRequest()
             ->addItems(
-                $this->parameterFactory->get(ParameterFactory::BOXALINO_API_REQUEST_PARAMETER_TYPE_ITEM)
+                $this->parameterFactory->get(ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_ITEM)
                     ->add($this->getGroupBy(), $this->getProductId())
             );
 
@@ -70,7 +70,7 @@ abstract class ItemContextAbstract
         {
             $this->getApiRequest()
                 ->addItems(
-                    $this->parameterFactory->get(ParameterFactory::BOXALINO_API_REQUEST_PARAMETER_TYPE_ITEM)
+                    $this->parameterFactory->get(ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_ITEM)
                         ->add($this->getGroupBy(), $subProductId, "subProduct")
                 );
         }
@@ -81,7 +81,7 @@ abstract class ItemContextAbstract
             {
                 $this->getApiRequest()
                     ->addParameters(
-                        $this->parameterFactory->get(ParameterFactory::BOXALINO_API_REQUEST_PARAMETER_TYPE_USER)
+                        $this->parameterFactory->get(ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_USER)
                             ->add($type, $ids)
                     );
             }
@@ -169,7 +169,7 @@ abstract class ItemContextAbstract
     }
 
     /**
-     * @return this
+     * @return self
      */
     public function setSubProductIds(array $ids) : self
     {

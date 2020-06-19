@@ -2,7 +2,7 @@
 namespace Boxalino\RealTimeUserExperienceApi\Framework\Request;
 
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ContextInterface;
-use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactory;
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactoryInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestDefinitionInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestTransformerInterface;
@@ -25,7 +25,7 @@ abstract class ContextAbstract
     protected $apiRequest;
 
     /**
-     * @var ParameterFactory
+     * @var ParameterFactoryInterface
      */
     protected $parameterFactory;
 
@@ -68,11 +68,11 @@ abstract class ContextAbstract
      * Listing constructor.
      *
      * @param RequestTransformerInterface $requestTransformer
-     * @param ParameterFactory $parameterFactory
+     * @param ParameterFactoryInterface $parameterFactory
      */
     public function __construct(
         RequestTransformerInterface $requestTransformer,
-        ParameterFactory $parameterFactory
+        ParameterFactoryInterface $parameterFactory
     ) {
         $this->properties = new \ArrayObject();
         $this->requestTransformer = $requestTransformer;

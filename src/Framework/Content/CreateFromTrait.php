@@ -13,6 +13,7 @@ trait CreateFromTrait
     /**
      * @param $object
      * @param array $excludeProperties
+     * @return Struct
      */
     public function createFromObject($object, array $excludeProperties)
     {

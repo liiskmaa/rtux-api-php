@@ -3,8 +3,9 @@ namespace Boxalino\RealTimeUserExperienceApi\Framework\Request;
 
 use Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiSortingModelInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\ApiCookieSubscriber;
-use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactory;
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactoryInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestDefinitionInterface;
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestTransformerInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Util\ConfigurationInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\MissingDependencyException;
@@ -23,6 +24,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 abstract class RequestTransformerAbstract implements RequestTransformerInterface
 {
+
     /**
      * @var LoggerInterface
      */
@@ -39,7 +41,7 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
     protected $requestDefinition;
 
     /**
-     * @var ParameterFactory
+     * @var ParameterFactoryInterface
      */
     protected $parameterFactory;
 
@@ -55,13 +57,13 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
 
     /**
      * RequestTransformerAbstract constructor.
-     * @param ParameterFactory $parameterFactory
+     * @param ParameterFactoryInterface $parameterFactory
      * @param ConfigurationInterface $configuration
      * @param ApiSortingModelInterface $sortingModel
      * @param LoggerInterface $logger
      */
     public function __construct(
-        ParameterFactory $parameterFactory,
+        ParameterFactoryInterface $parameterFactory,
         ConfigurationInterface $configuration,
         ApiSortingModelInterface $sortingModel,
         LoggerInterface $logger
@@ -76,10 +78,10 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
      * Sets context parameters (credentials, server, etc)
      * Adds parameters per request query elements
      *
-     * @param Request $request
+     * @param RequestInterface $request
      * @return RequestDefinitionInterface
      */
-    public function transform(Request $request): RequestDefinitionInterface
+    public function transform(RequestInterface $request): RequestDefinitionInterface
     {
         if(!$this->requestDefinition)
         {
@@ -88,14 +90,14 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
             );
         }
 
-        $contextId = $this->getContextId();
-        $this->configuration->setContextId($contextId);
+        $salesChannelId = $this->getContextId();
+        $this->configuration->setContextId($salesChannelId);
         $this->requestDefinition
-            ->setUsername($this->configuration->getUsername($contextId))
-            ->setApiKey($this->configuration->getApiKey($contextId))
-            ->setApiSecret($this->configuration->getApiSecret($contextId))
-            ->setDev($this->configuration->getIsDev($contextId))
-            ->setTest($this->configuration->getIsTest($contextId))
+            ->setUsername($this->configuration->getUsername($salesChannelId))
+            ->setApiKey($this->configuration->getApiKey($salesChannelId))
+            ->setApiSecret($this->configuration->getApiSecret($salesChannelId))
+            ->setDev($this->configuration->getIsDev($salesChannelId))
+            ->setTest($this->configuration->getIsTest($salesChannelId))
             ->setSessionId($this->getSessionId($request))
             ->setProfileId($this->getProfileId($request))
             ->setCustomerId($this->getCustomerId($request))
@@ -109,10 +111,10 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
     }
 
     /**
-     * @param Request $request
+     * @param RequestInterface $request
      * @return string
      */
-    abstract public function getCustomerId(Request $request) : string;
+    abstract public function getCustomerId(RequestInterface $request) : string;
 
     /**
      * @return string
@@ -147,15 +149,15 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
     /**
      * The value stored in the CEMS cookie
      */
-    public function getSessionId(Request $request) : string
+    public function getSessionId(RequestInterface $request) : string
     {
-        if($request->cookies->has(ApiCookieSubscriber::BOXALINO_API_COOKIE_SESSION))
+        if($request->hasCookie(ApiCookieSubscriber::BOXALINO_API_COOKIE_SESSION))
         {
-            return $request->cookies->get(ApiCookieSubscriber::BOXALINO_API_COOKIE_SESSION);
+            return $request->getCookie(ApiCookieSubscriber::BOXALINO_API_COOKIE_SESSION);
         }
 
         $cookieValue = Uuid::uuid4()->toString();
-        $request->cookies->set(ApiCookieSubscriber::BOXALINO_API_INIT_SESSION, $cookieValue);
+        $request->setCookie(ApiCookieSubscriber::BOXALINO_API_INIT_SESSION, $cookieValue);
 
         return $cookieValue;
     }
@@ -163,46 +165,41 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
     /**
      * The value stored in the CEMV cookie
      */
-    public function getProfileId(Request $request) : string
+    public function getProfileId(RequestInterface $request) : string
     {
-        if($request->cookies->has(ApiCookieSubscriber::BOXALINO_API_COOKIE_VISITOR))
+        if($request->hasCookie(ApiCookieSubscriber::BOXALINO_API_COOKIE_VISITOR))
         {
-            return $request->cookies->get(ApiCookieSubscriber::BOXALINO_API_COOKIE_VISITOR);
+            return $request->getCookie(ApiCookieSubscriber::BOXALINO_API_COOKIE_VISITOR);
         }
 
         $cookieValue = Uuid::uuid4()->toString();
-        $request->cookies->set(ApiCookieSubscriber::BOXALINO_API_INIT_VISITOR, $cookieValue);
+        $request->setCookie(ApiCookieSubscriber::BOXALINO_API_INIT_VISITOR, $cookieValue);
 
         return $cookieValue;
     }
 
     /**
-     * Processing the request parameters
+     * Processing the RequestInterface parameters
      *
-     * @param Request $request
+     * @param RequestInterface $request
      */
-    public function addParameters(Request $request) : void
+    public function addParameters(RequestInterface $request) : void
     {
         /** header parameters accept a string as value */
         $this->requestDefinition->addHeaderParameters(
-            $this->parameterFactory->get(ParameterFactory::BOXALINO_API_REQUEST_PARAMETER_TYPE_HEADER)
+            $this->parameterFactory->get(ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_HEADER)
                 ->add("User-Host", $request->getClientIp()),
-            $this->parameterFactory->get(ParameterFactory::BOXALINO_API_REQUEST_PARAMETER_TYPE_HEADER)
-                ->add("User-Agent", $request->headers->get('user-agent')),
-            $this->parameterFactory->get(ParameterFactory::BOXALINO_API_REQUEST_PARAMETER_TYPE_HEADER)
-                ->add("User-Referer", $request->headers->get('referer')),
-            $this->parameterFactory->get(ParameterFactory::BOXALINO_API_REQUEST_PARAMETER_TYPE_HEADER)
-                ->add("User-Url", $request->getUri()),
-            $this->parameterFactory->get(ParameterFactory::BOXALINO_API_REQUEST_PARAMETER_TYPE_HEADER)
+            $this->parameterFactory->get(ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_HEADER)
+                ->add("User-Agent", $request->getUserAgent()),
+            $this->parameterFactory->get(ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_HEADER)
+                ->add("User-Referer", $request->getUserReferer()),
+            $this->parameterFactory->get(ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_HEADER)
+                ->add("User-Url", $request->getUserUrl()),
+            $this->parameterFactory->get(ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_HEADER)
                 ->add("contextId", $this->getContextId())
         );
 
-        $queryString = $request->getQueryString();
-        if(is_null($queryString))
-        {
-            return;
-        }
-        parse_str($queryString, $params);
+        $params = $request->getParams();
         foreach($params as $param => $value)
         {
             if(in_array($param, [$this->getPageNumberParameter(), $this->getPageLimitParameter()]))
@@ -224,7 +221,7 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
 
             $value = is_array($value) ? $value : [$value];
             $this->requestDefinition->addParameters(
-                $this->parameterFactory->get(ParameterFactory::BOXALINO_API_REQUEST_PARAMETER_TYPE_USER)
+                $this->parameterFactory->get(ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_USER)
                     ->add($param, $value)
             );
         }
@@ -235,7 +232,7 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
      * @param int $page
      * @return int
      */
-    public function addOffset(Request $request) : RequestTransformerAbstract
+    public function addOffset(RequestInterface $request) : RequestTransformerAbstract
     {
         $page = $this->getPage($request);
         $this->requestDefinition->setOffset(($page-1) * $this->getLimit($request));
@@ -246,10 +243,10 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
      * Hitcount is a concept similar to limit
      *
      * @param int $hits
-     * @param Request $request
+     * @param RequestInterface $request
      * @return $this
      */
-    public function addHitCount(Request $request) : RequestTransformerAbstract
+    public function addHitCount(RequestInterface $request) : RequestTransformerAbstract
     {
         $this->requestDefinition->setHitCount($this->getLimit($request));
         return $this;
@@ -276,9 +273,9 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
     /**
      * @return string | null
      */
-    protected function addSorting(Request $request) : void
+    protected function addSorting(RequestInterface $request) : void
     {
-        $key = $request->get($this->getSortParameter(), $this->sortingModel->getDefaultSortField());
+        $key = $request->getParam($this->getSortParameter(), $this->sortingModel->getDefaultSortField());
         if (!$key || $key === $this->sortingModel->getDefaultSortField()) {
             return;
         }
@@ -287,7 +284,7 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
         foreach($sorting as $sort)
         {
             $this->requestDefinition->addSort(
-                $this->parameterFactory->get(ParameterFactory::BOXALINO_API_REQUEST_PARAMETER_TYPE_SORT)
+                $this->parameterFactory->get(ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_SORT)
                     ->add($sort["field"], $sort["reverse"])
             );
         }
@@ -296,12 +293,12 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
     /**
      * @return int
      */
-    protected function getLimit(Request $request): int
+    protected function getLimit(RequestInterface $request): int
     {
-        $limit = $request->query->getInt($this->getPageLimitParameter(), $this->getDefaultLimitValue());
+        $limit = (int) $request->getParam($this->getPageLimitParameter(), $this->getDefaultLimitValue());
 
         if ($request->isMethod(Request::METHOD_POST)) {
-            $limit = $request->request->getInt($this->getPageLimitParameter(), $limit);
+            $limit = (int) $request->getParam($this->getPageLimitParameter(), $limit);
         }
 
         return $limit <= 0 ? $this->getDefaultLimitValue() : $limit;
@@ -310,12 +307,12 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
     /**
      * @return int
      */
-    protected function getPage(Request $request): int
+    protected function getPage(RequestInterface $request): int
     {
-        $page = $request->query->getInt($this->getPageNumberParameter(), 1);
+        $page = (int) $request->getParam($this->getPageNumberParameter(), 1);
 
         if ($request->isMethod(Request::METHOD_POST)) {
-            $page = $request->request->getInt($this->getPageNumberParameter(), $page);
+            $page = (int) $request->getParam($this->getPageNumberParameter(), $page);
         }
 
         return $page <= 0 ? 1 : $page;
