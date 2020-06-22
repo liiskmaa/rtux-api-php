@@ -1,56 +1,16 @@
 <?php declare(strict_types=1);
 namespace Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing;
 
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\ApiResponseViewInterface;
+
 /**
  * Class ApiCmsModelInterface
  * Model used for the Boxalino Narrative CMS block
  *
  * @package Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing
  */
-interface ApiCmsModelInterface
+interface ApiCmsModelInterface extends ApiResponseViewInterface
 {
-
-    /**
-     * @return \ArrayIterator
-     */
-    public function getBlocks(): \ArrayIterator;
-
-    /**
-     * @param \ArrayIterator $blocks
-     * @return ApiCmsModel
-     */
-    public function setBlocks(\ArrayIterator $blocks): ApiCmsModelInterface;
-
-    /**
-     * @return string
-     */
-    public function getRequestId(): string;
-    /**
-     * @param string $requestId
-     * @return ApiCmsModel
-     */
-    public function setRequestId(string $requestId): ApiCmsModelInterface;
-
-    /**
-     * @return string
-     */
-    public function getGroupBy(): string;
-
-    /**
-     * @param string $groupBy
-     * @return ApiCmsModel
-     */
-    public function setGroupBy(string $groupBy): ApiCmsModelInterface;
-
-    /**
-     * @return string
-     */
-    public function getVariantUuid(): string;
-    /**
-     * @param string $variantUuid
-     * @return ApiCmsModel
-     */
-    public function setVariantUuid(string $variantUuid): ApiCmsModelInterface;
 
     /**
      * @return int

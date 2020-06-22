@@ -5,9 +5,9 @@ use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ContextInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactoryInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestDefinitionInterface;
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestTransformerInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\MissingDependencyException;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class ContextAbstract
@@ -80,10 +80,10 @@ abstract class ContextAbstract
     }
 
     /**
-     * @param Request $request
+     * @param RequestInterface $request
      * @return RequestDefinitionInterface
      */
-    public function get(Request $request) : RequestDefinitionInterface
+    public function get(RequestInterface $request) : RequestDefinitionInterface
     {
         $this->validateRequest($request);
         $this->requestTransformer->setRequestDefinition($this->getApiRequest())
@@ -101,11 +101,11 @@ abstract class ContextAbstract
         return $this->getApiRequest();
     }
 
-    abstract public function validateRequest(Request $request) : void;
-    abstract function getContextNavigationId(Request $request) : array;
-    abstract function getVisibilityFilter(Request $request) : ParameterInterface;
-    abstract function getCategoryFilter(Request $request) : ParameterInterface;
-    abstract function getActiveFilter(Request $request) : ParameterInterface;
+    abstract public function validateRequest(RequestInterface $request) : void;
+    abstract function getContextNavigationId(RequestInterface $request) : array;
+    abstract function getVisibilityFilter(RequestInterface $request) : ParameterInterface;
+    abstract function getCategoryFilter(RequestInterface $request) : ParameterInterface;
+    abstract function getActiveFilter(RequestInterface $request) : ParameterInterface;
     abstract function getContextVisibility() : array;
     abstract function getReturnFields() : array;
 
@@ -113,10 +113,10 @@ abstract class ContextAbstract
      * Adding context parameters per integration use-case
      * (for custom integrations)
      *
-     * @param Request $request
+     * @param RequestInterface $request
      * @return void
      */
-    protected function addContextParameters(Request $request) : void
+    protected function addContextParameters(RequestInterface $request) : void
     {
         if($this->getHitCount())
         {
@@ -128,9 +128,9 @@ abstract class ContextAbstract
      * Adding general filters (sample)
      * (when implementing the abstract class, the system logic can differ)
      *
-     * @param Request $request
+     * @param RequestInterface $request
      */
-    protected function addFilters(Request $request) : void
+    protected function addFilters(RequestInterface $request) : void
     {
         $this->getApiRequest()
             ->addFilters(

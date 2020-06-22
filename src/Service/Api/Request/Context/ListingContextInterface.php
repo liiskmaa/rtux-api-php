@@ -3,7 +3,7 @@ namespace Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Context;
 
 use Boxalino\RealTimeUserExperienceApi\Framework\Request\ListingContextAbstract;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ContextInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestInterface;
 
 /**
  * Interface SearchContextInterface
@@ -15,18 +15,18 @@ interface ListingContextInterface extends ContextInterface
     /**
      * Adds facets to the request (field-values)
      *
-     * @param Request $request
+     * @param RequestInterface $request
      * @return ListingContextAbstract
      */
-    public function addFacets(Request $request) : ListingContextAbstract;
+    public function addFacets(RequestInterface $request) : ListingContextAbstract;
 
     /**
      * Adds range facets to the request
      *
-     * @param Request $request
+     * @param RequestInterface $request
      * @return ListingContextAbstract
      */
-    public function addRangeFacets(Request $request) : ListingContextAbstract;
+    public function addRangeFacets(RequestInterface $request) : ListingContextAbstract;
 
     /**
      * Returns an array with the following structure:

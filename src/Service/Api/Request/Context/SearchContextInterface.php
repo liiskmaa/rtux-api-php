@@ -3,7 +3,6 @@ namespace Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Context;
 
 use Boxalino\RealTimeUserExperienceApi\Framework\Request\SearchContextAbstract;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ContextInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Interface SearchContextInterface

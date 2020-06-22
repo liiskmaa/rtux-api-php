@@ -1,15 +1,13 @@
 <?php declare(strict_types=1);
 namespace Boxalino\RealTimeUserExperienceApi\Service\Api\Request;
 
-use Symfony\Component\HttpFoundation\Request;
-
 interface ContextInterface
 {
     /**
-     * @param Request $request
+     * @param RequestInterface $request
      * @return RequestDefinitionInterface
      */
-    public function get(Request $request) : RequestDefinitionInterface;
+    public function get(RequestInterface $request) : RequestDefinitionInterface;
 
     /**
      * @param string $widget

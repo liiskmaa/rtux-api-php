@@ -11,7 +11,6 @@ use Boxalino\RealTimeUserExperienceApi\Service\Api\Util\ConfigurationInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\MissingDependencyException;
 use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\Uuid;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class RequestTransformerAbstract
@@ -90,14 +89,14 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
             );
         }
 
-        $salesChannelId = $this->getContextId();
-        $this->configuration->setContextId($salesChannelId);
+        $contextId = $this->getContextId();
+        $this->configuration->setContextId($contextId);
         $this->requestDefinition
-            ->setUsername($this->configuration->getUsername($salesChannelId))
-            ->setApiKey($this->configuration->getApiKey($salesChannelId))
-            ->setApiSecret($this->configuration->getApiSecret($salesChannelId))
-            ->setDev($this->configuration->getIsDev($salesChannelId))
-            ->setTest($this->configuration->getIsTest($salesChannelId))
+            ->setUsername($this->configuration->getUsername($contextId))
+            ->setApiKey($this->configuration->getApiKey($contextId))
+            ->setApiSecret($this->configuration->getApiSecret($contextId))
+            ->setDev($this->configuration->getIsDev($contextId))
+            ->setTest($this->configuration->getIsTest($contextId))
             ->setSessionId($this->getSessionId($request))
             ->setProfileId($this->getProfileId($request))
             ->setCustomerId($this->getCustomerId($request))
@@ -297,7 +296,7 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
     {
         $limit = (int) $request->getParam($this->getPageLimitParameter(), $this->getDefaultLimitValue());
 
-        if ($request->isMethod(Request::METHOD_POST)) {
+        if ($request->isMethod(RequestInterface::METHOD_POST)) {
             $limit = (int) $request->getParam($this->getPageLimitParameter(), $limit);
         }
 
@@ -311,7 +310,7 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
     {
         $page = (int) $request->getParam($this->getPageNumberParameter(), 1);
 
-        if ($request->isMethod(Request::METHOD_POST)) {
+        if ($request->isMethod(RequestInterface::METHOD_POST)) {
             $page = (int) $request->getParam($this->getPageNumberParameter(), $page);
         }
 

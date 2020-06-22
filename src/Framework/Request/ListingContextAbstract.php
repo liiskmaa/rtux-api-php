@@ -5,8 +5,8 @@ use Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiFacetModelAb
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Context\ListingContextInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactoryInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestDefinitionInterface;
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\WrongDependencyTypeException;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Boxalino Listing Request handler
@@ -22,10 +22,10 @@ abstract class ListingContextAbstract
     /**
      * Adding  facets from the request
      *
-     * @param Request $request
+     * @param RequestInterface $request
      * @return RequestDefinitionInterface
      */
-    public function get(Request $request) : RequestDefinitionInterface
+    public function get(RequestInterface $request) : RequestDefinitionInterface
     {
         parent::get($request);
         $this->addFacets($request);
@@ -37,12 +37,12 @@ abstract class ListingContextAbstract
     /**
      * Filter the list of query parameters by either being a product property or a defined property used in filter
      *
-     * @param Request $request
+     * @param RequestInterface $request
      * @return SearchContextAbstract
      */
-    public function addFacets(Request $request): ListingContextAbstract
+    public function addFacets(RequestInterface $request): ListingContextAbstract
     {
-        foreach($request->query->all() as $param => $values)
+        foreach($request->getParams() as $param => $values)
         {
             //it`s a store property
             if(strpos($param, ApiFacetModelAbstract::BOXALINO_STORE_FACET_PREFIX)===0)
@@ -66,15 +66,15 @@ abstract class ListingContextAbstract
     /**
      * Setting the range facets provided from the class to the request
      *
-     * @param Request $request
+     * @param RequestInterface $request
      * @return $this
      */
-    public function addRangeFacets(Request $request) : ListingContextAbstract
+    public function addRangeFacets(RequestInterface $request) : ListingContextAbstract
     {
         foreach($this->getRangeProperties() as $propertyName=>$configurations)
         {
-            $from = $request->query->getInt($configurations['from'], 0);
-            $to = $request->query->getInt($configurations['to'], 0);
+            $from = (int) $request->getParam($configurations['from'], 0);
+            $to = (int) $request->getParam($configurations['to'], 0);
             if($from > 0 || $to > 0)
             {
                 $this->getApiRequest()->addFacets(

@@ -4,10 +4,11 @@ namespace Boxalino\RealTimeUserExperienceApi\Framework\Content\Page;
 use Boxalino\RealTimeUserExperienceApi\Framework\Content\CreateFromTrait;
 use Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiCmsModelInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\ApiCallServiceInterface;
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\Block;
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\ApiResponseViewInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\UndefinedPropertyError;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class ApiCmsLoaderAbstract
@@ -27,12 +28,13 @@ abstract class ApiCmsLoaderAbstract extends ApiLoaderAbstract
     /**
      * Loads the content of an API Response page
      */
-    public function load(Request $request): ApiCmsModelInterface
+    public function load() : ApiLoaderInterface
     {
         $this->addProperties();
-        $this->call($request);
+        $this->call();
 
-        $page = $this->getCmsPage();
+        /** @var ApiCmsModelInterface $page */
+        $page = $this->getApiResponsePage();
         $page->setBlocks($this->apiCallService->getApiResponse()->getBlocks())
             ->setLeft($this->apiCallService->getApiResponse()->getLeft())
             ->setTop($this->apiCallService->getApiResponse()->getTop())
@@ -41,23 +43,26 @@ abstract class ApiCmsLoaderAbstract extends ApiLoaderAbstract
             ->setRequestId($this->apiCallService->getApiResponse()->getRequestId())
             ->setGroupBy($this->getGroupBy())
             ->setVariantUuid($this->getVariantUuid())
-            ->setNavigationId($this->getNavigationId($request))
+            ->setNavigationId($this->getNavigationId($this->getRequest()))
             ->setTotalHitCount($this->apiCallService->getApiResponse()->getHitCount());
 
-        return $page;
+        $this->setApiResponsePage($page);
+
+        return $this;
     }
 
+
     /**
-     * @return ApiCmsModelInterface
+     * @return ApiResponseViewInterface | null
      */
-    abstract protected function getCmsPage() : ApiCmsModelInterface;
+    abstract public function getApiResponsePage() : ?ApiResponseViewInterface;
 
     /**
      * Accessing the navigation/page ID
-     * @param Request $request
+     * @param RequestInterface $request
      * @return string
      */
-    abstract protected function getNavigationId(Request $request) : string;
+    abstract protected function getNavigationId(RequestInterface $request) : string;
 
     /**
      * @param array $config

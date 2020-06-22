@@ -5,9 +5,9 @@ use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Definition\ItemReques
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Context\ItemContextInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactoryInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestDefinitionInterface;
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\MissingDependencyException;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\WrongDependencyTypeException;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Item context request
@@ -45,10 +45,10 @@ abstract class ItemContextAbstract
     protected $subProductIds = [];
 
     /**
-     * @param Request $request
+     * @param RequestInterface $request
      * @return RequestDefinitionInterface
      */
-    public function get(Request $request) : RequestDefinitionInterface
+    public function get(RequestInterface $request) : RequestDefinitionInterface
     {
         if(!$this->productId)
         {

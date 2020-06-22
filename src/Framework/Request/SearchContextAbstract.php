@@ -6,8 +6,8 @@ use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Context\SearchContext
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Definition\SearchRequestDefinitionInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactoryInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestDefinitionInterface;
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\WrongDependencyTypeException;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Boxalino Search Request handler
@@ -38,10 +38,10 @@ abstract class SearchContextAbstract
     /**
      * Adding additional subphrases details for the search request
      *
-     * @param Request $request
+     * @param RequestInterface $request
      * @return RequestDefinitionInterface
      */
-    public function get(Request $request) : RequestDefinitionInterface
+    public function get(RequestInterface $request) : RequestDefinitionInterface
     {
         parent::get($request);
 
@@ -59,15 +59,15 @@ abstract class SearchContextAbstract
     }
 
     /**
-     * @param Request $request
+     * @param RequestInterface $request
      * @return void
      */
-    protected function addContextParameters(Request $request) : void
+    protected function addContextParameters(RequestInterface $request) : void
     {
         parent::addContextParameters($request);
         $this->getApiRequest()->addHeaderParameters(
             $this->parameterFactory->get(ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_HEADER)
-                ->add("query", $request->get($this->getSearchParameter(), ""))
+                ->add("query", (string) $request->getParam($this->getSearchParameter(), ""))
         );
     }
 

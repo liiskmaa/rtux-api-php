@@ -4,9 +4,10 @@ namespace Boxalino\RealTimeUserExperienceApi\Framework\Content\Page;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\ApiCallServiceInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ContextInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestDefinitionInterface;
-use Boxalino\RealTimeUserExperienceApi\Service\Api\Util\Configuration;
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestInterface;
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\ApiResponseViewInterface;
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Util\ConfigurationInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class AutocompletePageLoaderAbstract
@@ -21,15 +22,15 @@ abstract class ApiPageLoaderAbstract extends ApiLoaderAbstract
     /**
      * Loads the content of an API Response page
      *
-     * @param Request $request
-     * @return ApiResponsePageInterface
+     * @return ApiResponseViewInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function load(Request $request): ApiResponsePageInterface
+    public function load() : ApiLoaderInterface
     {
-        $this->call($request);
+        $this->call();
 
-        $page = $this->getApiResponsePage($request);
+        /** @var ApiResponsePageInterface $page */
+        $page = $this->getApiResponsePage();
         $page->setBlocks($this->apiCallService->getApiResponse()->getBlocks());
         $page->setRequestId($this->apiCallService->getApiResponse()->getRequestId());
         $page->setGroupBy($this->getGroupBy());
@@ -38,23 +39,25 @@ abstract class ApiPageLoaderAbstract extends ApiLoaderAbstract
         $page->setRedirectUrl($this->apiCallService->getApiResponse()->getRedirectUrl());
         $page->setTotalHitCount($this->apiCallService->getApiResponse()->getHitCount());
         $page->setSearchTerm(
-            (string) $request->query->get($this->getSearchParameter(), "")
+            (string) $this->getRequest()->getParam($this->getSearchParameter(), "")
         );
         if($this->apiCallService->getApiResponse()->isCorrectedSearchQuery())
         {
             $page->setSearchTerm((string) $this->apiCallService->getApiResponse()->getCorrectedSearchQuery());
         }
 
-        $this->dispatchEvent($request, $page);
-        return $page;
+        $this->dispatchEvent($this->getRequest(), $page);
+        $this->setApiResponsePage($page);
+        
+        return $this;
     }
 
     /**
-     * @param Request $request
+     * @param RequestInterface $request
      * @param ApiResponsePageInterface $page
      * @return mixed
      */
-    abstract protected function dispatchEvent(Request $request, ApiResponsePageInterface $page);
+    abstract protected function dispatchEvent(RequestInterface $request, ApiResponsePageInterface $page);
 
     /**
      * @return string
@@ -62,8 +65,8 @@ abstract class ApiPageLoaderAbstract extends ApiLoaderAbstract
     abstract public function getSearchParameter() : string;
 
     /**
-     * @return ApiResponsePageInterface
+     * @return ApiResponseViewInterface
      */
-    abstract public function getApiResponsePage(Request $request) : ApiResponsePageInterface;
+    abstract public function getApiResponsePage() : ?ApiResponseViewInterface;
 
 }

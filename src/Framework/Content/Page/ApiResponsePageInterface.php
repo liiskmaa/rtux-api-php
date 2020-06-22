@@ -1,38 +1,20 @@
 <?php declare(strict_types=1);
 namespace Boxalino\RealTimeUserExperienceApi\Framework\Content\Page;
 
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\ApiResponseViewInterface;
+
 /**
  * Interface ApiResponsePageInterface
  *
  * @package Boxalino\RealTimeUserExperienceApi\Service\Api\Content\Page
  */
-interface ApiResponsePageInterface
+interface ApiResponsePageInterface extends ApiResponseViewInterface
 {
 
-    /**
-     * @return \ArrayIterator
-     */
-    public function getBlocks() : \ArrayIterator;
     /**
      * @return string
      */
     public function getRequestId() : string;
-
-    /**
-     * @return string
-     */
-    public function getGroupBy() : string;
-    /**
-     * @param \ArrayIterator $blocks
-     * @return $this
-     */
-    public function setBlocks(\ArrayIterator $blocks);
-
-    /**
-     * @param string $groupBy
-     * @return $this
-     */
-    public function setGroupBy(string $groupBy);
 
     /**
      * @param string $requestId
@@ -40,27 +22,6 @@ interface ApiResponsePageInterface
      */
     public function setRequestId(string $requestId);
 
-    /**
-     * @return bool
-     */
-    public function isFallback(): bool;
-
-    /**
-     * @param bool $fallback
-     * @return $this
-     */
-    public function setFallback(bool $fallback);
-
-    /**
-     * @return string
-     */
-    public function getVariantUuid(): string;
-
-    /**
-     * @param string $variantUuid
-     * @return $this
-     */
-    public function setVariantUuid(string $variantUuid);
 
     /**
      * @return bool

@@ -3,21 +3,24 @@ namespace Boxalino\RealTimeUserExperienceApi\Framework\Content\Page;
 
 use Boxalino\RealTimeUserExperienceApi\Service\Api\ApiCallServiceInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ContextInterface;
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestInterface;
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\ApiResponseViewInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Util\ConfigurationInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\MissingDependencyException;
+use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\WrongDependencyTypeException;
 
 /**
  * Class ApiLoader
  *
  * @package Boxalino\RealTimeUserExperienceApi\Service\Api\Content\Page
  */
-abstract class ApiLoaderAbstract
+abstract class ApiLoaderAbstract implements ApiLoaderInterface
 {
 
     /**
      * @var ContextInterface
      */
-    protected $apiContextInterface;
+    protected $apiContext;
 
     /**
      * @var ApiCallServiceInterface
@@ -29,11 +32,20 @@ abstract class ApiLoaderAbstract
      */
     protected $configuration;
 
+    /**
+     * @var RequestInterface
+     */
+    protected $request;
 
     /**
      * @var \ArrayIterator
      */
     protected $apiContextInterfaceList;
+
+    /**
+     * @var ApiResponseViewInterface
+     */
+    protected $apiResponsePage;
 
     public function __construct(
         ApiCallServiceInterface $apiCallService,
@@ -47,30 +59,65 @@ abstract class ApiLoaderAbstract
     /**
      * Makes a call to the Boxalino API
      *
-     * @param Request $request
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    protected function call(Request $request) : void
+    public function call() : void
     {
-        $this->prepareContext($this->apiContextInterface);
+        if(!$this->getApiContext())
+        {
+            throw new MissingDependencyException("BoxalinoApiLoader: the API ContextInterface is not defined");
+        }
+
+        if(!($this->request instanceof RequestInterface))
+        {
+            throw new WrongDependencyTypeException(
+                "BoxalinoApiLoader: the request is not an instance of API RequestInterface but " . get_class($this->request)
+            );
+        }
+
+        $this->_beforeApiCallService();
         $this->apiCallService->call(
-            $this->apiContextInterface->get($request),
+            $this->getApiContext()->get($this->getRequest()),
             $this->configuration->getRestApiEndpoint($this->getContextId())
         );
 
-        $this->validateCall($this->apiCallService);
+        $this->_afterApiCallService();
         return;
     }
 
     /**
-     * @return mixed
+     * @param RequestInterface $request
+     * @return $this
      */
-    abstract protected function validateCall(ApiCallServiceInterface $apiCallService) : void;
+    public function setRequest(RequestInterface $request) : ApiLoaderInterface
+    {
+        $this->request = $request;
+        return $this;
+    }
+
+    /**
+     * @return RequestInterface
+     */
+    public function getRequest(): RequestInterface
+    {
+        return $this->request;
+    }
+
+    /**
+     * @return void
+     */
+    protected function _afterApiCallService() : void
+    {
+        if($this->apiCallService->isFallback())
+        {
+            throw new \Exception($apiCallService->getFallbackMessage());
+        }
+    }
 
     /**
      * Prepare the context
      */
-    abstract protected function prepareContext(ContextInterface $context) : void;
+    abstract protected function _beforeApiCallService() : void;
 
     /**
      * @return string
@@ -80,7 +127,7 @@ abstract class ApiLoaderAbstract
     /**
      * @return string
      */
-    protected function getGroupBy() : string
+    public function getGroupBy() : string
     {
         return $this->apiCallService->getApiResponse()->getGroupBy();
     }
@@ -88,7 +135,7 @@ abstract class ApiLoaderAbstract
     /**
      * @return string
      */
-    protected function getVariantUuid() : string
+    public function getVariantUuid() : string
     {
         return $this->apiCallService->getApiResponse()->getVariantId();
     }
@@ -97,7 +144,7 @@ abstract class ApiLoaderAbstract
      * @param ContextInterface $apiContextInterface
      * @return $this
      */
-    public function setApiContextInterface(ContextInterface $apiContextInterface)
+    public function setApiContext(ContextInterface $apiContextInterface)
     {
         $this->apiContextInterface = $apiContextInterface;
         return $this;
@@ -106,9 +153,19 @@ abstract class ApiLoaderAbstract
     /**
      * @return ContextInterface
      */
-    public function getApiContextInterface() : ContextInterface
+    public function getApiContext() : ContextInterface
     {
         return $this->apiContextInterface;
+    }
+
+    /**
+     * @param ApiResponseViewInterface $page
+     * @return $this|ApiLoaderInterface
+     */
+    public function setApiResponsePage(ApiResponseViewInterface $page): ApiLoaderInterface
+    {
+        $this->apiResponsePage = $page;
+        return $this;
     }
 
     /**
@@ -118,7 +175,7 @@ abstract class ApiLoaderAbstract
      * @param string $widget
      * @return $this
      */
-    public function addApiContextInterface(ContextInterface $apiContextInterface, string $widget)
+    public function addApiContext(ContextInterface $apiContextInterface, string $widget)
     {
         $this->apiContextInterfaceList->offsetSet($widget, $apiContextInterface);
         return $this;

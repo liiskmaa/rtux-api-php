@@ -4,8 +4,8 @@ namespace Boxalino\RealTimeUserExperienceApi\Framework\Request;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Context\AutocompleteContextInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Definition\AutocompleteRequestDefinitionInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestDefinitionInterface;
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\WrongDependencyTypeException;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Autocomplete context request
@@ -42,10 +42,10 @@ abstract class AutocompleteContextAbstract
     /**
      * Adding autocomplete specific request parameters
      *
-     * @param Request $request
+     * @param RequestInterface $request
      * @return RequestDefinitionInterface
      */
-    public function get(Request $request) : RequestDefinitionInterface
+    public function get(RequestInterface $request) : RequestDefinitionInterface
     {
         parent::get($request);
         $this->getApiRequest()

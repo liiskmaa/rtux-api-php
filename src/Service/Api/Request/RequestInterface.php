@@ -9,26 +9,43 @@ namespace Boxalino\RealTimeUserExperienceApi\Service\Api\Request;
  */
 interface RequestInterface
 {
+    
+    public const METHOD_POST = "POST";
+    public const METHOD_GET = "GET";
 
     /**
-     * @return RequestInterface
+     * Returns the framework request
+     * 
+     * @return mixed
      */
-    public function getRequest() : RequestInterface;
+    public function getRequest();
 
     /**
+     * @param mixed $request
+     * @return self
+     */
+    public function setRequest($request) : RequestInterface;
+
+    /**
+     * Check if cookie exists
+     * 
      * @param string $key
      * @return bool
      */
     public function hasCookie(string $key) : bool;
 
     /**
+     * Sets cookie value 
+     * 
      * @param string $key
      * @param $value
      * @return $this
      */
-    public function setCookie(string $key, $value) : self;
+    public function setCookie(string $key, $value) : RequestInterface;
     
     /**
+     * Accesses cookie value 
+     * 
      * @param string $key
      * @param $default
      * @return string
@@ -36,6 +53,8 @@ interface RequestInterface
     public function getCookie(string $key, $default=null): string;
 
     /**
+     * Access to request locale
+     * 
      * @return string
      */
     public function getLocale() : string;
@@ -61,18 +80,23 @@ interface RequestInterface
     public function getUserUrl() : string;
 
     /**
+     * Gets the list of all parameters on the request (query, etc)
+     * 
      * @return array
      */
     public function getParams() : array;
 
     /**
+     * Gets value of specific parameter
+     * 
      * @param string $key
      * @param null $default
-     * @return string|null
      */
-    public function getParam(string $key, $default = null) : ?string;
+    public function getParam(string $key, $default = null);
 
     /**
+     * Check the method of the original request
+     * 
      * @param string $method
      * @return bool
      */

@@ -3,7 +3,7 @@ namespace Boxalino\RealTimeUserExperienceApi\Framework\Request;
 
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Context\ListingContextInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactoryInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestInterface;
 
 /**
  * Class CmsContextAbstract
@@ -24,9 +24,9 @@ abstract class CmsContextAbstract
      * Add the category filter (if any)
      * Adding configured filters (if any)
      *
-     * @param Request $request
+     * @param RequestInterface $request
      */
-    protected function addFilters(Request $request) : void
+    protected function addFilters(RequestInterface $request) : void
     {
         $this->getApiRequest()
             ->setHitCount($this->getHitCount())
@@ -62,10 +62,10 @@ abstract class CmsContextAbstract
      * Adding the requested facets (if allowed)
      * Adding configured facets (if any)
      *
-     * @param Request $request
+     * @param RequestInterface $request
      * @return SearchContextAbstract
      */
-    public function addFacets(Request $request): ListingContextAbstract
+    public function addFacets(RequestInterface $request): ListingContextAbstract
     {
         if($this->getProperty("applyRequestParams"))
         {
