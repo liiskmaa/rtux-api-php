@@ -110,7 +110,7 @@ abstract class ApiLoaderAbstract implements ApiLoaderInterface
     {
         if($this->apiCallService->isFallback())
         {
-            throw new \Exception($apiCallService->getFallbackMessage());
+            throw new \Exception($this->apiCallService->getFallbackMessage());
         }
     }
 
@@ -144,9 +144,9 @@ abstract class ApiLoaderAbstract implements ApiLoaderInterface
      * @param ContextInterface $apiContextInterface
      * @return $this
      */
-    public function setApiContext(ContextInterface $apiContextInterface)
+    public function setApiContext(ContextInterface $apiContextInterface) : ApiLoaderInterface
     {
-        $this->apiContextInterface = $apiContextInterface;
+        $this->apiContext = $apiContextInterface;
         return $this;
     }
 
@@ -155,7 +155,7 @@ abstract class ApiLoaderAbstract implements ApiLoaderInterface
      */
     public function getApiContext() : ContextInterface
     {
-        return $this->apiContextInterface;
+        return $this->apiContext;
     }
 
     /**
@@ -175,7 +175,7 @@ abstract class ApiLoaderAbstract implements ApiLoaderInterface
      * @param string $widget
      * @return $this
      */
-    public function addApiContext(ContextInterface $apiContextInterface, string $widget)
+    public function addApiContext(ContextInterface $apiContextInterface, string $widget) : ApiLoaderInterface
     {
         $this->apiContextInterfaceList->offsetSet($widget, $apiContextInterface);
         return $this;

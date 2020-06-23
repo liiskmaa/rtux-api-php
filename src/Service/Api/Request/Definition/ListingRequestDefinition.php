@@ -9,5 +9,6 @@ use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestDefinition;
  * @package Boxalino\RealTimeUserExperienceApi\Service\Api
  */
 class ListingRequestDefinition extends RequestDefinition
+    implements ListingRequestDefinitionInterface
 {
 }

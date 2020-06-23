@@ -31,8 +31,8 @@ abstract class CmsContextAbstract
         $this->getApiRequest()
             ->setHitCount($this->getHitCount())
             ->addFilters(
-                $this->getVisibilityFilter(),
-                $this->getActiveFilter()
+                $this->getVisibilityFilter($request),
+                $this->getActiveFilter($request)
             );
 
         $categoryIds = $this->getContextNavigationId($request);

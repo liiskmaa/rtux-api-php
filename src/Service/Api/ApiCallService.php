@@ -85,7 +85,9 @@ class ApiCallService implements ApiCallServiceInterface
         {
             $this->setFallback(true);
             $this->setFallbackMessage($exception->getMessage());
-            $this->logger->error("BoxalinoAPIError: " . $exception->getMessage() . " at " . __CLASS__);
+            $this->logger->error("BoxalinoAPIError: " . $exception->getMessage() . " at " . __CLASS__
+                . " on request: " . $apiRequest->jsonSerialize()
+            );
         }
 
         return null;

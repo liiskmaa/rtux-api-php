@@ -1,11 +1,9 @@
 <?php declare(strict_types=1);
 namespace Boxalino\RealTimeUserExperienceApi\Framework\Content\Page;
 
-use Boxalino\RealTimeUserExperienceApi\Service\Api\ApiCallServiceInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ContextInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\ApiResponseViewInterface;
-use Boxalino\RealTimeUserExperienceApi\Service\Api\Util\ConfigurationInterface;
 
 /**
  * Class ApiLoaderInterface
@@ -49,6 +47,7 @@ interface ApiLoaderInterface
     public function getApiResponsePage() : ?ApiResponseViewInterface;
 
     /**
+     * @param ApiResponseViewInterface $page
      * @return ApiLoaderInterface
      */
     public function setApiResponsePage(ApiResponseViewInterface $page) : ApiLoaderInterface;

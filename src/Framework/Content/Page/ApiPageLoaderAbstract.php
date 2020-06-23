@@ -1,13 +1,8 @@
 <?php declare(strict_types=1);
 namespace Boxalino\RealTimeUserExperienceApi\Framework\Content\Page;
 
-use Boxalino\RealTimeUserExperienceApi\Service\Api\ApiCallServiceInterface;
-use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ContextInterface;
-use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestDefinitionInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\ApiResponseViewInterface;
-use Boxalino\RealTimeUserExperienceApi\Service\Api\Util\ConfigurationInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class AutocompletePageLoaderAbstract
@@ -48,7 +43,7 @@ abstract class ApiPageLoaderAbstract extends ApiLoaderAbstract
 
         $this->dispatchEvent($this->getRequest(), $page);
         $this->setApiResponsePage($page);
-        
+
         return $this;
     }
 

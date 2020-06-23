@@ -3,12 +3,10 @@ namespace Boxalino\RealTimeUserExperienceApi\Framework\Content\Page;
 
 use Boxalino\RealTimeUserExperienceApi\Framework\Content\CreateFromTrait;
 use Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiCmsModelInterface;
-use Boxalino\RealTimeUserExperienceApi\Service\Api\ApiCallServiceInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\Block;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\ApiResponseViewInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\UndefinedPropertyError;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class ApiCmsLoaderAbstract
@@ -40,7 +38,6 @@ abstract class ApiCmsLoaderAbstract extends ApiLoaderAbstract
             ->setTop($this->apiCallService->getApiResponse()->getTop())
             ->setBottom($this->apiCallService->getApiResponse()->getBottom())
             ->setRight($this->apiCallService->getApiResponse()->getRight())
-            ->setRequestId($this->apiCallService->getApiResponse()->getRequestId())
             ->setGroupBy($this->getGroupBy())
             ->setVariantUuid($this->getVariantUuid())
             ->setNavigationId($this->getNavigationId($this->getRequest()))
@@ -91,23 +88,23 @@ abstract class ApiCmsLoaderAbstract extends ApiLoaderAbstract
         {
             if($key == 'widget')
             {
-                $this->apiContextInterface->setWidget($value);
+                $this->getApiContext()->setWidget($value);
                 continue;
             }
             if($key == 'hitCount')
             {
-                $this->apiContextInterface->setHitCount((int) $value);
+                $this->getApiContext()->setHitCount((int) $value);
                 continue;
             }
             if($key == 'groupBy')
             {
-                $this->apiContextInterface->setGroupBy($value);
+                $this->getApiContext()->setGroupBy($value);
                 continue;
             }
 
             if(!is_null($value) && !empty($value))
             {
-                $this->apiContextInterface->set($key, $value);
+                $this->getApiContext()->set($key, $value);
             }
         }
     }

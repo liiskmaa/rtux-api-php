@@ -18,7 +18,7 @@ interface ApiCmsModelInterface extends ApiResponseViewInterface
     public function getTotalHitCount(): int;
     /**
      * @param int $totalHitCount
-     * @return ApiCmsModel
+     * @return ApiCmsModelInterface
      */
     public function setTotalHitCount(int $totalHitCount): ApiCmsModelInterface;
     /**
@@ -28,7 +28,7 @@ interface ApiCmsModelInterface extends ApiResponseViewInterface
 
     /**
      * @param string|null $navigationId
-     * @return ApiCmsModel
+     * @return ApiCmsModelInterface
      */
     public function setNavigationId(?string $navigationId): ApiCmsModelInterface;
 
@@ -39,7 +39,7 @@ interface ApiCmsModelInterface extends ApiResponseViewInterface
 
     /**
      * @param \ArrayIterator $left
-     * @return ApiCmsModel
+     * @return ApiCmsModelInterface
      */
     public function setLeft(\ArrayIterator $left): ApiCmsModelInterface;
 
@@ -50,7 +50,7 @@ interface ApiCmsModelInterface extends ApiResponseViewInterface
 
     /**
      * @param \ArrayIterator $right
-     * @return ApiCmsModel
+     * @return ApiCmsModelInterface
      */
     public function setRight(\ArrayIterator $right): ApiCmsModelInterface;
 
@@ -61,7 +61,7 @@ interface ApiCmsModelInterface extends ApiResponseViewInterface
 
     /**
      * @param \ArrayIterator $bottom
-     * @return ApiCmsModel
+     * @return ApiCmsModelInterface
      */
     public function setBottom(\ArrayIterator $bottom): ApiCmsModelInterface;
 
@@ -72,7 +72,7 @@ interface ApiCmsModelInterface extends ApiResponseViewInterface
 
     /**
      * @param \ArrayIterator $top
-     * @return ApiCmsModel
+     * @return ApiCmsModelInterface
      */
     public function setTop(\ArrayIterator $top): ApiCmsModelInterface;
 

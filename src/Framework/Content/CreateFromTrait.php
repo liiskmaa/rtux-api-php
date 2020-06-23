@@ -3,7 +3,7 @@ namespace Boxalino\RealTimeUserExperienceApi\Framework\Content;
 
 /**
  * Trait CreateFromTrait
- * Generation of a class by using a different object as basse
+ * Generation of a class by using a different object as base
  * (ex: helps duplicate elements)
  *
  * @package Boxalino\RealTimeUserExperienceApi\Framework\Content
@@ -13,7 +13,7 @@ trait CreateFromTrait
     /**
      * @param $object
      * @param array $excludeProperties
-     * @return Struct
+     * @return mixed
      */
     public function createFromObject($object, array $excludeProperties)
     {
