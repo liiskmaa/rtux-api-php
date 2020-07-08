@@ -3,19 +3,21 @@ namespace Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing;
 
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorModelInterface;
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\Sort;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\MissingDependencyException;
 
 /**
  * Class ApiSortingModelAbstract
+ *
  * @package Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing
  */
 abstract class ApiSortingModelAbstract
     implements ApiSortingModelInterface
 {
-    const SORT_ASCENDING = "ASC";
-    const SORT_DESCENDING = "DESC";
 
     /**
+     * List of key->field for available sortings (framework-dependent)
+     *
      * @var []
      */
     protected $sortings = [];
@@ -31,46 +33,18 @@ abstract class ApiSortingModelAbstract
     protected $sortingMapResponse;
 
     /**
-     * @var AccessorInterface
+     * Current sorting (as set via Boxalino API response)
+     * (initialized when the $block->getModel() is called)
+     *
+     * @var AccessorInterface | Sort
      */
     protected $activeSorting;
+
 
     public function __construct()
     {
         $this->sortingMapRequest = new \ArrayObject();
         $this->sortingMapResponse = new \ArrayObject();
-    }
-
-    /**
-     * Retrieving the declared Boxalino field linked to e-shop sorting declaration
-     *
-     * @param string $field
-     * @return string
-     */
-    public function getRequestField(string $field) : string
-    {
-        if($this->sortingMapRequest->offsetExists($field))
-        {
-            return $this->sortingMapRequest->offsetGet($field);
-        }
-
-        throw new MissingDependencyException("BoxalinoApiSorting: The required request field does not have a sorting mapping.");
-    }
-
-    /**
-     * Retrieving the declared e-shop field linked to Boxalino fields
-     *
-     * @param string $field
-     * @return string
-     */
-    public function getResponseField(string $field) : string
-    {
-        if($this->sortingMapResponse->offsetExists($field))
-        {
-            return $this->sortingMapResponse->offsetGet($field);
-        }
-
-        throw new MissingDependencyException("BoxalinoApiSorting: The required response field does not have a sorting mapping.");
     }
 
     /**
@@ -108,27 +82,18 @@ abstract class ApiSortingModelAbstract
     abstract public function getDefaultSortField() : string;
 
     /**
+     * Default sorting order (asc,desc)
+     *
+     * @return string
+     */
+    abstract public function getDefaultSortDirection() : string;
+
+    /**
      * Transform a request key to a valid API sort
      * @param string $key
      * @return array
      */
-    public function requestTransform(string $key) : array
-    {
-        if($this->has($key))
-        {
-            $sorting = $this->get($key);
-            $mapping = [];
-            foreach($sorting->getFields() as $field => $direction)
-            {
-                $reverse = mb_strtoupper($direction) === self::SORT_DESCENDING ?? false;
-                $mapping[] = ["field" => $this->getRequestField($field), "reverse" => $reverse];
-            }
-
-            return $mapping;
-        }
-
-        return [];
-    }
+    abstract public function getRequestSorting(string $key) : array;
 
     /**
      * Adds mapping between a system field definition (as inserted via local e-shop tagging)
@@ -150,6 +115,38 @@ abstract class ApiSortingModelAbstract
     }
 
     /**
+     * Retrieving the declared Boxalino field linked to e-shop sorting declaration
+     *
+     * @param string $field
+     * @return string
+     */
+    public function getRequestField(string $field) : string
+    {
+        if($this->sortingMapRequest->offsetExists($field))
+        {
+            return $this->sortingMapRequest->offsetGet($field);
+        }
+
+        throw new MissingDependencyException("BoxalinoApiSorting: The required request field does not have a sorting mapping.");
+    }
+
+    /**
+     * Retrieving the declared e-shop field linked to Boxalino fields
+     *
+     * @param string $field
+     * @return string
+     */
+    public function getResponseField(string $field) : string
+    {
+        if($this->sortingMapResponse->offsetExists($field))
+        {
+            return $this->sortingMapResponse->offsetGet($field);
+        }
+
+        throw new MissingDependencyException("BoxalinoApiSorting: The required response field does not have a sorting mapping.");
+    }
+
+    /**
      * Setting the active sorting
      *
      * @param AccessorInterface $responseSorting
@@ -159,6 +156,36 @@ abstract class ApiSortingModelAbstract
     {
         $this->activeSorting = $responseSorting;
         return $this;
+    }
+
+    /**
+     * Return the active sorting object (as part of Boxalino API response)
+     *
+     * @return string
+     */
+    public function getCurrentApiSortField() : string
+    {
+        try {
+            return $this->activeSorting->getField();
+        } catch (\Exception $exception)
+        {
+            return $this->getDefaultSortField();
+        }
+    }
+
+    /**
+     * Return the active sorting direction (asc, desc)
+     *
+     * @return string
+     */
+    public function getCurrentSortDirection() : string
+    {
+        try {
+            return $this->activeSorting->getReverse() ? ApiSortingModelInterface::SORT_DESCENDING : ApiSortingModelInterface::SORT_ASCENDING;
+        } catch(\Exception $exception)
+        {
+            return $this->getDefaultSortDirection();
+        }
     }
 
     /**

@@ -270,7 +270,7 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
     }
 
     /**
-     * @return string | null
+     * @return void
      */
     protected function addSorting(RequestInterface $request) : void
     {
@@ -279,7 +279,7 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
             return;
         }
 
-        $sorting = $this->sortingModel->requestTransform($key);
+        $sorting = $this->sortingModel->getRequestSorting($key);
         foreach($sorting as $sort)
         {
             $this->requestDefinition->addSort(
