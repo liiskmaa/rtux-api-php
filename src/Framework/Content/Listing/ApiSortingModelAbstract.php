@@ -166,7 +166,7 @@ abstract class ApiSortingModelAbstract
     public function getCurrentApiSortField() : string
     {
         try {
-            return $this->activeSorting->getField();
+            return $this->activeSorting->getField() ?? $this->getDefaultSortField();
         } catch (\Exception $exception)
         {
             return $this->getDefaultSortField();
