@@ -8,7 +8,9 @@ use ArrayIterator;
  */
 interface AccessorFacetModelInterface extends AccessorModelInterface
 {
-
+    const BOXALINO_STORE_FACET_PREFIX = "products_";
+    const BOXALINO_SYSTEM_FACET_PREFIX = "bx_";
+    
     /**
      * @return ArrayIterator
      */

@@ -21,9 +21,6 @@ abstract class ApiFacetModelAbstract implements AccessorFacetModelInterface
 {
     use ResponseHydratorTrait;
 
-    public const BOXALINO_STORE_FACET_PREFIX = "products_";
-    public const BOXALINO_SYSTEM_FACET_PREFIX = "bx_";
-
     /**
      * @var \ArrayIterator
      */
