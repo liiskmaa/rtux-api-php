@@ -22,6 +22,11 @@ interface BlockInterface extends AccessorInterface
     public function getTemplate() : string;
 
     /**
+     * @return string | null
+     */
+    public function getPosition() : ?string;
+
+    /**
      * @return string|null
      */
     public function getAccessor() : ?string;
@@ -62,6 +67,12 @@ interface BlockInterface extends AccessorInterface
      * @return $this
      */
     public function setBlocks(?array $blocks);
+
+    /**
+     * @param null | array $position
+     * @return $this
+     */
+    public function setPosition(?array $position);
 
     /**
      * @param int|null $index

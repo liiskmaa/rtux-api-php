@@ -4,6 +4,7 @@ namespace Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorFacetModelInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorModelInterface;
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\Facet;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\ResponseHydratorTrait;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Util\AccessorHandlerInterface;
 use Psr\Log\LoggerInterface;
@@ -32,6 +33,11 @@ abstract class ApiFacetModelAbstract implements AccessorFacetModelInterface
     protected $selectedFacets;
 
     /**
+     * @var \ArrayObject
+     */
+    protected $positionFacets;
+
+    /**
      * @var AccessorHandlerInterface
      */
     protected $accessorHandler;
@@ -43,6 +49,7 @@ abstract class ApiFacetModelAbstract implements AccessorFacetModelInterface
 
     public function __construct()
     {
+        $this->positionFacets = new \ArrayObject();
         $this->selectedFacets = new \ArrayIterator();
     }
 
@@ -68,6 +75,31 @@ abstract class ApiFacetModelAbstract implements AccessorFacetModelInterface
     public function getSelectedFacets() : \ArrayIterator
     {
         return $this->selectedFacets;
+    }
+
+    /**
+     * Accessing the facets list based on the facet configured position
+     *
+     * @param string $position
+     * @return \ArrayIterator
+     */
+    public function getByPosition(string $position) : \ArrayIterator
+    {
+        if($this->positionFacets->offsetExists($position))
+        {
+            return $this->positionFacets->offsetGet($position);
+        }
+        /** @var Facet $facet */
+        $facets = array_filter(array_map(function(AccessorInterface $facet) use ($position) {
+            if($facet->getPosition() === $position)
+            {
+                return $facet;
+            }
+        }, $this->getFacets()->getArrayCopy()));
+
+        $this->positionFacets->offsetSet($position, new \ArrayIterator($facets));
+
+        return $this->positionFacets->offsetGet($position);
     }
 
     /**
@@ -122,7 +154,7 @@ abstract class ApiFacetModelAbstract implements AccessorFacetModelInterface
 
     /**
      * Sets the facets
-     * Sets the accesor handler to be able to run toObject construct
+     * Sets the accessor handler to be able to run toObject construct
      *
      * @param null | AccessorInterface $context
      * @return AccessorModelInterface

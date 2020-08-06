@@ -131,6 +131,14 @@ class Facet extends Accessor
     protected $selected = false;
 
     /**
+     * If configured, facet position (left, top, bottom, right)
+     * Otherwise - not part of response
+     * 
+     * @var string | null
+     */
+    protected $position = null;
+
+    /**
      * @return string
      */
     public function getField(): string
@@ -474,6 +482,24 @@ class Facet extends Accessor
     public function setSelected(bool $selected): Facet
     {
         $this->selected = $selected;
+        return $this;
+    }
+
+    /**
+     * @return string | null
+     */
+    public function getPosition() : ?string
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param string $position
+     * @return Facet
+     */
+    public function setPosition(string $position) : Facet
+    {
+        $this->position = $position;
         return $this;
     }
 

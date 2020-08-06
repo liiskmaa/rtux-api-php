@@ -24,6 +24,11 @@ class Block extends Accessor
     protected $template;
 
     /**
+     * @var string | null
+     */
+    protected $position;
+
+    /**
      * @var null | string
      */
     protected $accessor = null;
@@ -37,6 +42,11 @@ class Block extends Accessor
      * @var int
      */
     protected $index = 0;
+
+    /**
+     * @var \ArrayIterator
+     */
+    protected $facets;
 
     /**
      * The load of the model is done on model request to ensure all other properties
@@ -60,6 +70,14 @@ class Block extends Accessor
     public function getTemplate() : string
     {
         return $this->template;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPosition() : ?string
+    {
+        return $this->position;
     }
 
     /**
@@ -139,8 +157,16 @@ class Block extends Accessor
         return $this;
     }
 
-    protected $facets;
-
+    /**
+     * @param array $position
+     * @return $this
+     */
+    public function setPosition(?array $position)
+    {
+        $this->position = $position[0] ?? null;
+        return $this;
+    }
+    
     /**
      * @return \ArrayIterator
      */
