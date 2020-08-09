@@ -55,6 +55,11 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
     protected $limit = 0;
 
     /**
+     * @var null | string
+     */
+    protected $profileId = null;
+
+    /**
      * RequestTransformerAbstract constructor.
      * @param ParameterFactoryInterface $parameterFactory
      * @param ConfigurationInterface $configuration
@@ -166,15 +171,19 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
      */
     public function getProfileId(RequestInterface $request) : string
     {
-        if($request->hasCookie(ApiCookieSubscriber::BOXALINO_API_COOKIE_VISITOR))
+        if(is_null($this->profileId))
         {
-            return $request->getCookie(ApiCookieSubscriber::BOXALINO_API_COOKIE_VISITOR);
+            if($request->hasCookie(ApiCookieSubscriber::BOXALINO_API_COOKIE_VISITOR))
+            {
+                return $request->getCookie(ApiCookieSubscriber::BOXALINO_API_COOKIE_VISITOR);
+            }
+
+            $cookieValue = Uuid::uuid4()->toString();
+            $request->setCookie(ApiCookieSubscriber::BOXALINO_API_INIT_VISITOR, $cookieValue);
+            $this->profileId = $cookieValue;
         }
-
-        $cookieValue = Uuid::uuid4()->toString();
-        $request->setCookie(ApiCookieSubscriber::BOXALINO_API_INIT_VISITOR, $cookieValue);
-
-        return $cookieValue;
+        
+        return $this->profileId;
     }
 
     /**
