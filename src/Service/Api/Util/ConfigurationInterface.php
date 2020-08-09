@@ -12,45 +12,34 @@ interface ConfigurationInterface
     /**
      * The API endpoint depends on the testing conditionals and on the data index
      *
-     * @param string $contextId
      * @return string
      */
-    public function getRestApiEndpoint(string $contextId) : string;
+    public function getRestApiEndpoint() : string;
 
     /**
-     * @param string $contextId
      * @return string
      */
-    public function getUsername(string $contextId) : string;
+    public function getUsername() : string;
 
     /**
-     * @param string $contextId
      * @return string
      */
-    public function getApiKey(string $contextId) : string;
+    public function getApiKey() : string;
 
     /**
-     * @param string $contextId
      * @return string
      */
-    public function getApiSecret(string $contextId) : string;
+    public function getApiSecret() : string;
 
     /**
-     * @param string $contextId
      * @return bool
      */
-    public function getIsDev(string $contextId) : bool;
+    public function getIsDev() : bool;
 
     /**
-     * @param string $contextId
      * @return bool
      */
-    public function getIsTest(string $contextId) : bool;
+    public function getIsTest() : bool;
 
-    /**
-     * @param string $contextId
-     * @return mixed
-     */
-    public function setContextId(string $contextId);
-
+    
 }

@@ -94,14 +94,12 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
             );
         }
 
-        $contextId = $this->getContextId();
-        $this->configuration->setContextId($contextId);
         $this->requestDefinition
-            ->setUsername($this->configuration->getUsername($contextId))
-            ->setApiKey($this->configuration->getApiKey($contextId))
-            ->setApiSecret($this->configuration->getApiSecret($contextId))
-            ->setDev($this->configuration->getIsDev($contextId))
-            ->setTest($this->configuration->getIsTest($contextId))
+            ->setUsername($this->configuration->getUsername())
+            ->setApiKey($this->configuration->getApiKey())
+            ->setApiSecret($this->configuration->getApiSecret())
+            ->setDev($this->configuration->getIsDev())
+            ->setTest($this->configuration->getIsTest())
             ->setSessionId($this->getSessionId($request))
             ->setProfileId($this->getProfileId($request))
             ->setCustomerId($this->getCustomerId($request))
@@ -119,11 +117,6 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
      * @return string
      */
     abstract public function getCustomerId(RequestInterface $request) : string;
-
-    /**
-     * @return string
-     */
-    abstract public function getContextId() : string;
 
     /**
      * @return string
@@ -202,9 +195,7 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
             $this->parameterFactory->get(ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_HEADER)
                 ->add("User-Referer", $request->getUserReferer()),
             $this->parameterFactory->get(ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_HEADER)
-                ->add("User-Url", $request->getUserUrl()),
-            $this->parameterFactory->get(ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_HEADER)
-                ->add("contextId", $this->getContextId())
+                ->add("User-Url", $request->getUserUrl())
         );
 
         $params = $request->getParams();

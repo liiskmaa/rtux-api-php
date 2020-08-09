@@ -78,7 +78,7 @@ abstract class ApiLoaderAbstract implements ApiLoaderInterface
         $this->_beforeApiCallService();
         $this->apiCallService->call(
             $this->getApiContext()->get($this->getRequest()),
-            $this->configuration->getRestApiEndpoint($this->getContextId())
+            $this->configuration->getRestApiEndpoint()
         );
 
         $this->_afterApiCallService();
@@ -118,11 +118,6 @@ abstract class ApiLoaderAbstract implements ApiLoaderInterface
      * Prepare the context
      */
     abstract protected function _beforeApiCallService() : void;
-
-    /**
-     * @return string
-     */
-    abstract public function getContextId() : string;
 
     /**
      * @return string
