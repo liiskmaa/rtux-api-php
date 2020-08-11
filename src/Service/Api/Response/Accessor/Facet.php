@@ -59,7 +59,7 @@ class Facet extends Accessor
      * @var string
      * alphabetical | counter | custom | 2 (store system order)
      */
-    protected $valueorderEnums;
+    protected $valueorderEnums = null;
 
     /**
      * @var bool
@@ -75,17 +75,17 @@ class Facet extends Accessor
      * | multiselect-dropdown | search | stars | colorpicker | datepicker | sizepicker | checkbox | genderpicker
      * | thumbs | textarea | textfield
      */
-    protected $visualisation;
+    protected $visualisation = null;
 
     /**
      * @var string (hidden |  expanded  | collapsed)
      */
-    protected $display;
+    protected $display = null;
 
     /**
      * @var string ( top | inlist | only )
      */
-    protected $displaySelectedValues;
+    protected $displaySelectedValues = null;
 
     /**
      * Display number of products matching each facet value or not
@@ -133,10 +133,30 @@ class Facet extends Accessor
     /**
      * If configured, facet position (left, top, bottom, right)
      * Otherwise - not part of response
-     * 
+     *
      * @var string | null
      */
     protected $position = null;
+
+    /**
+     * @var string | null
+     */
+    protected $requestField = null;
+
+    /**
+     * @var bool
+     */
+    protected $allowMultiselect = false;
+
+    /**
+     * @var string
+     */
+    protected $rangeFromField;
+
+    /**
+     * @var string
+     */
+    protected $rangeToField;
 
     /**
      * @return string
@@ -189,9 +209,18 @@ class Facet extends Accessor
     public function setValues(array $values): Facet
     {
         $this->values = new \ArrayIterator();
-        foreach($values as $value)
+        foreach($values as $index => $value)
         {
-            $this->values->append($this->toObject($value,  $this->getAccessorHandler()->getAccessor("facetValue")));
+            /** @var FacetValue $facetValueEntity */
+            $facetValueEntity = $this->toObject($value,  $this->getAccessorHandler()->getAccessor("facetValue"));
+            if($this->getEnumDisplayMaxSize() || $this->getEnumDisplaySize())
+            {
+                if($index > $this->getEnumDisplaySize() || $index > $this->getEnumDisplayMaxSize())
+                {
+                    $facetValueEntity->setShow(false);
+                }
+            }
+            $this->values->append($facetValueEntity);
         }
 
         return $this;
@@ -290,7 +319,7 @@ class Facet extends Accessor
     /**
      * @return string
      */
-    public function getValueorderEnums(): string
+    public function getValueorderEnums(): ?string
     {
         return $this->valueorderEnums;
     }
@@ -326,7 +355,7 @@ class Facet extends Accessor
     /**
      * @return string
      */
-    public function getVisualisation(): string
+    public function getVisualisation(): ?string
     {
         return $this->visualisation;
     }
@@ -344,7 +373,7 @@ class Facet extends Accessor
     /**
      * @return string
      */
-    public function getDisplay(): string
+    public function getDisplay(): ?string
     {
         return $this->display;
     }
@@ -362,7 +391,7 @@ class Facet extends Accessor
     /**
      * @return string
      */
-    public function getDisplaySelectedValues(): string
+    public function getDisplaySelectedValues(): ?string
     {
         return $this->displaySelectedValues;
     }
@@ -504,8 +533,98 @@ class Facet extends Accessor
     }
 
     /**
+     * Get request variable name which is used for apply filter
+     * For ex: "products_" can be removed, fields renamed, etc
+     *
+     * @return string
+     */
+    public function getRequestField() : string
+    {
+        if(is_null($this->requestField))
+        {
+            //$this->requestField = substr($this->getField(), strlen(AccessorFacetModelInterface::BOXALINO_STORE_FACET_PREFIX), strlen($this->getField()));
+            $this->requestField = $this->getField();
+        }
+
+        return $this->requestField ;
+    }
+
+    /**
+     * Set the name of the facet as is to appear in the URL
+     *
+     * @param string $field
+     */
+    public function setRequestField(string $field) : Facet
+    {
+        $this->requestField = $field;
+        return $this;
+    }
+
+    /**
+     * Flag if the facet is configured to allow multiple selected values
+     *
+     * @return bool
+     */
+    public function allowMultiselect() : bool
+    {
+        return $this->allowMultiselect;
+    }
+
+    /**
+     * @param string $allow
+     * @return $this
+     */
+    public function setAllowMultiselect(string $allow) : Facet
+    {
+        $this->allowMultiselect = $allow == 'true';
+        return $this;
+    }
+
+    /**
+     * In case of range facets, range-from field can be configured
+     * (further used for facetValue remove/select URLs)
+     *
+     * @return string | null
+     */
+    public function getRangeFromField(): ?string
+    {
+        return $this->rangeFromField;
+    }
+
+    /**
+     * @param string | null $rangeFromField
+     * @return Facet
+     */
+    public function setRangeFromField(?string $rangeFromField): Facet
+    {
+        $this->rangeFromField = $rangeFromField;
+        return $this;
+    }
+
+    /**
+     * In case of range facets, range-to field can be configured
+     * (further used for facetValue remove/select URLs)
+     *
+     * @return string | null
+     */
+    public function getRangeToField(): ?string
+    {
+        return $this->rangeToField;
+    }
+
+    /**
+     * @param string | null $rangeToField
+     * @return Facet
+     */
+    public function setRangeToField(?string $rangeToField): Facet
+    {
+        $this->rangeToField = $rangeToField;
+        return $this;
+    }
+
+    /**
      * @return array
-    */
+     */
     public function getSelectedValues() : array
     {
         if(is_null($this->selectedValues))

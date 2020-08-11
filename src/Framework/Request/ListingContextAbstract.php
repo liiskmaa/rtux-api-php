@@ -51,7 +51,7 @@ abstract class ListingContextAbstract
                 {
                     continue;
                 }
-                $values = is_array($values) ? $values : explode("|", $values);
+                $values = is_array($values) ? $values : explode($this->getFilterValuesDelimiter(), $values);
                 $values = array_map("html_entity_decode", $values);
                 $this->getApiRequest()->addFacets(
                     $this->parameterFactory->get(ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_FACET)
@@ -93,5 +93,12 @@ abstract class ListingContextAbstract
      * @return array
      */
     abstract public function getRangeProperties() : array;
+
+    /**
+     * Delimiter for the filter values in the URL
+     *
+     * @return string
+     */
+    abstract public function getFilterValuesDelimiter() : string;
 
 }
