@@ -76,6 +76,11 @@ class ApiCallService implements ApiCallServiceInterface
                 $apiRequest->jsonSerialize()
             );
 
+            if($apiRequest->isTest())
+            {
+                $this->logger->info("Boxalino API request: " . $apiRequest->jsonSerialize());
+            }
+
             /** @var  \GuzzleHttp\Psr7\Response $response */
             $response = $this->restClient->send($request);
             $this->setApiResponse($this->responseDefinition->setResponse($response));
