@@ -88,7 +88,7 @@ class FacetValue extends Accessor
      */
     public function getLabel(): string
     {
-        return $this->label;
+        return $this->label ?? $this->getValue();
     }
 
     /**

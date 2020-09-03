@@ -86,12 +86,7 @@ class ResponseDefinition implements ResponseDefinitionInterface
         $element = strtolower($element);
         if ($prefix == 'get')
         {
-            if (in_array($element, $this->segments))
-            {
-                return $this->getContentByType($element);
-            }
-
-            throw new UndefinedMethodError("BoxalinoResponseAPI: the requested method $method is not supported by the Boxalino API ResponseServer");
+            return $this->getContentByType($element);
         }
 
         return null;
@@ -248,10 +243,13 @@ class ResponseDefinition implements ResponseDefinitionInterface
     {
         $content = new \ArrayIterator();
         try{
-            $blocks = $this->get()->$type;
-            foreach($blocks as $block)
+            if(property_exists($this->get(), $type))
             {
-                $content->append($this->getBlockObject($block));
+                $blocks = $this->get()->$type;
+                foreach($blocks as $block)
+                {
+                    $content->append($this->getBlockObject($block));
+                }
             }
         } catch (\ErrorException $error)
         {
