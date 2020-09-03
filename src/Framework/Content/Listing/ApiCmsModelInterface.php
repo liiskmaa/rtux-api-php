@@ -31,49 +31,6 @@ interface ApiCmsModelInterface extends ApiResponseViewInterface
      * @return ApiCmsModelInterface
      */
     public function setNavigationId(?string $navigationId): ApiCmsModelInterface;
-
-    /**
-     * @return \ArrayIterator
-     */
-    public function getLeft(): \ArrayIterator;
-
-    /**
-     * @param \ArrayIterator $left
-     * @return ApiCmsModelInterface
-     */
-    public function setLeft(\ArrayIterator $left): ApiCmsModelInterface;
-
-    /**
-     * @return \ArrayIterator
-     */
-    public function getRight(): \ArrayIterator;
-
-    /**
-     * @param \ArrayIterator $right
-     * @return ApiCmsModelInterface
-     */
-    public function setRight(\ArrayIterator $right): ApiCmsModelInterface;
-
-    /**
-     * @return \ArrayIterator
-     */
-    public function getBottom(): \ArrayIterator;
-
-    /**
-     * @param \ArrayIterator $bottom
-     * @return ApiCmsModelInterface
-     */
-    public function setBottom(\ArrayIterator $bottom): ApiCmsModelInterface;
-
-    /**
-     * @return \ArrayIterator
-     */
-    public function getTop(): \ArrayIterator;
-
-    /**
-     * @param \ArrayIterator $top
-     * @return ApiCmsModelInterface
-     */
-    public function setTop(\ArrayIterator $top): ApiCmsModelInterface;
-
+    
+    
 }

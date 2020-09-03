@@ -1,7 +1,6 @@
 <?php declare(strict_types=1);
 namespace Boxalino\RealTimeUserExperienceApi\Framework\Content\Page;
 
-use Boxalino\RealTimeUserExperienceApi\Framework\Content\CreateFromTrait;
 use Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiCmsModelInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\Block;
@@ -16,8 +15,6 @@ use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\UndefinedPropertyErr
  */
 abstract class ApiCmsLoaderAbstract extends ApiLoaderAbstract
 {
-    use CreateFromTrait;
-
     /**
      * @var array
      */

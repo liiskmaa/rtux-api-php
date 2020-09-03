@@ -27,7 +27,11 @@ abstract class ApiPageLoaderAbstract extends ApiLoaderAbstract
         /** @var ApiResponsePageInterface $page */
         $page = $this->getApiResponsePage();
         $page->setFallback($this->apiCallService->isFallback());
-        $page->setBlocks($this->apiCallService->getApiResponse()->getBlocks());
+        $page->setBlocks($this->apiCallService->getApiResponse()->getBlocks())
+            ->setLeft($this->apiCallService->getApiResponse()->getLeft())
+            ->setTop($this->apiCallService->getApiResponse()->getTop())
+            ->setBottom($this->apiCallService->getApiResponse()->getBottom())
+            ->setRight($this->apiCallService->getApiResponse()->getRight());
         $page->setRequestId($this->apiCallService->getApiResponse()->getRequestId());
         $page->setGroupBy($this->getGroupBy());
         $page->setVariantUuid($this->getVariantUuid());

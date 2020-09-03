@@ -1,7 +1,6 @@
 <?php declare(strict_types=1);
 namespace Boxalino\RealTimeUserExperienceApi\Service\Api\Response;
 
-use Boxalino\RealTimeUserExperienceApi\Framework\Content\Page\ApiResponsePageInterface;
 
 interface ApiResponseViewInterface
 {
@@ -49,5 +48,50 @@ interface ApiResponseViewInterface
      * @return $this
      */
     public function setVariantUuid(string $variantUuid) : ApiResponseViewInterface;
- 
+
+    /**
+     * @return \ArrayIterator
+     */
+    public function getLeft(): \ArrayIterator;
+
+    /**
+     * @param \ArrayIterator $left
+     * @return ApiResponseViewInterface
+     */
+    public function setLeft(\ArrayIterator $left): ApiResponseViewInterface;
+
+    /**
+     * @return \ArrayIterator
+     */
+    public function getRight(): \ArrayIterator;
+
+    /**
+     * @param \ArrayIterator $right
+     * @return ApiResponseViewInterface
+     */
+    public function setRight(\ArrayIterator $right): ApiResponseViewInterface;
+
+    /**
+     * @return \ArrayIterator
+     */
+    public function getBottom(): \ArrayIterator;
+
+    /**
+     * @param \ArrayIterator $bottom
+     * @return ApiResponseViewInterface
+     */
+    public function setBottom(\ArrayIterator $bottom): ApiResponseViewInterface;
+
+    /**
+     * @return \ArrayIterator
+     */
+    public function getTop(): \ArrayIterator;
+
+    /**
+     * @param \ArrayIterator $top
+     * @return ApiResponseViewInterface
+     */
+    public function setTop(\ArrayIterator $top): ApiResponseViewInterface;
+
+
 }

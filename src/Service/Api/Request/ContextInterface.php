@@ -44,4 +44,15 @@ interface ContextInterface
      * @return string | bool | void
      */
     public function getProperty(string $property);
+
+    /**
+     * Adding request parameters to the request
+     *
+     * @param string $key
+     * @param $value
+     * @param string $type
+     * @return mixed
+     */
+    public function addRequestParameter(string $key, $value, $type = ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_HEADER);
+    
 }

@@ -279,5 +279,23 @@ abstract class ContextAbstract
     {
         return $this->properties->offsetExists($property);
     }
+    
+    /**
+     * @param string $key
+     * @param $value
+     * @param string $type
+     */
+    public function addRequestParameter(string $key, $value, $type=ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_HEADER)
+    {
+        if(in_array($type, [ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_USER, ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_HEADER]))
+        {
+            $this->getApiRequest()->addHeaderParameters(
+                $this->parameterFactory->get($type)
+                    ->add($key, $value)
+            );
+        }
+
+        return $this;
+    }
 
 }
