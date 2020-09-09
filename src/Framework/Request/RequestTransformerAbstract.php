@@ -294,6 +294,11 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
      */
     protected function getLimit(RequestInterface $request): int
     {
+        if($this->limit)
+        {
+            return $this->limit;
+        }
+
         $limit = (int) $request->getParam($this->getPageLimitParameter(), $this->getDefaultLimitValue());
 
         if ($request->isMethod(RequestInterface::METHOD_POST)) {
@@ -317,4 +322,17 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
         return $page <= 0 ? 1 : $page;
     }
 
+    /**
+     * @param int $limit
+     * @return $this
+     */
+    public function setLimit(int $limit) : self
+    {
+        if($limit > 0)
+        {
+            $this->limit = $limit;
+        }
+
+        return $this;
+    }
 }

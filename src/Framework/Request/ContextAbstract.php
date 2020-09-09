@@ -87,6 +87,7 @@ abstract class ContextAbstract
     {
         $this->validateRequest($request);
         $this->requestTransformer->setRequestDefinition($this->getApiRequest())
+            ->setLimit($this->getHitCount())
             ->transform($request);
 
         $this->setRequestDefinition($this->requestTransformer->getRequestDefinition());
