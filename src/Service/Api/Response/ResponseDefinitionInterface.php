@@ -9,6 +9,14 @@ use Psr\Log\LoggerInterface;
 interface ResponseDefinitionInterface
 {
 
+    const BOXALINO_PARAMETER_BX_VARIANT_UUID="_bx_variant_uuid";
+    const BOXALINO_PARAMETER_CORRECTED_SEARCH_QUERY="correctedSearchQuery";
+    const BOXALINO_PARAMETER_MAIN_HIT_COUNT="mainHitCount";
+    const BOXALINO_PARAMETER_REDIRECT_URL="redirect_url";
+    const BOXALINO_PARAMETER_HAS_SEARCH_SUBPHRASES="hasSearchSubPhrases";
+    const BOXALINO_PARAMETER_BX_REQUEST_ID="_bx_request_id";
+    const BOXALINO_PARAMETER_BX_GROUP_BY="_bx_group_by";
+
     /**
      * @return int
      */

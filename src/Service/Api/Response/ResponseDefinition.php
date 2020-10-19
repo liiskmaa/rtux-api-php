@@ -99,8 +99,12 @@ class ResponseDefinition implements ResponseDefinitionInterface
     {
         try{
             try {
-                return $this->get()->system->mainHitCount;
-            } catch(\Exception $exception)
+                if(property_exists($this->get()->system, "mainHitCount"))
+                {
+                    return $this->get()->system->mainHitCount;
+                }
+                throw new UndefinedPropertyError("BoxalinoAPI Logical Branch switch.");
+            } catch(UndefinedPropertyError $exception)
             {
                 foreach($this->getBlocks() as $block)
                 {
@@ -118,13 +122,15 @@ class ResponseDefinition implements ResponseDefinitionInterface
                         continue;
                     }
                 }
-
-                return 0;
             }
+
+            return 0;
         } catch(\Exception $exception)
         {
             return 0;
         }
+
+        return 0;
     }
 
     /**
@@ -134,7 +140,12 @@ class ResponseDefinition implements ResponseDefinitionInterface
     {
         try{
             $index = 0;
-            return $this->get()->advanced->$index->redirect_url;
+            if(property_exists($this->get()->advanced->$index, ResponseDefinitionInterface::BOXALINO_PARAMETER_REDIRECT_URL))
+            {
+                return $this->get()->advanced->$index->redirect_url;
+            }
+
+            return null;
         } catch(\Exception $exception)
         {
             return null;
@@ -147,7 +158,12 @@ class ResponseDefinition implements ResponseDefinitionInterface
     public function isCorrectedSearchQuery() : bool
     {
         try{
-            return (bool) $this->get()->system->correctedSearchQuery;
+            if(property_exists($this->get()->system, ResponseDefinitionInterface::BOXALINO_PARAMETER_CORRECTED_SEARCH_QUERY))
+            {
+                return (bool) $this->get()->system->correctedSearchQuery;
+            }
+
+            return false;
         } catch(\Exception $exception)
         {
             return false;
@@ -160,7 +176,12 @@ class ResponseDefinition implements ResponseDefinitionInterface
     public function getCorrectedSearchQuery() : ?string
     {
         try{
-            return $this->get()->system->correctedSearchQuery;
+            if(property_exists($this->get()->system, ResponseDefinitionInterface::BOXALINO_PARAMETER_CORRECTED_SEARCH_QUERY))
+            {
+                return $this->get()->system->correctedSearchQuery;
+            }
+
+            return null;
         } catch(\Exception $exception)
         {
             return null;
@@ -173,7 +194,12 @@ class ResponseDefinition implements ResponseDefinitionInterface
     public function hasSearchSubPhrases() : bool
     {
         try{
-            return (bool) $this->get()->advanced->system->hasSearchSubPhrases;
+            if(property_exists($this->get()->system, ResponseDefinitionInterface::BOXALINO_PARAMETER_HAS_SEARCH_SUBPHRASES))
+            {
+                return (bool) $this->get()->system->hasSearchSubPhrases;
+            }
+
+            return false;
         } catch(\Exception $exception)
         {
             return false;
@@ -187,7 +213,12 @@ class ResponseDefinition implements ResponseDefinitionInterface
     {
         try{
             $index = 0;
-            return $this->get()->advanced->$index->_bx_request_id;
+            if(property_exists($this->get()->advanced->$index, ResponseDefinitionInterface::BOXALINO_PARAMETER_BX_REQUEST_ID))
+            {
+                return $this->get()->advanced->$index->_bx_request_id;
+            }
+
+            return "N/A";
         } catch(\Exception $exception)
         {
             return "N/A";
@@ -201,7 +232,12 @@ class ResponseDefinition implements ResponseDefinitionInterface
     {
         try{
             $index = 0;
-            return $this->get()->advanced->$index->_bx_group_by;
+            if(property_exists($this->get()->advanced->$index, ResponseDefinitionInterface::BOXALINO_PARAMETER_BX_GROUP_BY))
+            {
+                return $this->get()->advanced->$index->_bx_group_by;
+            }
+
+            return "N/A";
         } catch(\Exception $exception)
         {
             return "N/A";
@@ -215,7 +251,12 @@ class ResponseDefinition implements ResponseDefinitionInterface
     {
         try{
             $index = 0;
-            return $this->get()->advanced->$index->_bx_variant_uuid;
+            if(property_exists($this->get()->advanced->$index, ResponseDefinitionInterface::BOXALINO_PARAMETER_BX_VARIANT_UUID))
+            {
+                return $this->get()->advanced->$index->_bx_request_id;
+            }
+
+            return "N/A";
         } catch(\Exception $exception)
         {
             return "N/A";
