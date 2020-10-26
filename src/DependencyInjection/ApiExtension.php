@@ -14,7 +14,7 @@ use Symfony\Component\Config\FileLocator;
  */
 class ApiExtension extends Extension
 {
-    private const ALIAS = 'boxalino_realtimeuserexperienceapi';
+    const ALIAS = 'boxalino_realtimeuserexperienceapi';
 
     public function getAlias() : string
     {

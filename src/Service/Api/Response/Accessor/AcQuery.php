@@ -37,7 +37,7 @@ class AcQuery extends Accessor
     /**
      * @return string|null
      */
-    public function getHighlighted() : ?string
+    public function getHighlighted()
     {
         return $this->highlighted;
     }
@@ -56,7 +56,7 @@ class AcQuery extends Accessor
      * @param null|string $highlighted
      * @return $this
      */
-    public function setHighlighted(?string $highlighted)
+    public function setHighlighted($highlighted)
     {
         $this->highlighted = $highlighted;
         return $this;

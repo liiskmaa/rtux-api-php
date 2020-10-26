@@ -14,7 +14,7 @@ interface SearchContextInterface extends ContextInterface
     /**
      * @return int|null
      */
-    public function getSubPhrasesCount(): ?int;
+    public function getSubPhrasesCount(): int;
 
     /**
      * @param int $subPhrasesCount
@@ -25,7 +25,7 @@ interface SearchContextInterface extends ContextInterface
     /**
      * @return int|null
      */
-    public function getSubPhrasesProductsCount(): ?int;
+    public function getSubPhrasesProductsCount(): int;
 
     /**
      * @param int $subPhrasesProductsCount

@@ -77,7 +77,7 @@ class AccessorHandler implements AccessorHandlerInterface
      * @param string $type
      * @return mixed
      */
-    public function getAccessor(string $type) : ?AccessorInterface
+    public function getAccessor(string $type) : AccessorInterface
     {
         if($this->accessorDefinitions->offsetExists($type))
         {
@@ -102,7 +102,7 @@ class AccessorHandler implements AccessorHandlerInterface
      * @param string $type
      * @return string
      */
-    public function getAccessorSetter(string $type) : ?string
+    public function getAccessorSetter(string $type) : string
     {
         if($this->accessorSetter->offsetExists($type))
         {
@@ -138,7 +138,7 @@ class AccessorHandler implements AccessorHandlerInterface
      * @param string $type
      * @return string|null
      */
-    public function getHitIdFieldName(string $type) : ?string
+    public function getHitIdFieldName(string $type) : string
     {
         if($this->hitIdFieldName->offsetExists($type))
         {
@@ -154,7 +154,7 @@ class AccessorHandler implements AccessorHandlerInterface
      * @internal
      * @required
      */
-    public function setContainer(ContainerInterface $container): ?ContainerInterface
+    public function setContainer(ContainerInterface $container): ContainerInterface
     {
         $previous = $this->container;
         $this->container = $container;

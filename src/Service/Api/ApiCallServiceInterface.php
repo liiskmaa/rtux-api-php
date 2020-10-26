@@ -20,7 +20,7 @@ interface ApiCallServiceInterface
      * @return ResponseDefinitionInterface|null
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function call(RequestDefinitionInterface $apiRequest, string $restApiEndpoint) : ?ResponseDefinitionInterface;
+    public function call(RequestDefinitionInterface $apiRequest, string $restApiEndpoint);
 
     /**
      * @return bool
@@ -30,7 +30,7 @@ interface ApiCallServiceInterface
     /**
      * @return string|null
      */
-    public function getFallbackMessage() : ?string;
+    public function getFallbackMessage();
 
     /**
      * @return ResponseDefinitionInterface

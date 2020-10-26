@@ -37,13 +37,13 @@ interface ApiResponsePageInterface extends ApiResponseViewInterface
     /**
      * @return string|null
      */
-    public function getRedirectUrl(): ?string;
+    public function getRedirectUrl();
 
     /**
      * @param string|null $redirectUrl
      * @return $this
      */
-    public function setRedirectUrl(?string $redirectUrl);
+    public function setRedirectUrl($redirectUrl = null);
 
     /**
      * @return int

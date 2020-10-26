@@ -22,6 +22,6 @@ interface ParameterFactoryInterface
      * @param string $type
      * @return ParameterInterface | null
      */
-    public function get(string $type) : ?ParameterInterface;
+    public function get(string $type) : ParameterInterface;
 
 }

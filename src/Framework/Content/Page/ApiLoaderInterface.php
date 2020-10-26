@@ -44,7 +44,7 @@ interface ApiLoaderInterface
     /**
      * @return ApiResponseViewInterface | null
      */
-    public function getApiResponsePage() : ?ApiResponseViewInterface;
+    public function getApiResponsePage() : ApiResponseViewInterface;
 
     /**
      * @param ApiResponseViewInterface $page

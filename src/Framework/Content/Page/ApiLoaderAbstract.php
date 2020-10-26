@@ -106,7 +106,7 @@ abstract class ApiLoaderAbstract implements ApiLoaderInterface
     /**
      * @return void
      */
-    protected function _afterApiCallService() : void
+    protected function _afterApiCallService()
     {
         if($this->apiCallService->isFallback())
         {
@@ -117,7 +117,7 @@ abstract class ApiLoaderAbstract implements ApiLoaderInterface
     /**
      * Prepare the context
      */
-    abstract protected function _beforeApiCallService() : void;
+    abstract protected function _beforeApiCallService();
 
     /**
      * @return string

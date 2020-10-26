@@ -192,7 +192,7 @@ abstract class ApiSortingModelAbstract
      * @param null | AccessorInterface $context
      * @return AccessorModelInterface
      */
-    public function addAccessorContext(?AccessorInterface $context = null): AccessorModelInterface
+    public function addAccessorContext(AccessorInterface $context = null): AccessorModelInterface
     {
         $this->setActiveSorting($context->getSorting());
         return $this;

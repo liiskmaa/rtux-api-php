@@ -7,7 +7,6 @@ use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorMod
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\Facet;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\ResponseHydratorTrait;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Util\AccessorHandlerInterface;
-use Psr\Log\LoggerInterface;
 
 /**
  * Class ApiFacetModel
@@ -159,7 +158,7 @@ abstract class ApiFacetModelAbstract implements AccessorFacetModelInterface
      * @param null | AccessorInterface $context
      * @return AccessorModelInterface
      */
-    public function addAccessorContext(?AccessorInterface $context = null): AccessorModelInterface
+    public function addAccessorContext(AccessorInterface $context = null): AccessorModelInterface
     {
         $this->setAccessorHandler($context->getAccessorHandler());
         $this->setFacets($context->getFacetsList());

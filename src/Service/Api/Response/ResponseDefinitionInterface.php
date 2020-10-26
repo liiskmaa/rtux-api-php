@@ -25,7 +25,7 @@ interface ResponseDefinitionInterface
     /**
      * @return string|null
      */
-    public function getRedirectUrl() : ?string;
+    public function getRedirectUrl();
 
     /**
      * @return bool
@@ -35,7 +35,7 @@ interface ResponseDefinitionInterface
     /**
      * @return string|null
      */
-    public function getCorrectedSearchQuery() : ?string;
+    public function getCorrectedSearchQuery();
 
     /**
      * @return bool

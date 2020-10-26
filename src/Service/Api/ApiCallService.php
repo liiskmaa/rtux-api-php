@@ -43,7 +43,7 @@ class ApiCallService implements ApiCallServiceInterface
     /**
      * @var null | string
      */
-    protected $fallbackMessage = null;
+    protected $fallbackMessage = "There has been an error in the Boxalino API request.";
 
     /**
      * ApiCallService constructor.
@@ -62,7 +62,7 @@ class ApiCallService implements ApiCallServiceInterface
      * @return ResponseDefinition|null
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function call(RequestDefinitionInterface $apiRequest, string $restApiEndpoint) : ?ResponseDefinitionInterface
+    public function call(RequestDefinitionInterface $apiRequest, string $restApiEndpoint) : ResponseDefinitionInterface
     {
         try {
             $this->setFallback(false);
@@ -84,7 +84,6 @@ class ApiCallService implements ApiCallServiceInterface
             $response = $this->restClient->send($request);
             $this->setApiResponse($this->responseDefinition->setResponse($response));
 
-            return $this->getApiResponse();
         } catch (\Exception $exception)
         {
             $this->setFallback(true);
@@ -94,7 +93,7 @@ class ApiCallService implements ApiCallServiceInterface
             );
         }
 
-        return null;
+        return $this->getApiResponse();
     }
 
     /**
@@ -128,7 +127,7 @@ class ApiCallService implements ApiCallServiceInterface
     /**
      * @return string|null
      */
-    public function getFallbackMessage() : ?string
+    public function getFallbackMessage() : string
     {
         return $this->fallbackMessage;
     }

@@ -34,7 +34,7 @@ class ParameterFactory implements ParameterFactoryInterface
      * @param string $type
      * @return mixed
      */
-    public function get(string $type) : ? ParameterInterface
+    public function get(string $type) : ParameterInterface
     {
         $serviceId = self::BOXALINO_API_REQUEST_PARAMETER_SERVICE_PREFIX.strtolower($type);
         if($this->container->has($serviceId))
@@ -64,7 +64,7 @@ class ParameterFactory implements ParameterFactoryInterface
      * @internal
      * @required
      */
-    public function setContainer(ContainerInterface $container): ?ContainerInterface
+    public function setContainer(ContainerInterface $container): ContainerInterface
     {
         $this->container = $container;
         return $this->container;

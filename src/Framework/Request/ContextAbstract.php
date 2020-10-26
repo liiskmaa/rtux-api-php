@@ -1,13 +1,11 @@
 <?php declare(strict_types=1);
 namespace Boxalino\RealTimeUserExperienceApi\Framework\Request;
 
-use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ContextInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactoryInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestDefinitionInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestTransformerInterface;
-use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\MissingDependencyException;
 
 /**
  * Class ContextAbstract
@@ -102,7 +100,7 @@ abstract class ContextAbstract
         return $this->getApiRequest();
     }
 
-    abstract public function validateRequest(RequestInterface $request) : void;
+    abstract public function validateRequest(RequestInterface $request);
     abstract function getContextNavigationId(RequestInterface $request) : array;
     abstract function getVisibilityFilter(RequestInterface $request) : ParameterInterface;
     abstract function getCategoryFilter(RequestInterface $request) : ParameterInterface;
@@ -117,7 +115,7 @@ abstract class ContextAbstract
      * @param RequestInterface $request
      * @return void
      */
-    protected function addContextParameters(RequestInterface $request) : void
+    protected function addContextParameters(RequestInterface $request)
     {
         if($this->getHitCount())
         {
@@ -131,7 +129,7 @@ abstract class ContextAbstract
      *
      * @param RequestInterface $request
      */
-    protected function addFilters(RequestInterface $request) : void
+    protected function addFilters(RequestInterface $request)
     {
         $this->getApiRequest()
             ->addFilters(

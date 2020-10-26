@@ -2,13 +2,10 @@
 namespace Boxalino\RealTimeUserExperienceApi\Service\Api\Response;
 
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorInterface;
-use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\Block;
-use Boxalino\RealTimeUserExperienceApi\Service\Api\Util\AccessorHandler;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Util\AccessorHandlerInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\UndefinedPropertyError;
 use GuzzleHttp\Psr7\Response;
 use Psr\Log\LoggerInterface;
-use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\UndefinedMethodError;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
 /**
@@ -78,7 +75,7 @@ class ResponseDefinition implements ResponseDefinitionInterface
      * @param array $params
      * @return array
      */
-    public function __call(string $method, array $params = []) : ?\ArrayIterator
+    public function __call(string $method, array $params = [])
     {
         preg_match('/^(get)(.*?)$/i', $method, $matches);
         $prefix = $matches[1] ?? '';
@@ -136,7 +133,7 @@ class ResponseDefinition implements ResponseDefinitionInterface
     /**
      * @return string|null
      */
-    public function getRedirectUrl() : ?string
+    public function getRedirectUrl()
     {
         try{
             $index = 0;
@@ -173,7 +170,7 @@ class ResponseDefinition implements ResponseDefinitionInterface
     /**
      * @return string | null
      */
-    public function getCorrectedSearchQuery() : ?string
+    public function getCorrectedSearchQuery()
     {
         try{
             if(property_exists($this->get()->system, ResponseDefinitionInterface::BOXALINO_PARAMETER_CORRECTED_SEARCH_QUERY))
@@ -331,7 +328,7 @@ class ResponseDefinition implements ResponseDefinitionInterface
     /**
      * @return \StdClass|null
      */
-    public function get() : ?\StdClass
+    public function get()
     {
         if(is_null($this->data))
         {

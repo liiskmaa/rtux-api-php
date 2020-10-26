@@ -90,7 +90,7 @@ trait ResponseHydratorTrait
      * @param string $property
      * @return AccessorInterface|null
      */
-    public function findObjectWithProperty($block, string $property) : ?AccessorInterface
+    public function findObjectWithProperty($block, string $property)
     {
         $response = null;
         if($block instanceof Block)

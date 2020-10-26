@@ -14,7 +14,7 @@ interface BlockInterface extends AccessorInterface
     /**
      * @return AccessorModelInterface|null
      */
-    public function getModel() : ?AccessorModelInterface;
+    public function getModel() : AccessorModelInterface;
 
     /**
      * @return string
@@ -24,12 +24,12 @@ interface BlockInterface extends AccessorInterface
     /**
      * @return string | null
      */
-    public function getPosition() : ?string;
+    public function getPosition();
 
     /**
      * @return string|null
      */
-    public function getAccessor() : ?string;
+    public function getAccessor();
 
     /**
      * @return \ArrayIterator
@@ -60,24 +60,24 @@ interface BlockInterface extends AccessorInterface
      * @param array|null $accessor
      * @return $this
      */
-    public function setAccessor($accessor);
+    public function setAccessor($accessor = null);
 
     /**
      * @param null | array $blocks
      * @return $this
      */
-    public function setBlocks(?array $blocks);
+    public function setBlocks($blocks = []);
 
     /**
      * @param null | array $position
      * @return $this
      */
-    public function setPosition(?array $position);
+    public function setPosition($position = null);
 
     /**
      * @param int|null $index
      * @return $this
      */
-    public function setIndex(?int $index);
+    public function setIndex($index = null);
 
 }

@@ -3,7 +3,6 @@ namespace Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing;
 
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorModelInterface;
-use Psr\Log\LoggerInterface;
 
 /**
  * Class ApiEntityCollectionModel
@@ -56,7 +55,7 @@ abstract class ApiEntityCollectionModelAbstract implements AccessorModelInterfac
      * @param null | AccessorInterface $context
      * @return AccessorModelInterface
      */
-    public function addAccessorContext(?AccessorInterface $context = null): AccessorModelInterface
+    public function addAccessorContext(AccessorInterface $context = null): AccessorModelInterface
     {
         $this->setHitIds($context->getBlocks(),
             $context->getAccessorHandler()->getAccessorSetter('bx-hit'),

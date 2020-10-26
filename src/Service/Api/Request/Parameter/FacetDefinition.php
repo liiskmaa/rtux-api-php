@@ -28,7 +28,7 @@ class FacetDefinition extends ParameterDefinition
      * @param string|null $valueKey
      * @return FacetDefinition
      */
-    public function addWithValues(string $field, array $values, bool $urlField = false, ?string $valueKey = null) : self
+    public function addWithValues(string $field, array $values, bool $urlField = false, $valueKey = null) : self
     {
         $this->field = $field;
         $this->urlField = $urlField;

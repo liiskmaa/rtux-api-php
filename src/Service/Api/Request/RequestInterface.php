@@ -10,8 +10,8 @@ namespace Boxalino\RealTimeUserExperienceApi\Service\Api\Request;
 interface RequestInterface
 {
     
-    public const METHOD_POST = "POST";
-    public const METHOD_GET = "GET";
+    const METHOD_POST = "POST";
+    const METHOD_GET = "GET";
 
     /**
      * Returns the framework request

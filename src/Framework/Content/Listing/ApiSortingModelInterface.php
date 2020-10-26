@@ -3,7 +3,6 @@ namespace Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing;
 
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorModelInterface;
-use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\MissingDependencyException;
 
 /**
  * Class ApiSortingModelAbstract
@@ -104,7 +103,7 @@ interface ApiSortingModelInterface extends AccessorModelInterface
      * @param null | AccessorInterface $context
      * @return AccessorModelInterface
      */
-    public function addAccessorContext(?AccessorInterface $context = null): AccessorModelInterface;
+    public function addAccessorContext(AccessorInterface $context = null): AccessorModelInterface;
 
     /**
      * Default sort field for Boxalino API products order (ex: score, position, relevance, etc)

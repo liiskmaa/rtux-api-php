@@ -179,7 +179,7 @@ class Facet extends Accessor
     /**
      * @return string
      */
-    public function getLabel(): ?string
+    public function getLabel()
     {
         return $this->label;
     }
@@ -319,7 +319,7 @@ class Facet extends Accessor
     /**
      * @return string
      */
-    public function getValueorderEnums(): ?string
+    public function getValueorderEnums()
     {
         return $this->valueorderEnums;
     }
@@ -355,7 +355,7 @@ class Facet extends Accessor
     /**
      * @return string
      */
-    public function getVisualisation(): ?string
+    public function getVisualisation()
     {
         return $this->visualisation;
     }
@@ -373,7 +373,7 @@ class Facet extends Accessor
     /**
      * @return string
      */
-    public function getDisplay(): ?string
+    public function getDisplay()
     {
         return $this->display;
     }
@@ -391,7 +391,7 @@ class Facet extends Accessor
     /**
      * @return string
      */
-    public function getDisplaySelectedValues(): ?string
+    public function getDisplaySelectedValues()
     {
         return $this->displaySelectedValues;
     }
@@ -427,7 +427,7 @@ class Facet extends Accessor
     /**
      * @return int|null
      */
-    public function getEnumDisplaySize(): ?int
+    public function getEnumDisplaySize()
     {
         return $this->enumDisplaySize;
     }
@@ -436,7 +436,7 @@ class Facet extends Accessor
      * @param int|null $enumDisplaySize
      * @return Facet
      */
-    public function setEnumDisplaySize(?int $enumDisplaySize): Facet
+    public function setEnumDisplaySize($enumDisplaySize = null): Facet
     {
         $this->enumDisplaySize = $enumDisplaySize;
         return $this;
@@ -445,7 +445,7 @@ class Facet extends Accessor
     /**
      * @return int|null
      */
-    public function getEnumDisplayMaxSize(): ?int
+    public function getEnumDisplayMaxSize()
     {
         return $this->enumDisplayMaxSize;
     }
@@ -454,7 +454,7 @@ class Facet extends Accessor
      * @param int|null $enumDisplayMaxSize
      * @return Facet
      */
-    public function setEnumDisplayMaxSize(?int $enumDisplayMaxSize): Facet
+    public function setEnumDisplayMaxSize($enumDisplayMaxSize = null): Facet
     {
         $this->enumDisplayMaxSize = $enumDisplayMaxSize;
         return $this;
@@ -463,7 +463,7 @@ class Facet extends Accessor
     /**
      * @return float|null
      */
-    public function getMinDisplayCoverage(): ?float
+    public function getMinDisplayCoverage()
     {
         return $this->minDisplayCoverage;
     }
@@ -472,7 +472,7 @@ class Facet extends Accessor
      * @param float|null $minDisplayCoverage
      * @return Facet
      */
-    public function setMinDisplayCoverage(?float $minDisplayCoverage): Facet
+    public function setMinDisplayCoverage($minDisplayCoverage): Facet
     {
         $this->minDisplayCoverage = $minDisplayCoverage;
         return $this;
@@ -517,7 +517,7 @@ class Facet extends Accessor
     /**
      * @return string | null
      */
-    public function getPosition() : ?string
+    public function getPosition()
     {
         return $this->position;
     }
@@ -586,7 +586,7 @@ class Facet extends Accessor
      *
      * @return string | null
      */
-    public function getRangeFromField(): ?string
+    public function getRangeFromField()
     {
         return $this->rangeFromField;
     }
@@ -595,7 +595,7 @@ class Facet extends Accessor
      * @param string | null $rangeFromField
      * @return Facet
      */
-    public function setRangeFromField(?string $rangeFromField): Facet
+    public function setRangeFromField($rangeFromField = null): Facet
     {
         $this->rangeFromField = $rangeFromField;
         return $this;
@@ -607,7 +607,7 @@ class Facet extends Accessor
      *
      * @return string | null
      */
-    public function getRangeToField(): ?string
+    public function getRangeToField()
     {
         return $this->rangeToField;
     }
@@ -616,7 +616,7 @@ class Facet extends Accessor
      * @param string | null $rangeToField
      * @return Facet
      */
-    public function setRangeToField(?string $rangeToField): Facet
+    public function setRangeToField($rangeToField = null): Facet
     {
         $this->rangeToField = $rangeToField;
         return $this;

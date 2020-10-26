@@ -54,7 +54,7 @@ class Block extends Accessor
      *
      * @return string|null
      */
-    public function getModel() :?AccessorModelInterface
+    public function getModel() :AccessorModelInterface
     {
         if(is_string($this->model))
         {
@@ -75,7 +75,7 @@ class Block extends Accessor
     /**
      * @return string|null
      */
-    public function getPosition() : ?string
+    public function getPosition()
     {
         return $this->position;
     }
@@ -83,7 +83,7 @@ class Block extends Accessor
     /**
      * @return string|null
      */
-    public function getAccessor() : ?string
+    public function getAccessor()
     {
         return $this->accessor;
     }
@@ -131,7 +131,7 @@ class Block extends Accessor
      * @param array|null $accessor
      * @return $this
      */
-    public function setAccessor($accessor)
+    public function setAccessor($accessor = null)
     {
         $this->accessor = $accessor;
         if(is_array($accessor))
@@ -146,7 +146,7 @@ class Block extends Accessor
      * @param array | null
      * @return $this
      */
-    public function setBlocks(?array $blocks)
+    public function setBlocks($blocks = [])
     {
         $this->blocks = new \ArrayIterator();
         foreach($blocks as $block)
@@ -158,10 +158,10 @@ class Block extends Accessor
     }
 
     /**
-     * @param array $position
+     * @param array | null $position
      * @return $this
      */
-    public function setPosition(?array $position)
+    public function setPosition($position = null)
     {
         $this->position = $position[0] ?? null;
         return $this;
@@ -192,7 +192,7 @@ class Block extends Accessor
      * @param int|null $index
      * @return $this
      */
-    public function setIndex(?int $index)
+    public function setIndex($index = null)
     {
         $this->index = $index ?? 0;
         return $this;

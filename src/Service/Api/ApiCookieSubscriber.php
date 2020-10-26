@@ -14,13 +14,13 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class ApiCookieSubscriber implements EventSubscriberInterface
 {
-    public const BOXALINO_API_COOKIE_SESSION = "cems";
-    public const BOXALINO_API_COOKIE_VISITOR = "cemv";
+    const BOXALINO_API_COOKIE_SESSION = "cems";
+    const BOXALINO_API_COOKIE_VISITOR = "cemv";
 
-    public const BOXALINO_API_INIT_SESSION = "cems-init";
-    public const BOXALINO_API_INIT_VISITOR = "cemv-init";
+    const BOXALINO_API_INIT_SESSION = "cems-init";
+    const BOXALINO_API_INIT_VISITOR = "cemv-init";
 
-    public const VISITOR_COOKIE_TIME = 31536000;
+    const VISITOR_COOKIE_TIME = 31536000;
 
     public static function getSubscribedEvents()
     {
@@ -34,7 +34,7 @@ class ApiCookieSubscriber implements EventSubscriberInterface
     /**
      * @param ResponseEvent $event
      */
-    public function setApiCookie(ResponseEvent $event): void
+    public function setApiCookie(ResponseEvent $event)
     {
         $response = $event->getResponse();
         $request = $event->getRequest();

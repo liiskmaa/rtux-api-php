@@ -49,7 +49,7 @@ abstract class ApiCmsLoaderAbstract extends ApiLoaderAbstract
     /**
      * @return ApiResponseViewInterface | null
      */
-    abstract public function getApiResponsePage() : ?ApiResponseViewInterface;
+    abstract public function getApiResponsePage() : ApiResponseViewInterface;
 
     /**
      * Accessing the navigation/page ID

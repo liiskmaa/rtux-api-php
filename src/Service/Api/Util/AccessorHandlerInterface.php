@@ -33,7 +33,7 @@ interface AccessorHandlerInterface
      * @param string $type
      * @return string
      */
-    public function getAccessorSetter(string $type) : ?string;
+    public function getAccessorSetter(string $type) : string;
 
     /**
      * @param string $type
@@ -52,7 +52,7 @@ interface AccessorHandlerInterface
      * @param string $type
      * @return string|null
      */
-    public function getHitIdFieldName(string $type) : ?string;
+    public function getHitIdFieldName(string $type) : string;
 
     /**
      * @param string $type

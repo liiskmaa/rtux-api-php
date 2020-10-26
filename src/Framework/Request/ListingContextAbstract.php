@@ -6,7 +6,6 @@ use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Context\ListingContex
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactoryInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestDefinitionInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestInterface;
-use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\WrongDependencyTypeException;
 
 /**
  * Boxalino Listing Request handler

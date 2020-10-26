@@ -184,7 +184,7 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
      *
      * @param RequestInterface $request
      */
-    public function addParameters(RequestInterface $request) : void
+    public function addParameters(RequestInterface $request)
     {
         /** header parameters accept a string as value */
         $this->requestDefinition->addHeaderParameters(
@@ -272,7 +272,7 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
     /**
      * @return void
      */
-    protected function addSorting(RequestInterface $request) : void
+    protected function addSorting(RequestInterface $request)
     {
         $key = $request->getParam($this->getSortParameter(), $this->sortingModel->getDefaultSortField());
         if (!$key || $key === $this->sortingModel->getDefaultSortField()) {

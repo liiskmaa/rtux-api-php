@@ -68,7 +68,7 @@ class FacetValue extends Accessor
     /**
      * @return string
      */
-    public function getValue(): ?string
+    public function getValue()
     {
         return $this->value;
     }
@@ -212,7 +212,7 @@ class FacetValue extends Accessor
     /**
      * @return string|null
      */
-    public function getUrl(): ?string
+    public function getUrl()
     {
         return $this->url;
     }
@@ -221,7 +221,7 @@ class FacetValue extends Accessor
      * @param string|null $url
      * @return FacetValue
      */
-    public function setUrl(?string $url): FacetValue
+    public function setUrl($url = null): FacetValue
     {
         $this->url = $url;
         return $this;
@@ -230,7 +230,7 @@ class FacetValue extends Accessor
     /**
      * @return string|null
      */
-    public function getMaxSelectedValue(): ?string
+    public function getMaxSelectedValue()
     {
         return $this->maxSelectedValue;
     }
@@ -239,7 +239,7 @@ class FacetValue extends Accessor
      * @param string|null $maxSelectedValue
      * @return FacetValue
      */
-    public function setMaxSelectedValue(?string $maxSelectedValue): FacetValue
+    public function setMaxSelectedValue($maxSelectedValue = null): FacetValue
     {
         $this->maxSelectedValue = $maxSelectedValue;
         return $this;
@@ -248,7 +248,7 @@ class FacetValue extends Accessor
     /**
      * @return string|null
      */
-    public function getMinSelectedValue(): ?string
+    public function getMinSelectedValue()
     {
         return $this->minSelectedValue;
     }
@@ -257,7 +257,7 @@ class FacetValue extends Accessor
      * @param string|null $minSelectedValue
      * @return FacetValue
      */
-    public function setMinSelectedValue(?string $minSelectedValue): FacetValue
+    public function setMinSelectedValue($minSelectedValue = null): FacetValue
     {
         $this->minSelectedValue = $minSelectedValue;
         return $this;

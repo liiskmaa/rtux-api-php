@@ -67,6 +67,6 @@ abstract class ApiPageLoaderAbstract extends ApiLoaderAbstract
     /**
      * @return ApiResponseViewInterface
      */
-    abstract public function getApiResponsePage() : ?ApiResponseViewInterface;
+    abstract public function getApiResponsePage() : ApiResponseViewInterface;
 
 }

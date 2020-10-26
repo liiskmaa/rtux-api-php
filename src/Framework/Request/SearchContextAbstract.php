@@ -62,7 +62,7 @@ abstract class SearchContextAbstract
      * @param RequestInterface $request
      * @return void
      */
-    protected function addContextParameters(RequestInterface $request) : void
+    protected function addContextParameters(RequestInterface $request)
     {
         parent::addContextParameters($request);
         $this->getApiRequest()->addHeaderParameters(
@@ -74,7 +74,7 @@ abstract class SearchContextAbstract
     /**
      * @return int|null
      */
-    public function getSubPhrasesCount(): ?int
+    public function getSubPhrasesCount(): int
     {
         return $this->subPhrasesCount;
     }
@@ -92,7 +92,7 @@ abstract class SearchContextAbstract
     /**
      * @return int|null
      */
-    public function getSubPhrasesProductsCount(): ?int
+    public function getSubPhrasesProductsCount(): int
     {
         return $this->subPhrasesProductsCount;
     }

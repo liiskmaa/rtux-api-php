@@ -24,13 +24,13 @@ interface ApiCmsModelInterface extends ApiResponseViewInterface
     /**
      * @return string|null
      */
-    public function getNavigationId(): ?string;
+    public function getNavigationId();
 
     /**
      * @param string|null $navigationId
      * @return ApiCmsModelInterface
      */
-    public function setNavigationId(?string $navigationId): ApiCmsModelInterface;
+    public function setNavigationId(string $navigationId): ApiCmsModelInterface;
     
     
 }
