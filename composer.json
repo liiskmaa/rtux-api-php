@@ -21,7 +21,7 @@
     "require": {
         "php": "^7.0",
         "symfony/monolog-bundle": "^3.0",
-        "symfony/dependency-injection": "~3.0",
+        "symfony/dependency-injection": "^2.8 | ^3.0",
         "symfony/http-kernel": "^2.8 | ^3.4",
         "psr/log": "~1.1",
         "guzzlehttp/guzzle": ">=6",
