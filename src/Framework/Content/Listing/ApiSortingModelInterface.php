@@ -3,7 +3,6 @@ namespace Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing;
 
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorModelInterface;
-use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\MissingDependencyException;
 
 /**
  * Class ApiSortingModelAbstract
@@ -119,6 +118,5 @@ interface ApiSortingModelInterface extends AccessorModelInterface
      * @return string
      */
     public function getDefaultSortDirection() : string;
-
 
 }

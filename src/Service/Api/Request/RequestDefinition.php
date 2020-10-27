@@ -5,7 +5,6 @@ use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Parameter\FacetDefini
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Parameter\FilterDefinition;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Parameter\HeaderParameterDefinition;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Parameter\UserParameterDefinition;
-use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Parameter\ItemDefinition;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\Parameter\SortingDefinition;
 
 /**

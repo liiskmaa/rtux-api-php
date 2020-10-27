@@ -32,4 +32,5 @@ interface SearchContextInterface extends ContextInterface
      * @return SearchContextAbstract
      */
     public function setSubPhrasesProductsCount(int $subPhrasesProductsCount): SearchContextAbstract;
+
 }

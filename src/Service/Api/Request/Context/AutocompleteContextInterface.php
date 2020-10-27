@@ -11,6 +11,7 @@ use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ContextInterface;
  */
 interface AutocompleteContextInterface extends ContextInterface
 {
+
     /**
      * @param int $count
      * @return $this|ContextAbstract
@@ -54,6 +55,5 @@ interface AutocompleteContextInterface extends ContextInterface
      * @return AutocompleteContextAbstract
      */
     public function setHighlightPostfix(string $acHighlightPost): AutocompleteContextAbstract;
-
 
 }

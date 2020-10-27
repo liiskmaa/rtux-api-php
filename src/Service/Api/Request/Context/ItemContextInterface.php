@@ -9,6 +9,7 @@ use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ContextInterface;
  */
 interface ItemContextInterface extends ContextInterface
 {
+
     /**
      * @param string $productId
      * @return self

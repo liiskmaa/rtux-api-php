@@ -12,4 +12,5 @@ interface ParameterInterface
      * @return array
      */
     public function toArray() : array;
+
 }

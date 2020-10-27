@@ -12,6 +12,7 @@ use Psr\Log\LoggerInterface;
  */
 class ParameterFactory implements ParameterFactoryInterface
 {
+
     CONST BOXALINO_API_REQUEST_PARAMETER_SERVICE_PREFIX = "boxalino.api.request.parameter.";
 
     /**
@@ -69,4 +70,5 @@ class ParameterFactory implements ParameterFactoryInterface
         $this->container = $container;
         return $this->container;
     }
+
 }

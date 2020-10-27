@@ -25,4 +25,5 @@ class UserParameterDefinition extends ParameterDefinition
         $this->{$property} = $values;
         return $this;
     }
+
 }

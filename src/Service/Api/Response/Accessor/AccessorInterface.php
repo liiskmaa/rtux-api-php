@@ -6,6 +6,7 @@ namespace Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor;
  */
 interface AccessorInterface
 {
+
     /**
      * @param \StdClass $data
      * @param AccessorInterface $object

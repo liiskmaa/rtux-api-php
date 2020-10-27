@@ -21,6 +21,7 @@ interface ApiCmsModelInterface extends ApiResponseViewInterface
      * @return ApiCmsModelInterface
      */
     public function setTotalHitCount(int $totalHitCount): ApiCmsModelInterface;
+
     /**
      * @return string|null
      */
@@ -31,6 +32,5 @@ interface ApiCmsModelInterface extends ApiResponseViewInterface
      * @return ApiCmsModelInterface
      */
     public function setNavigationId(?string $navigationId): ApiCmsModelInterface;
-    
     
 }

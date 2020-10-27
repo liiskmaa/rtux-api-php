@@ -3,7 +3,11 @@ namespace Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor;
 
 /**
  * Class FacetValue
+ *
  * Model for a facet value response element
+ * Custom elements can be added to the facet value with the use of "facetValueExtraInfo" strategy
+ * Please consult with Boxalino for your facet option needs
+ *
  * @package Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor
  */
 class FacetValue extends Accessor

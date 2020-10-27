@@ -413,4 +413,5 @@ class ResponseDefinition implements ResponseDefinitionInterface
     {
         return $this->segments;
     }
+
 }

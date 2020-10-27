@@ -1,8 +1,15 @@
 <?php declare(strict_types=1);
 namespace Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor;
 
-use Boxalino\RealTimeUserExperienceApi\Service\Api\Util\AccessorHandlerInterface;
-
+/**
+ * Class Facet
+ *
+ * Boxalino API facet model
+ * The properties defined are a base on what can be configured in Boxalino Intelligence Admin
+ * The rest of the properties (custom defined) can be accessed directly
+ *
+ * @package Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor
+ */
 class Facet extends Accessor
     implements AccessorInterface
 {

@@ -49,6 +49,7 @@ class ApiCallService implements ApiCallServiceInterface
     /**
      * ApiCallService constructor.
      * @param LoggerInterface $logger
+     * @param ResponseDefinitionInterface $responseDefinition
      */
     public function __construct(LoggerInterface $logger, ResponseDefinitionInterface $responseDefinition)
     {
@@ -61,7 +62,6 @@ class ApiCallService implements ApiCallServiceInterface
      * @param RequestDefinitionInterface $apiRequest
      * @param string $restApiEndpoint
      * @return ResponseDefinition|null
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function call(RequestDefinitionInterface $apiRequest, string $restApiEndpoint) : ?ResponseDefinitionInterface
     {

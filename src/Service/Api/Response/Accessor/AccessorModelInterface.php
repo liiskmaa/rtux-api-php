@@ -11,6 +11,6 @@ interface AccessorModelInterface
      * @param AccessorInterface | null $context
      * @return AccessorModelInterface
      */
-    public function addAccessorContext(?AccessorInterface $context = null) : AccessorModelInterface;
+    public function addAccessorContext(AccessorInterface $context = null) : AccessorModelInterface;
 
 }

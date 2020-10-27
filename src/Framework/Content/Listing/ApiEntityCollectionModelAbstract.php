@@ -3,7 +3,6 @@ namespace Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing;
 
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorModelInterface;
-use Psr\Log\LoggerInterface;
 
 /**
  * Class ApiEntityCollectionModel
