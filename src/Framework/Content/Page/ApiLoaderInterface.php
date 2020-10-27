@@ -29,7 +29,7 @@ interface ApiLoaderInterface
     /**
      * Makes a call to the Boxalino API
      */
-    public function call() : void;
+    public function call();
 
     /**
      * @return string

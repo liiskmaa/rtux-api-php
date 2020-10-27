@@ -61,7 +61,7 @@ abstract class ApiLoaderAbstract implements ApiLoaderInterface
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function call() : void
+    public function call()
     {
         if(!$this->getApiContext())
         {

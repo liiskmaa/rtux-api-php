@@ -133,12 +133,7 @@ class Block extends Accessor
      */
     public function setAccessor($accessor = null)
     {
-        $this->accessor = $accessor;
-        if(is_array($accessor))
-        {
-            $this->accessor = $accessor[0];
-        }
-
+        $this->accessor = $accessor[0] ?? null;
         return $this;
     }
 
