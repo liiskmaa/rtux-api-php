@@ -26,7 +26,7 @@ abstract class CmsContextAbstract
      *
      * @param RequestInterface $request
      */
-    protected function addFilters(RequestInterface $request) : void
+    protected function addFilters(RequestInterface $request)
     {
         $this->getApiRequest()
             ->setHitCount($this->getHitCount())
