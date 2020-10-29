@@ -15,8 +15,8 @@
                  parent="boxalino.api.content.loader" shared="false" abstract="true">
         </service>
 
-        <!-- Generic CMS loader extension with API call -->
-        <service id="boxalino.api.content.loader.cms" class="Boxalino\RealTimeUserExperienceApi\Framework\Content\Page\ApiCmsLoaderAbstract"
+        <!-- Generic base loader extension with API call -->
+        <service id="boxalino.api.content.loader.base" class="Boxalino\RealTimeUserExperienceApi\Framework\Content\Page\ApiBaseLoaderAbstract"
                  parent="boxalino.api.content.loader" shared="false" abstract="true">
         </service>
 
