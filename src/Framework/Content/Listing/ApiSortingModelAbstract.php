@@ -47,34 +47,6 @@ abstract class ApiSortingModelAbstract
         $this->sortingMapResponse = new \ArrayObject();
     }
 
-    /**
-     * Accessing the sorting declared for a key on a local system
-     * (local system standard)
-     *
-     * @param string $key
-     * @return mixed
-     */
-    abstract public function get(string $key);
-
-    /**
-     * Check if a sorting rule key has been declared for local e-shop
-     *
-     * @param string $key
-     * @return bool
-     */
-    abstract public function has(string $key): bool;
-
-    /**
-     * Accessing the sortings available for a setup
-     *
-     * @return array
-     */
-    abstract public function getSortings(): array;
-
-    /**
-     * Based on the response, transform the response field+direction into a e-shop valid sorting
-     */
-    abstract public function getCurrent() : string;
 
     /**
      * @return string
@@ -88,12 +60,6 @@ abstract class ApiSortingModelAbstract
      */
     abstract public function getDefaultSortDirection() : string;
 
-    /**
-     * Transform a request key to a valid API sort
-     * @param string $key
-     * @return array
-     */
-    abstract public function getRequestSorting(string $key) : array;
 
     /**
      * Adds mapping between a system field definition (as inserted via local e-shop tagging)
@@ -109,6 +75,25 @@ abstract class ApiSortingModelAbstract
         {
             $this->sortingMapRequest->offsetSet($systemField, $boxalinoField);
             $this->sortingMapResponse->offsetSet($boxalinoField, $systemField);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Adds sorting options by design
+     * (explicit structure)
+     *
+     * @param array $sortingOptionsList
+     * @return $this
+     */
+    public function addSortingOptionCollection(array $sortingOptionsList) : self
+    {
+        foreach($sortingOptionsList as $urlKey => $sortDefinition)
+        {
+            $sortingOption = new ApiSortingOption($sortDefinition);
+            $this->add([$sortingOption->getField() => $sortingOption->getApiField()]);
+            $this->sortings[$urlKey] = $sortingOption;
         }
 
         return $this;
@@ -186,6 +171,83 @@ abstract class ApiSortingModelAbstract
         {
             return $this->getDefaultSortDirection();
         }
+    }
+
+    /**
+     * Transform a request key to a valid API sort
+     *
+     * @param string $key
+     * @return array
+     */
+    public function getRequestSorting(string $key) : array
+    {
+        $requestedSortingList = [];
+        if($this->has($key))
+        {
+            $requestedSortingList[] = [
+                "field" => $this->get($key)->getApiField(),
+                "reverse" => $this->get($key)->isReverse()
+            ];
+        }
+
+        return $requestedSortingList;
+    }
+
+    /**
+     * Based on the response,
+     * transforms the response field and direction into a e-shop valid sorting
+     */
+    public function getCurrent() : string
+    {
+        $responseField = $this->getCurrentApiSortField();
+        if(!empty($responseField))
+        {
+            $direction = $this->getCurrentSortDirection();
+            $field = $this->getResponseField($responseField);
+            foreach($this->getSortings() as $key => $sorting)
+            {
+                /** @var $sorting ApiSortingOption */
+                if($sorting->getField() == $field && $sorting->getDirection() == $direction)
+                {
+                    return $key;
+                }
+            }
+        }
+
+        return $this->getDefaultSortField();
+    }
+
+    /**
+     * Accessing the sorting declared for a key on a local system
+     * (local system standard)
+     *
+     * @param string $key
+     * @return ApiSortingOption | null | mixed
+     */
+    public function get(string $key)
+    {
+        return $this->sortings[$key] ?? null;
+    }
+
+    /**
+     * Check if a sorting rule key has been declared for local e-shop
+     *
+     * @param string $key
+     * @return bool
+     */
+    public function has(string $key): bool
+    {
+        return isset($this->sortings[$key]);
+    }
+
+    /**
+     * Accessing the sort options available for the e-shop
+     *
+     * @return array
+     */
+    public function getSortings(): array
+    {
+        return $this->sortings;
     }
 
     /**
