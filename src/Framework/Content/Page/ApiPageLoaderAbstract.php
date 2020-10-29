@@ -5,7 +5,7 @@ use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\ApiResponseViewInterface;
 
 /**
- * Class AutocompletePageLoaderAbstract
+ * Class ApiPageLoaderAbstract
  * Makes request to Boxalino
  * Sets content on a ApiResponsePageInterface object, accessible via frontend
  *

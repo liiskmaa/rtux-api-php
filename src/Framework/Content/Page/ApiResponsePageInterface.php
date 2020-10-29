@@ -22,7 +22,6 @@ interface ApiResponsePageInterface extends ApiResponseViewInterface
      */
     public function setRequestId(string $requestId);
 
-
     /**
      * @return bool
      */

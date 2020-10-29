@@ -2,7 +2,6 @@
 namespace Boxalino\RealTimeUserExperienceApi\Framework\Content\Page;
 
 use Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiCmsModelInterface;
-use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\Block;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\ApiResponseViewInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\UndefinedPropertyError;
@@ -11,21 +10,16 @@ use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\UndefinedPropertyErr
  * Class ApiCmsLoaderAbstract
  * Sample based on a familiar block component
  *
- * @package Boxalino\RealTimeUserExperienceApi\Service\Api\Content\Page
+ * @package Boxalino\RealTimeUserExperienceApi\Framework\Content\Page
  */
-abstract class ApiCmsLoaderAbstract extends ApiLoaderAbstract
+abstract class ApiBaseLoaderAbstract extends ApiLoaderAbstract
 {
-    /**
-     * @var array
-     */
-    protected $cmsConfig = [];
 
     /**
      * Loads the content of an API Response page
      */
     public function load() : ApiLoaderInterface
     {
-        $this->addProperties();
         $this->call();
 
         /** @var ApiCmsModelInterface $page */
@@ -37,7 +31,6 @@ abstract class ApiCmsLoaderAbstract extends ApiLoaderAbstract
             ->setRight($this->apiCallService->getApiResponse()->getRight())
             ->setGroupBy($this->getGroupBy())
             ->setVariantUuid($this->getVariantUuid())
-            ->setNavigationId($this->getNavigationId($this->getRequest()))
             ->setTotalHitCount($this->apiCallService->getApiResponse()->getHitCount());
 
         $this->setApiResponsePage($page);
@@ -45,66 +38,10 @@ abstract class ApiCmsLoaderAbstract extends ApiLoaderAbstract
         return $this;
     }
 
-
     /**
      * @return ApiResponseViewInterface | null
      */
     abstract public function getApiResponsePage() : ?ApiResponseViewInterface;
-
-    /**
-     * Accessing the navigation/page ID
-     * @param RequestInterface $request
-     * @return string
-     */
-    abstract protected function getNavigationId(RequestInterface $request) : string;
-
-    /**
-     * @param array $config
-     * @return $this
-     */
-    public function setCmsConfig(array $config)
-    {
-        $this->cmsCconfig = $config;
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getCmsConfig() : array
-    {
-        return $this->cmsConfig;
-    }
-
-    /**
-     * Adds properties to the CmsContextAbstract
-     */
-    protected function addProperties()
-    {
-        foreach($this->getCmsConfig() as $key => $value)
-        {
-            if($key == 'widget')
-            {
-                $this->getApiContext()->setWidget($value);
-                continue;
-            }
-            if($key == 'hitCount')
-            {
-                $this->getApiContext()->setHitCount((int) $value);
-                continue;
-            }
-            if($key == 'groupBy')
-            {
-                $this->getApiContext()->setGroupBy($value);
-                continue;
-            }
-
-            if(!is_null($value) && !empty($value))
-            {
-                $this->getApiContext()->set($key, $value);
-            }
-        }
-    }
 
     /**
      * This function can be used to access parts of the response
