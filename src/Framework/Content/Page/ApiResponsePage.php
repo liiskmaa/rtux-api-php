@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
-namespace Boxalino\RealTimeUserExperienceAPI\Framework\Content\Page;
+namespace Boxalino\RealTimeUserExperienceApi\Framework\Content\Page;
 
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\ApiResponseViewInterface;
 
