@@ -13,6 +13,7 @@ use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\UndefinedPropertyErr
  * @package Boxalino\RealTimeUserExperienceApi\Framework\Content\Page
  */
 abstract class ApiBaseLoaderAbstract extends ApiLoaderAbstract
+    implements ApiLoaderInterface
 {
 
     /**
@@ -23,25 +24,13 @@ abstract class ApiBaseLoaderAbstract extends ApiLoaderAbstract
         $this->call();
 
         /** @var ApiCmsModelInterface $page */
-        $page = $this->getApiResponsePage();
-        $page->setBlocks($this->apiCallService->getApiResponse()->getBlocks())
-            ->setLeft($this->apiCallService->getApiResponse()->getLeft())
-            ->setTop($this->apiCallService->getApiResponse()->getTop())
-            ->setBottom($this->apiCallService->getApiResponse()->getBottom())
-            ->setRight($this->apiCallService->getApiResponse()->getRight())
-            ->setGroupBy($this->getGroupBy())
-            ->setVariantUuid($this->getVariantUuid())
-            ->setTotalHitCount($this->apiCallService->getApiResponse()->getHitCount());
+        $page = $this->getApiResponse();
+        $page->setTotalHitCount($this->apiCallService->getApiResponse()->getHitCount());
 
         $this->setApiResponsePage($page);
 
         return $this;
     }
-
-    /**
-     * @return ApiResponseViewInterface | null
-     */
-    abstract public function getApiResponsePage() : ?ApiResponseViewInterface;
 
     /**
      * This function can be used to access parts of the response

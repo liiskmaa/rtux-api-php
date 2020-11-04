@@ -7,7 +7,6 @@ use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\ResponseDefinitionIn
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpFoundation\Cookie;
 
 /**
  * Class ApiCallService

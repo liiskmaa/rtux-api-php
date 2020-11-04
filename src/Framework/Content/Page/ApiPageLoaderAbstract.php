@@ -12,12 +12,13 @@ use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\ApiResponseViewInter
  * @package Boxalino\RealTimeUserExperienceApi\Service\Api\Content\Page
  */
 abstract class ApiPageLoaderAbstract extends ApiLoaderAbstract
+    implements ApiLoaderInterface
 {
 
     /**
      * Loads the content of an API Response page
      *
-     * @return ApiResponseViewInterface
+     * @return ApiLoaderInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function load() : ApiLoaderInterface
@@ -25,22 +26,14 @@ abstract class ApiPageLoaderAbstract extends ApiLoaderAbstract
         $this->call();
 
         /** @var ApiResponsePageInterface $page */
-        $page = $this->getApiResponsePage();
-        $page->setFallback($this->apiCallService->isFallback());
-        $page->setBlocks($this->apiCallService->getApiResponse()->getBlocks())
-            ->setLeft($this->apiCallService->getApiResponse()->getLeft())
-            ->setTop($this->apiCallService->getApiResponse()->getTop())
-            ->setBottom($this->apiCallService->getApiResponse()->getBottom())
-            ->setRight($this->apiCallService->getApiResponse()->getRight());
-        $page->setRequestId($this->apiCallService->getApiResponse()->getRequestId());
-        $page->setGroupBy($this->getGroupBy());
-        $page->setVariantUuid($this->getVariantUuid());
-        $page->setHasSearchSubPhrases($this->apiCallService->getApiResponse()->hasSearchSubPhrases());
-        $page->setRedirectUrl($this->apiCallService->getApiResponse()->getRedirectUrl());
-        $page->setTotalHitCount($this->apiCallService->getApiResponse()->getHitCount());
-        $page->setSearchTerm(
-            (string) $this->getRequest()->getParam($this->getSearchParameter(), "")
-        );
+        $page = $this->getApiResponse();
+        $page->setRequestId($this->apiCallService->getApiResponse()->getRequestId())
+            ->setHasSearchSubPhrases($this->apiCallService->getApiResponse()->hasSearchSubPhrases())
+            ->setRedirectUrl($this->apiCallService->getApiResponse()->getRedirectUrl())
+            ->setTotalHitCount($this->apiCallService->getApiResponse()->getHitCount())
+            ->setSearchTerm(
+                (string) $this->getRequest()->getParam($this->getSearchParameter(), "")
+            );
         if($this->apiCallService->getApiResponse()->isCorrectedSearchQuery())
         {
             $page->setSearchTerm((string) $this->apiCallService->getApiResponse()->getCorrectedSearchQuery());
@@ -64,9 +57,5 @@ abstract class ApiPageLoaderAbstract extends ApiLoaderAbstract
      */
     abstract public function getSearchParameter() : string;
 
-    /**
-     * @return ApiResponseViewInterface
-     */
-    abstract public function getApiResponsePage() : ?ApiResponseViewInterface;
 
 }

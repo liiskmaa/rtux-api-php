@@ -1,7 +1,12 @@
 <?php declare(strict_types=1);
 namespace Boxalino\RealTimeUserExperienceApi\Service\Api\Response;
 
-
+/**
+ * Interface ApiResponseViewInterface
+ * A base response view with the required elements
+ *
+ * @package Boxalino\RealTimeUserExperienceApi\Service\Api\Response
+ */
 interface ApiResponseViewInterface
 {
 
@@ -15,12 +20,12 @@ interface ApiResponseViewInterface
      * @return $this
      */
     public function setBlocks(\ArrayIterator $blocks) : ApiResponseViewInterface;
-    
+
     /**
      * @return string
      */
     public function getGroupBy() : string;
-    
+
     /**
      * @param string $groupBy
      * @return $this
@@ -92,6 +97,61 @@ interface ApiResponseViewInterface
      * @return ApiResponseViewInterface
      */
     public function setTop(\ArrayIterator $top): ApiResponseViewInterface;
+
+    /**
+     * @return \ArrayIterator|null
+     */
+    public function getSeoProperties(): ?\ArrayIterator;
+
+    /**
+     * @param \ArrayIterator|null $seoProperties
+     * @return ApiResponseViewInterface
+     */
+    public function setSeoProperties(?\ArrayIterator $seoProperties): ApiResponseViewInterface;
+
+    /**
+     * @return \ArrayIterator|null
+     */
+    public function getSeoMetaTagsProperties(): ?\ArrayIterator;
+
+    /**
+     * @param \ArrayIterator|null $seoMetaTagsProperties
+     * @return ApiResponseViewInterface
+     */
+    public function setSeoMetaTagsProperties(?\ArrayIterator $seoMetaTagsProperties): ApiResponseViewInterface;
+
+    /**
+     * @return string|null
+     */
+    public function getSeoPageTitle(): ?string;
+
+    /**
+     * @param string|null $seoPageTitle
+     * @return ApiResponseViewInterface
+     */
+    public function setSeoPageTitle(?string $seoPageTitle): ApiResponseViewInterface;
+
+    /**
+     * @return string|null
+     */
+    public function getSeoPageMetaTitle(): ?string;
+
+    /**
+     * @param string|null $seoPageMetaTitle
+     * @return ApiResponseViewInterface
+     */
+    public function setSeoPageMetaTitle(?string $seoPageMetaTitle): ApiResponseViewInterface;
+
+    /**
+     * @return array|null
+     */
+    public function getSeoBreadcrumbs(): ?array;
+
+    /**
+     * @param array|null $seoBreadcrumbs
+     * @return ApiResponseViewInterface
+     */
+    public function setSeoBreadcrumbs(?array $seoBreadcrumbs): ApiResponseViewInterface;
 
 
 }

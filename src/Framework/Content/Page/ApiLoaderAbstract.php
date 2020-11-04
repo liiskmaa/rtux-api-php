@@ -14,7 +14,7 @@ use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\WrongDependencyTypeE
  *
  * @package Boxalino\RealTimeUserExperienceApi\Service\Api\Content\Page
  */
-abstract class ApiLoaderAbstract implements ApiLoaderInterface
+abstract class ApiLoaderAbstract
 {
 
     /**
@@ -82,8 +82,37 @@ abstract class ApiLoaderAbstract implements ApiLoaderInterface
         );
 
         $this->_afterApiCallService();
-        return;
     }
+
+    /**
+     * Sets the default properties on the ApiResponseViewInterface entity
+     *
+     * @return ApiResponseViewInterface
+     */
+    public function getApiResponse() : ApiResponseViewInterface
+    {
+        $page = $this->getApiResponsePage();
+        $page->setBlocks($this->apiCallService->getApiResponse()->getBlocks())
+            ->setLeft($this->apiCallService->getApiResponse()->getLeft())
+            ->setTop($this->apiCallService->getApiResponse()->getTop())
+            ->setBottom($this->apiCallService->getApiResponse()->getBottom())
+            ->setRight($this->apiCallService->getApiResponse()->getRight())
+            ->setGroupBy($this->getGroupBy())
+            ->setVariantUuid($this->getVariantUuid())
+            ->setFallback($this->apiCallService->isFallback())
+            ->setSeoBreadcrumbs($this->apiCallService->getApiResponse()->getSeoBreadcrumbs())
+            ->setSeoMetaTagsProperties($this->apiCallService->getApiResponse()->getSeoMetaTagsProperties())
+            ->setSeoProperties($this->apiCallService->getApiResponse()->getSeoProperties())
+            ->setSeoPageTitle($this->apiCallService->getApiResponse()->getSeoPageTitle())
+            ->setSeoPageMetaTitle($this->apiCallService->getApiResponse()->getSeoPageMetaTitle());
+
+        return $page;
+    }
+
+    /**
+     * @return ApiResponseViewInterface
+     */
+    abstract public function getApiResponsePage() : ?ApiResponseViewInterface;
 
     /**
      * @param RequestInterface $request

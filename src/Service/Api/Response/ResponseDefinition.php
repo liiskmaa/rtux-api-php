@@ -2,14 +2,10 @@
 namespace Boxalino\RealTimeUserExperienceApi\Service\Api\Response;
 
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorInterface;
-use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\Block;
-use Boxalino\RealTimeUserExperienceApi\Service\Api\Util\AccessorHandler;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Util\AccessorHandlerInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\UndefinedPropertyError;
 use GuzzleHttp\Psr7\Response;
 use Psr\Log\LoggerInterface;
-use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\UndefinedMethodError;
-use Symfony\Component\Config\Definition\Exception\Exception;
 
 /**
  * Class ResponseDefinition
@@ -56,6 +52,16 @@ class ResponseDefinition implements ResponseDefinitionInterface
      * @var null | \ArrayIterator
      */
     protected $blocks = null;
+
+    /**
+     * @var null | \ArrayIterator
+     */
+    protected $seoProperties = null;
+
+    /**
+     * @var null | \ArrayIterator
+     */
+    protected $seoMetaProperties = null;
 
     /**
      * The visual elements declared with a property "position" different than "main" or none, will have their own
@@ -326,6 +332,125 @@ class ResponseDefinition implements ResponseDefinitionInterface
         {
             return $this->get()->performance;
         }
+    }
+
+    /**
+     * @return \ArrayIterator|null
+     */
+    public function getSeoProperties() : ?\ArrayIterator
+    {
+        try{
+            if(is_null($this->seoProperties))
+            {
+                $this->seoProperties = $this->getPropertyByPrefix(ResponseDefinitionInterface::BOXALINO_PARAMETER_SEO_PREFIX);
+            }
+
+            return $this->seoProperties;
+        } catch(\Exception $exception)
+        {
+            return null;
+        }
+    }
+
+    /**
+     * @return \ArrayIterator|null
+     */
+    public function getSeoMetaTagsProperties() : ?\ArrayIterator
+    {
+        try{
+            if(is_null($this->seoMetaProperties))
+            {
+                $this->seoMetaProperties = $this->getPropertyByPrefix(ResponseDefinitionInterface::BOXALINO_PARAMETER_SEO_META_TAGS_PREFIX);
+            }
+
+            return $this->seoMetaProperties;
+        } catch(\Exception $exception)
+        {
+            return null;
+        }
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSeoPageTitle() : ?string
+    {
+        try{
+            $index = 0;
+            $property = ResponseDefinitionInterface::BOXALINO_PARAMETER_SEO_PAGE_TITLE;
+            if(property_exists($this->get()->advanced->$index, $property))
+            {
+                return $this->get()->advanced->$index->$property;
+            }
+
+            return null;
+        } catch(\Exception $exception)
+        {
+            return null;
+        }
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSeoPageMetaTitle() : ?string
+    {
+        try{
+            $index = 0;
+            $property = ResponseDefinitionInterface::BOXALINO_PARAMETER_SEO_META_TITLE;
+            if(property_exists($this->get()->advanced->$index, $property))
+            {
+                return $this->get()->advanced->$index->$property;
+            }
+
+            return null;
+        } catch(\Exception $exception)
+        {
+            return null;
+        }
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getSeoBreadcrumbs() : ?array
+    {
+        try{
+            $index = 0;
+            $property = ResponseDefinitionInterface::BOXALINO_PARAMETER_SEO_BREADCRUMBS;
+            if(property_exists($this->get()->advanced->$index, $property))
+            {
+                return json_decode($this->get()->advanced->$index->$property->value, true);
+            }
+
+            return [];
+        } catch(\Exception $exception)
+        {
+            return [];
+        }
+    }
+
+    /**
+     * @param string $prefix
+     * @return \ArrayIterator
+     */
+    protected function getPropertyByPrefix(string $prefix) : \ArrayIterator
+    {
+        $index = 0;
+        $dataAsObject = new \ReflectionObject($this->get()->advanced->$index);
+        $properties = $dataAsObject->getProperties();
+        $returnObject = new \ArrayIterator();
+        foreach($properties as $property)
+        {
+            $propertyName = $property->getName();
+            if(strpos($propertyName, $prefix) === 0)
+            {
+                $element = $this->get()->advanced->$index->$propertyName;
+                $returnObject->offsetSet($element->name, $element->value);
+            }
+        }
+
+        return $returnObject;
     }
 
     /**
