@@ -18,7 +18,7 @@ abstract class ApiBaseLoaderAbstract extends ApiLoaderAbstract
     /**
      * Loads the content of an API Response page
      */
-    public function load() : ApiLoaderInterface
+    public function load()
     {
         $this->call();
 

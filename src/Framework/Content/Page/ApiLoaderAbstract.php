@@ -139,7 +139,7 @@ abstract class ApiLoaderAbstract implements ApiLoaderInterface
      * @param ContextInterface $apiContextInterface
      * @return $this
      */
-    public function setApiContext(ContextInterface $apiContextInterface) : ApiLoaderInterface
+    public function setApiContext(ContextInterface $apiContextInterface)
     {
         $this->apiContext = $apiContextInterface;
         return $this;

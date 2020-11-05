@@ -13,7 +13,7 @@ use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\ApiResponseViewInter
 interface ApiLoaderInterface
 {
 
-    public function load() : ApiLoaderInterface;
+    public function load();
 
     /**
      * @param RequestInterface $request

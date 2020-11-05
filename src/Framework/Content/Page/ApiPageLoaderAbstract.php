@@ -17,7 +17,7 @@ abstract class ApiPageLoaderAbstract extends ApiLoaderAbstract
     /**
      * Loads the content of an API Response page
      *
-     * @return ApiResponseViewInterface
+     * @return ApiLoaderInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function load() : ApiLoaderInterface
