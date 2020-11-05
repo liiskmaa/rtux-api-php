@@ -12,11 +12,8 @@ use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\ApiResponseViewInter
  */
 interface ApiLoaderInterface
 {
-
-    /**
-     * @return ApiLoaderInterface
-     */
-    public function load() : ApiLoaderInterface;
+    
+    public function load();
 
     /**
      * @return ApiResponseViewInterface

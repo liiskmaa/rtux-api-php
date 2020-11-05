@@ -21,7 +21,7 @@ abstract class ApiPageLoaderAbstract extends ApiLoaderAbstract
      * @return ApiLoaderInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function load() : ApiLoaderInterface
+    public function load() : ApiLoaderInterfaceb
     {
         $this->call();
 
