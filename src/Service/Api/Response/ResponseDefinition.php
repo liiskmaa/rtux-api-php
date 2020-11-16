@@ -2,14 +2,10 @@
 namespace Boxalino\RealTimeUserExperienceApi\Service\Api\Response;
 
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorInterface;
-use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\Block;
-use Boxalino\RealTimeUserExperienceApi\Service\Api\Util\AccessorHandler;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Util\AccessorHandlerInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\UndefinedPropertyError;
 use GuzzleHttp\Psr7\Response;
 use Psr\Log\LoggerInterface;
-use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\UndefinedMethodError;
-use Symfony\Component\Config\Definition\Exception\Exception;
 
 /**
  * Class ResponseDefinition

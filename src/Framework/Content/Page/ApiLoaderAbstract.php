@@ -122,6 +122,14 @@ abstract class ApiLoaderAbstract implements ApiLoaderInterface
     /**
      * @return string
      */
+    public function getApiResponseJson()
+    {
+        return $this->apiCallService->getApiResponse()->getJson();
+    }
+
+    /**
+     * @return string
+     */
     public function getGroupBy() : string
     {
         return $this->apiCallService->getApiResponse()->getGroupBy();

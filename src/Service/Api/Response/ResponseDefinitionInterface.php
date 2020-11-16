@@ -4,7 +4,6 @@ namespace Boxalino\RealTimeUserExperienceApi\Service\Api\Response;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Util\AccessorHandlerInterface;
 use GuzzleHttp\Psr7\Response;
-use Psr\Log\LoggerInterface;
 
 interface ResponseDefinitionInterface
 {
