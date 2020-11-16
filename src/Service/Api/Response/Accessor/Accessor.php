@@ -17,6 +17,11 @@ class Accessor implements AccessorInterface
      */
     protected $accessorHandler;
 
+    /**
+     * @var BxAttributeList
+     */
+    protected $bxAttributes;
+
     public function __construct(AccessorHandlerInterface $accessorHandler)
     {
         $this->accessorHandler = $accessorHandler;
@@ -74,6 +79,30 @@ class Accessor implements AccessorInterface
     public function getAccessorHandler(): AccessorHandlerInterface
     {
         return $this->accessorHandler;
+    }
+
+    /**
+     *
+     * @param array|null $attributesList
+     * @return $this
+     */
+    public function setBxAttributes($attributesList = []) : self
+    {
+        $this->bxAttributes = new BxAttributeList();
+        foreach($attributesList as $attribute)
+        {
+            $this->bxAttributes->append($this->toObject($attribute, $this->getAccessorHandler()->getAccessor("bx-attributes")));
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return BxAttributeList | \ArrayIterator
+     */
+    public function getBxAttributes() : \ArrayIterator
+    {
+        return $this->bxAttributes ?? new BxAttributeList();
     }
 
 }

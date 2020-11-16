@@ -26,4 +26,11 @@ interface AccessorInterface
      */
     public function get(string $parameterName);
 
+    /**
+     * Access the Boxalino response attributes for API JS tracker
+     *
+     * @return \ArrayIterator
+     */
+    public function getBxAttributes() : \ArrayIterator;
+
 }
