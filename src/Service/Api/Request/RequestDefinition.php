@@ -518,7 +518,7 @@ class RequestDefinition implements RequestDefinitionInterface
     {
         foreach($this->getParameters() as $parameterKey=>$parameterValue)
         {
-            if($parameterKey === self::BOXALINO_API_REQUEST_INSPECT_FLAG)
+            if($parameterKey === RequestDefinitionInterface::BOXALINO_API_REQUEST_INSPECT_FLAG)
             {
                 if($parameterValue[0] === $this->getApiKey())
                 {
