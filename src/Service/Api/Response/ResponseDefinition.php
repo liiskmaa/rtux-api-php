@@ -250,7 +250,7 @@ class ResponseDefinition implements ResponseDefinitionInterface
             $index = 0;
             if(property_exists($this->get()->advanced->$index, ResponseDefinitionInterface::BOXALINO_PARAMETER_BX_VARIANT_UUID))
             {
-                return $this->get()->advanced->$index->_bx_request_id;
+                return $this->get()->advanced->$index->_bx_variant_uuid;
             }
 
             return "N/A";
