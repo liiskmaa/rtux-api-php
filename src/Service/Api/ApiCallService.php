@@ -6,6 +6,8 @@ use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\ResponseDefinition;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\ResponseDefinitionInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
+use http\Client\Response;
+use http\Message\Body;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -75,6 +77,7 @@ class ApiCallService implements ApiCallServiceInterface
                 $apiRequest->jsonSerialize()
             );
 
+            /** when a request is done in test mode - log the API request */
             if($apiRequest->isTest())
             {
                 $this->logger->info("Boxalino API request: " . $apiRequest->jsonSerialize());
@@ -83,6 +86,9 @@ class ApiCallService implements ApiCallServiceInterface
             /** @var  \GuzzleHttp\Psr7\Response $response */
             $response = $this->restClient->send($request);
             $this->setApiResponse($this->responseDefinition->setResponse($response));
+
+            /** in case of successfull request & the request is done in inspect-mode - log both the API request & API response */
+            $this->addInspect($apiRequest, $restApiEndpoint);
 
             return $this->getApiResponse();
         } catch (\Exception $exception)
@@ -95,6 +101,25 @@ class ApiCallService implements ApiCallServiceInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param RequestDefinitionInterface $apiRequest
+     * @param string $restApiEndpoint
+     * @return self
+     */
+    public function addInspect(RequestDefinitionInterface $apiRequest, string $restApiEndpoint) : self
+    {
+        if($apiRequest->isInspectMode())
+        {
+            $widget = $apiRequest->getWidget();
+
+            header('BOXALINO_API_ENDPOINT_' . $widget .': '. $restApiEndpoint);
+            header('BOXALINO_API_REQUEST_'. $widget .': '. $apiRequest->setApiSecret("********************")->jsonSerialize());
+            header('BOXALINO_API_RESPONSE_'. $widget .': '. $this->getApiResponse()->getJson());
+        }
+
+        return $this;
     }
 
     /**

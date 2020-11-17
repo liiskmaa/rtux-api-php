@@ -512,6 +512,25 @@ class RequestDefinition implements RequestDefinitionInterface
     }
 
     /**
+     * @return bool
+     */
+    public function isInspectMode() : bool
+    {
+        foreach($this->getParameters() as $parameterKey=>$parameterValue)
+        {
+            if($parameterKey === self::BOXALINO_API_REQUEST_INSPECT_FLAG)
+            {
+                if($parameterValue[0] === $this->getApiKey())
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @return array
      */
     public function toArray() : array
