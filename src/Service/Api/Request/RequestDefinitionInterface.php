@@ -17,6 +17,11 @@ interface RequestDefinitionInterface extends \JsonSerializable
 {
 
     /**
+     * URL parameter to alert for an inspect request
+     */
+    public const BOXALINO_API_REQUEST_INSPECT_FLAG="_bx_inspect_key";
+
+    /**
      * @param FilterDefinition ...$filterDefinitions
      * @return $this
      */
@@ -152,6 +157,21 @@ interface RequestDefinitionInterface extends \JsonSerializable
      * @return RequestDefinition
      */
     public function setApiKey(string $apiKey) : RequestDefinition;
+
+    /**
+     * @return string
+     */
+    public function getApiKey() : string;
+
+    /**
+     * @return bool
+     */
+    public function isInspectMode() : bool;
+
+    /**
+     * @return string
+     */
+    public function getWidget() : string;
 
     /**
      * @return array
