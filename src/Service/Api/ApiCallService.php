@@ -84,6 +84,9 @@ class ApiCallService implements ApiCallServiceInterface
             $response = $this->restClient->send($request);
             $this->setApiResponse($this->responseDefinition->setResponse($response));
 
+            /** in case of successfull request & the request is done in inspect-mode - log both the API request & API response */
+            $this->addInspect($apiRequest, $restApiEndpoint);
+
         } catch (\Exception $exception)
         {
             $this->setFallback(true);
@@ -94,6 +97,25 @@ class ApiCallService implements ApiCallServiceInterface
         }
 
         return $this->getApiResponse();
+    }
+
+    /**
+     * @param RequestDefinitionInterface $apiRequest
+     * @param string $restApiEndpoint
+     * @return self
+     */
+    public function addInspect(RequestDefinitionInterface $apiRequest, string $restApiEndpoint) : self
+    {
+        if($apiRequest->isInspectMode())
+        {
+            $widget = $apiRequest->getWidget();
+
+            header('BOXALINO_API_ENDPOINT_' . $widget .': '. $restApiEndpoint);
+            header('BOXALINO_API_REQUEST_'. $widget .': '. $apiRequest->setApiSecret("********************")->jsonSerialize());
+            header('BOXALINO_API_RESPONSE_'. $widget .': '. $this->getApiResponse()->getJson());
+        }
+
+        return $this;
     }
 
     /**
