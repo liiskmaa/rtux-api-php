@@ -62,7 +62,7 @@
                 <argument>Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\BxAccessor</argument>
             </call>
             <call method="addAccessor">
-                <argument>bx-attribute</argument>
+                <argument>bx-attributes</argument>
                 <argument>bxAttributes</argument>
                 <argument>Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\BxAttribute</argument>
             </call>
