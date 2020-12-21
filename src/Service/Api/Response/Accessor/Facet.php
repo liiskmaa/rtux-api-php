@@ -1,8 +1,15 @@
 <?php declare(strict_types=1);
 namespace Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor;
 
-use Boxalino\RealTimeUserExperienceApi\Service\Api\Util\AccessorHandlerInterface;
-
+/**
+ * Class Facet
+ *
+ * Boxalino API facet model
+ * The properties defined are a base on what can be configured in Boxalino Intelligence Admin
+ * The rest of the properties (custom defined) can be accessed directly
+ *
+ * @package Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor
+ */
 class Facet extends Accessor
     implements AccessorInterface
 {
@@ -177,7 +184,7 @@ class Facet extends Accessor
     }
 
     /**
-     * @return string
+     * @return string | null
      */
     public function getLabel(): ?string
     {
@@ -185,10 +192,10 @@ class Facet extends Accessor
     }
 
     /**
-     * @param string $label
+     * @param string | null $label
      * @return Facet
      */
-    public function setLabel(string $label): Facet
+    public function setLabel(?string $label): Facet
     {
         $this->label = $label;
         return $this;
@@ -299,18 +306,18 @@ class Facet extends Accessor
     }
 
     /**
-     * @return int
+     * @return int | null
      */
-    public function getSortCode(): int
+    public function getSortCode(): ?int
     {
         return $this->sortCode;
     }
 
     /**
-     * @param int $sortCode
+     * @param int | null $sortCode
      * @return Facet
      */
-    public function setSortCode(int $sortCode): Facet
+    public function setSortCode(?int $sortCode): Facet
     {
         $this->sortCode = $sortCode;
         return $this;
@@ -361,10 +368,10 @@ class Facet extends Accessor
     }
 
     /**
-     * @param string $visualisation
+     * @param string | null $visualisation
      * @return Facet
      */
-    public function setVisualisation(string $visualisation): Facet
+    public function setVisualisation(?string $visualisation): Facet
     {
         $this->visualisation = $visualisation;
         return $this;
@@ -379,10 +386,10 @@ class Facet extends Accessor
     }
 
     /**
-     * @param string $display
+     * @param string | null $display
      * @return Facet
      */
-    public function setDisplay(string $display): Facet
+    public function setDisplay(?string $display): Facet
     {
         $this->display = $display;
         return $this;
@@ -397,10 +404,10 @@ class Facet extends Accessor
     }
 
     /**
-     * @param string $displaySelectedValues
+     * @param string | null $displaySelectedValues
      * @return Facet
      */
-    public function setDisplaySelectedValues(string $displaySelectedValues): Facet
+    public function setDisplaySelectedValues(?string $displaySelectedValues): Facet
     {
         $this->displaySelectedValues = $displaySelectedValues;
         return $this;
@@ -415,10 +422,10 @@ class Facet extends Accessor
     }
 
     /**
-     * @param bool $showCounter
+     * @param string | null $showCounter
      * @return Facet
      */
-    public function setShowCounter(string $showCounter): Facet
+    public function setShowCounter(?string $showCounter): Facet
     {
         $this->showCounter = $showCounter === "true" ;
         return $this;
@@ -479,18 +486,18 @@ class Facet extends Accessor
     }
 
     /**
-     * @return bool
+     * @return bool | null
      */
-    public function isSortAscending(): bool
+    public function isSortAscending(): ?bool
     {
         return $this->sortAscending;
     }
 
     /**
-     * @param bool $sortAscending
+     * @param bool | null $sortAscending
      * @return Facet
      */
-    public function setSortAscending(bool $sortAscending): Facet
+    public function setSortAscending(?bool $sortAscending): Facet
     {
         $this->sortAscending = $sortAscending;
         return $this;
@@ -523,10 +530,10 @@ class Facet extends Accessor
     }
 
     /**
-     * @param string $position
+     * @param string | null $position
      * @return Facet
      */
-    public function setPosition(string $position) : Facet
+    public function setPosition(?string $position) : Facet
     {
         $this->position = $position;
         return $this;
@@ -563,18 +570,18 @@ class Facet extends Accessor
     /**
      * Flag if the facet is configured to allow multiple selected values
      *
-     * @return bool
+     * @return bool | null
      */
-    public function allowMultiselect() : bool
+    public function allowMultiselect() : ?bool
     {
         return $this->allowMultiselect;
     }
 
     /**
-     * @param string $allow
+     * @param string | null $allow
      * @return $this
      */
-    public function setAllowMultiselect(string $allow) : Facet
+    public function setAllowMultiselect(?string $allow) : Facet
     {
         $this->allowMultiselect = $allow == 'true';
         return $this;
