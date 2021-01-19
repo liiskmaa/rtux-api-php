@@ -539,4 +539,17 @@ class ResponseDefinition implements ResponseDefinitionInterface
         return $this->segments;
     }
 
+    /**
+     * Resets the API response
+     *
+     * @return ResponseDefinitionInterface
+     */
+    public function reset() : ResponseDefinitionInterface
+    {
+        $this->data = null;
+        $this->blocks = null;
+        $this->seoMetaProperties = null;
+        $this->seoMetaProperties = null;
+    }
+
 }

@@ -67,6 +67,7 @@ class ApiCallService implements ApiCallServiceInterface
     public function call(RequestDefinitionInterface $apiRequest, string $restApiEndpoint) : ?ResponseDefinitionInterface
     {
         try {
+            $this->responseDefinition->reset();
             $this->setFallback(false);
             $request = new Request(
                 'POST',

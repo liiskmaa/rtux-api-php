@@ -143,5 +143,11 @@ interface ResponseDefinitionInterface
      */
     public function getSeoBreadcrumbs() : ?array;
 
+    /**
+     * Call to reset the object
+     *
+     * @return ResponseDefinitionInterface
+     */
+    public function reset() : ResponseDefinitionInterface;
 
 }
