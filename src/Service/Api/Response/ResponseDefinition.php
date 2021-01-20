@@ -550,6 +550,8 @@ class ResponseDefinition implements ResponseDefinitionInterface
         $this->blocks = null;
         $this->seoMetaProperties = null;
         $this->seoMetaProperties = null;
+
+        return $this;
     }
 
 }
