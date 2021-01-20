@@ -136,7 +136,7 @@ abstract class ItemContextAbstract
      */
     public function setConfiguredProductsAsContextParameters(bool $value) : self
     {
-        $this->useConfiguredProductsAsContextParameters = false;
+        $this->useConfiguredProductsAsContextParameters = true;
         return $this;
     }
 
