@@ -176,7 +176,7 @@ abstract class ApiLoaderAbstract
      * @param ContextInterface $apiContextInterface
      * @return $this
      */
-    public function setApiContext(ContextInterface $apiContextInterface) 
+    public function setApiContext(ContextInterface $apiContextInterface)
     {
         $this->apiContext = $apiContextInterface;
         return $this;
@@ -211,6 +211,50 @@ abstract class ApiLoaderAbstract
     {
         $this->apiContextInterfaceList->offsetSet($widget, $apiContextInterface);
         return $this;
+    }
+
+    /**
+     * @return \ArrayIterator
+     */
+    public function getApiContextList() : \ArrayIterator
+    {
+        return $this->apiContextInterfaceList;
+    }
+
+    /**
+     * @return ConfigurationInterface
+     */
+    public function getConfiguration() : ConfigurationInterface
+    {
+        return $this->configuration;
+    }
+
+    /**
+     * @param ConfigurationInterface $configuration
+     * @return $this
+     */
+    public function setConfiguration(ConfigurationInterface $configuration) : self
+    {
+        $this->configuration = $configuration;
+        return $this;
+    }
+
+    /**
+     * @param ApiCallServiceInterface $apiCallService
+     * @return $this
+     */
+    public function setApiCallService(ApiCallServiceInterface $apiCallService) : self
+    {
+        $this->apiCallService = $apiCallService;
+        return $this;
+    }
+
+    /**
+     * @return ApiCallServiceInterface
+     */
+    public function getApiCallService()
+    {
+        return $this->apiCallService;
     }
 
 }
