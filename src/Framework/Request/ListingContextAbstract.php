@@ -44,8 +44,8 @@ abstract class ListingContextAbstract
     {
         foreach($request->getParams() as $param => $values)
         {
-            //it`s a store property
-            if(strpos($param, ApiFacetModelAbstract::BOXALINO_STORE_FACET_PREFIX)===0)
+            //it`s a store property - has the allowed filters prefix
+            if(strpos($param, $this->getFacetPrefix())===0)
             {
                 if (in_array($param, array_keys($this->getRangeProperties())))
                 {
@@ -55,7 +55,7 @@ abstract class ListingContextAbstract
                 $values = array_map("html_entity_decode", $values);
                 $this->getApiRequest()->addFacets(
                     $this->parameterFactory->get(ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_FACET)
-                        ->addWithValues($param, $values)
+                        ->addWithValues(substr($param, strlen($this->getFacetPrefix()), strlen($param)), $values)
                 );
             }
         }
@@ -100,5 +100,6 @@ abstract class ListingContextAbstract
      * @return string
      */
     abstract public function getFilterValuesDelimiter() : string;
+
 
 }

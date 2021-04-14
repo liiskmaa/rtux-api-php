@@ -22,4 +22,14 @@ interface AccessorFacetModelInterface extends AccessorModelInterface
      */
     public function getByPosition(string $position) : \ArrayIterator;
 
+    /**
+     * @return string
+     */
+    public function getFacetPrefix() : string;
+
+    /**
+     * @param string $prefix
+     */
+    public function setFacetPrefix(string $prefix) : void;
+
 }

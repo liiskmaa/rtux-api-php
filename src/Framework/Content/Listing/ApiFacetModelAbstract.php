@@ -27,6 +27,11 @@ abstract class ApiFacetModelAbstract implements AccessorFacetModelInterface
     protected $facets;
 
     /**
+     * @var string
+     */
+    protected $facetPrefix = null;
+
+    /**
      * @var \ArrayIterator
      */
     protected $selectedFacets;
@@ -111,6 +116,8 @@ abstract class ApiFacetModelAbstract implements AccessorFacetModelInterface
         foreach($facets as $facet)
         {
             $facet = $this->toObject($facet, $this->getAccessorHandler()->getAccessor("facet"));
+            $facet->setFieldPrefix($this->getFacetPrefix());
+
             $this->facets->append($facet);
             if($facet->getLabel() === "")
             {
@@ -182,5 +189,22 @@ abstract class ApiFacetModelAbstract implements AccessorFacetModelInterface
         $this->accessorHandler = $accessorHandler;
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getFacetPrefix(): string
+    {
+        return $this->facetPrefix ?? AccessorFacetModelInterface::BOXALINO_STORE_FACET_PREFIX;
+    }
+
+    /**
+     * @param string $facetPrefix
+     */
+    public function setFacetPrefix(string $facetPrefix): void
+    {
+        $this->facetPrefix = $facetPrefix;
+    }
+
 
 }

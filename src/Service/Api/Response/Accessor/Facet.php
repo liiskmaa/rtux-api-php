@@ -166,6 +166,11 @@ class Facet extends Accessor
     protected $rangeToField;
 
     /**
+     * @var string | null
+     */
+    protected $fieldPrefix;
+
+    /**
      * @return string
      */
     public function getField(): string
@@ -540,34 +545,6 @@ class Facet extends Accessor
     }
 
     /**
-     * Get request variable name which is used for apply filter
-     * For ex: "products_" can be removed, fields renamed, etc
-     *
-     * @return string
-     */
-    public function getRequestField() : string
-    {
-        if(is_null($this->requestField))
-        {
-            //$this->requestField = substr($this->getField(), strlen(AccessorFacetModelInterface::BOXALINO_STORE_FACET_PREFIX), strlen($this->getField()));
-            $this->requestField = $this->getField();
-        }
-
-        return $this->requestField ;
-    }
-
-    /**
-     * Set the name of the facet as is to appear in the URL
-     *
-     * @param string $field
-     */
-    public function setRequestField(string $field) : Facet
-    {
-        $this->requestField = $field;
-        return $this;
-    }
-
-    /**
      * Flag if the facet is configured to allow multiple selected values
      *
      * @return bool | null
@@ -626,6 +603,51 @@ class Facet extends Accessor
     public function setRangeToField(?string $rangeToField): Facet
     {
         $this->rangeToField = $rangeToField;
+        return $this;
+    }
+
+    /**
+     * Get request variable name which is used for apply filter
+     * For ex: "products_" can be removed, fields renamed, etc
+     *
+     * @return string
+     */
+    public function getRequestField() : string
+    {
+        if(is_null($this->requestField))
+        {
+            $this->requestField = $this->getFieldPrefix() . $this->getField();
+        }
+
+        return $this->requestField ;
+    }
+
+    /**
+     * Set the name of the facet as is to appear in the URL
+     *
+     * @param string $field
+     */
+    public function setRequestField(string $field) : Facet
+    {
+        $this->requestField = $field;
+        return $this;
+    }
+
+    /**
+     * @return string | null
+     */
+    public function getFieldPrefix() : ?string
+    {
+        return $this->fieldPrefix;
+    }
+
+    /**
+     * @param string $prefix
+     * @return $this
+     */
+    public function setFieldPrefix(string $prefix) : Facet
+    {
+        $this->fieldPrefix = $prefix;
         return $this;
     }
 

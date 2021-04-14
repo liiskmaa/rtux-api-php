@@ -65,6 +65,11 @@ abstract class ContextAbstract
     protected $properties;
 
     /**
+     * @var null
+     */
+    protected $facetPrefix = null;
+
+    /**
      * Listing constructor.
      *
      * @param RequestTransformerInterface $requestTransformer
@@ -273,6 +278,22 @@ abstract class ContextAbstract
     }
 
     /**
+     * @param string $facetPrefix
+     */
+    public function setFacetPrefix(string $facetPrefix): void
+    {
+        $this->facetPrefix = $facetPrefix;
+    }
+
+    /**
+     * @param string $facetPrefix
+     */
+    public function getFacetPrefix(): string
+    {
+        return $this->facetPrefix;
+    }
+
+    /**
      * @param string $property
      * @return bool
      */
@@ -280,7 +301,7 @@ abstract class ContextAbstract
     {
         return $this->properties->offsetExists($property);
     }
-    
+
     /**
      * @param string $key
      * @param $value
