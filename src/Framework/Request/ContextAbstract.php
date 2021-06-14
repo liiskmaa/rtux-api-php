@@ -7,6 +7,7 @@ use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestDefinitionInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestTransformerInterface;
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorFacetModelInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\MissingDependencyException;
 
 /**
@@ -290,7 +291,7 @@ abstract class ContextAbstract
      */
     public function getFacetPrefix(): string
     {
-        return $this->facetPrefix;
+        return $this->facetPrefix ?? AccessorFacetModelInterface::BOXALINO_API_FACET_PREFIX;
     }
 
     /**

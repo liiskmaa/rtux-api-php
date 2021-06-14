@@ -16,7 +16,7 @@
             <argument type="service" id="Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestTransformerInterface"/>
             <argument type="service" id="Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterFactoryInterface"/>
             <call method="setFacetPrefix">
-                <argument type="constant">Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorFacetModelInterface::BOXALINO_STORE_FACET_PREFIX</argument>
+                <argument type="constant">Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorFacetModelInterface::BOXALINO_API_FACET_PREFIX</argument>
             </call>
         </service>
         <service id="boxalino.api.request.context.item"

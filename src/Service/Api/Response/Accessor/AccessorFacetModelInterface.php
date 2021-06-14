@@ -10,6 +10,8 @@ interface AccessorFacetModelInterface extends AccessorModelInterface
 {
     const BOXALINO_STORE_FACET_PREFIX = "products_";
     const BOXALINO_SYSTEM_FACET_PREFIX = "bx_";
+    const BOXALINO_API_FACET_PREFIX = "api_";
+    const BOXALINO_BQ_FACET_PREFIX = "bq_";
 
     /**
      * @return ArrayIterator
@@ -23,9 +25,9 @@ interface AccessorFacetModelInterface extends AccessorModelInterface
     public function getByPosition(string $position) : \ArrayIterator;
 
     /**
-     * @return string
+     * @return string | null
      */
-    public function getFacetPrefix() : string;
+    public function getFacetPrefix() : ?string;
 
     /**
      * @param string $prefix

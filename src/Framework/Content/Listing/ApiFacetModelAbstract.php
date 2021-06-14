@@ -168,7 +168,7 @@ abstract class ApiFacetModelAbstract implements AccessorFacetModelInterface
     public function addAccessorContext(?AccessorInterface $context = null): AccessorModelInterface
     {
         $this->setAccessorHandler($context->getAccessorHandler());
-        $this->setFacets($context->getFacetsList());
+        $this->setFacets($context->getBxFacets());
         return $this;
     }
 
@@ -195,7 +195,7 @@ abstract class ApiFacetModelAbstract implements AccessorFacetModelInterface
      */
     public function getFacetPrefix(): string
     {
-        return $this->facetPrefix ?? AccessorFacetModelInterface::BOXALINO_STORE_FACET_PREFIX;
+        return $this->facetPrefix ?? AccessorFacetModelInterface::BOXALINO_API_FACET_PREFIX;
     }
 
     /**

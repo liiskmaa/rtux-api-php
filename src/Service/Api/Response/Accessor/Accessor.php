@@ -66,7 +66,6 @@ class Accessor implements AccessorInterface
      * Sets either accessor objects or accessor fields to the response object
      *
      * @param string $propertyName
-     * @return $this
      */
     public function get(string $propertyName)
     {

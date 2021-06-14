@@ -13,7 +13,8 @@ use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorMod
  *
  * @package Boxalino\RealTimeUserExperienceApi\Service\Api\Content
  */
-abstract class ApiEntityCollectionModelAbstract implements AccessorModelInterface
+class ApiEntityCollectionModel
+    implements AccessorModelInterface, ApiEntityCollectionInterface
 {
 
     /**
@@ -22,9 +23,17 @@ abstract class ApiEntityCollectionModelAbstract implements AccessorModelInterfac
     protected $hitIds;
 
     /**
-     * Accessing collection of products based on the hits
+     * @var \ArrayIterator
      */
-    abstract public function getCollection();
+    protected $apiCollection;
+
+    /**
+     * @return \ArrayIterator
+     */
+    public function getApiCollection() : \ArrayIterator
+    {
+        return $this->apiCollection;
+    }
 
     /**
      * @return array
@@ -32,6 +41,24 @@ abstract class ApiEntityCollectionModelAbstract implements AccessorModelInterfac
     public function getHitIds() : array
     {
         return $this->hitIds;
+    }
+
+    /**
+     * Creates the collection which has only the return fields requested
+     *
+     * @param \ArrayIterator $blocks
+     * @param string $hitAccessor
+     */
+    public function setApiCollection(\ArrayIterator $blocks, string $hitAccessor) : void
+    {
+        $items = array_map(function(AccessorInterface $block) use ($hitAccessor) {
+            if(property_exists($block, $hitAccessor))
+            {
+                return $block->get($hitAccessor);
+            }
+        }, $blocks->getArrayCopy());
+
+        $this->apiCollection = $items;
     }
 
     /**
@@ -44,7 +71,19 @@ abstract class ApiEntityCollectionModelAbstract implements AccessorModelInterfac
         $ids = array_map(function(AccessorInterface $block) use ($hitAccessor, $idField) {
             if(property_exists($block, $hitAccessor))
             {
-                return $block->get($hitAccessor)->get($idField)[0];
+                $value = $block->get($hitAccessor)->get($idField);
+                if(is_array($value))
+                {
+                    return $value[0];
+                }
+
+                if(!$value)
+                {
+                    /** @var string $value by default, any returned document has the "id" value, when part of a collection */
+                    return $block->get($hitAccessor)->get("id");
+                }
+
+                return $value;
             }
         }, $blocks->getArrayCopy());
 
@@ -57,6 +96,8 @@ abstract class ApiEntityCollectionModelAbstract implements AccessorModelInterfac
      */
     public function addAccessorContext(?AccessorInterface $context = null): AccessorModelInterface
     {
+        $this->setApiCollection($context->getBlocks(), $context->getAccessorHandler()->getAccessorSetter("bx-hit"));
+
         $this->setHitIds($context->getBlocks(),
             $context->getAccessorHandler()->getAccessorSetter('bx-hit'),
             $context->getAccessorHandler()->getHitIdFieldName('bx-hit')
@@ -64,5 +105,6 @@ abstract class ApiEntityCollectionModelAbstract implements AccessorModelInterfac
 
         return $this;
     }
+
 
 }
