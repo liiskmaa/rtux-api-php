@@ -21,7 +21,7 @@
         </service>
 
         <!-- Abstract Entity displaying how to access hit IDs from the response -->
-        <service id="boxalino.api.content.listing.collection" class="Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiEntityCollectionModelAbstract"
+        <service id="boxalino.api.content.listing.collection" class="Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiEntityCollectionModel"
                  public="true" shared="false" abstract="true"/>
 
         <!-- Boxalino facet handler model (used in layout block definition) -->
