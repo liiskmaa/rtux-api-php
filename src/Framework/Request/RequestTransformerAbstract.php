@@ -175,7 +175,7 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
             $request->setCookie(ApiCookieSubscriber::BOXALINO_API_INIT_VISITOR, $cookieValue);
             $this->profileId = $cookieValue;
         }
-        
+
         return $this->profileId;
     }
 
@@ -279,8 +279,7 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
             return;
         }
 
-        $sorting = $this->sortingModel->getRequestSorting($key);
-        foreach($sorting as $sort)
+        foreach($this->getSortingByKey($key) as $sort)
         {
             $this->requestDefinition->addSort(
                 $this->parameterFactory->get(ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_SORT)
@@ -289,6 +288,15 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
         }
     }
 
+    /**
+     * @param string $key
+     * @return array
+     */
+    public function getSortingByKey(string $key) : array
+    {
+        return $this->sortingModel->getRequestSorting($key);
+    }
+    
     /**
      * @return int
      */

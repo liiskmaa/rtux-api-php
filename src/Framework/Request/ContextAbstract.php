@@ -91,6 +91,7 @@ abstract class ContextAbstract
     public function get(RequestInterface $request) : RequestDefinitionInterface
     {
         $this->validateRequest($request);
+
         $this->requestTransformer->setRequestDefinition($this->getApiRequest())
             ->setLimit($this->getHitCount())
             ->transform($request);
@@ -103,6 +104,7 @@ abstract class ContextAbstract
 
         $this->addFilters($request);
         $this->addContextParameters($request);
+        $this->addSort($request);
 
         return $this->getApiRequest();
     }
@@ -114,6 +116,20 @@ abstract class ContextAbstract
     abstract function getActiveFilter(RequestInterface $request) : ParameterInterface;
     abstract function getContextVisibility() : array;
     abstract function getReturnFields() : array;
+
+    /**
+     * Adding a sort on the request
+     * Redefine in a context that allows flexible update of the request
+     * Either add a sort on the API request  (RequestDefinitionInterface) element
+     * or add the sort parameter key:value on the RequestInterface $request
+     * (it will automatically be added in the request
+     * 
+     * @param RequestInterface $request
+     */
+    public function addSort(RequestInterface $request) : void
+    {
+        return;
+    }
 
     /**
      * Adding context parameters per integration use-case

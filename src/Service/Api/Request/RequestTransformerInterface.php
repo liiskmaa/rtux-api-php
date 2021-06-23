@@ -49,4 +49,10 @@ interface RequestTransformerInterface
      */
     public function getRequestDefinition() : RequestDefinitionInterface;
 
+    /**
+     * @param string $key
+     * @return array
+     */
+    public function getSortingByKey(string $key) : array;
+
 }
