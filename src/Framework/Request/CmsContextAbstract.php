@@ -93,6 +93,29 @@ abstract class CmsContextAbstract
     }
 
     /**
+     * @param RequestInterface $request
+     */
+    public function addSort(RequestInterface $request) : void
+    {
+        if($this->has("sort"))
+        {
+            /** @var string $sortField */
+            $sortKey= $this->getProperty("sort");
+            foreach($this->requestTransformer->getSortingByKey($sortKey) as $sort)
+            {
+                $this->getApiRequest()->addSort(
+                    $this->parameterFactory->get(ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_SORT)
+                        ->add($sort["field"], $sort["reverse"])
+                );
+            }
+
+            return;
+        }
+
+        parent::addSort($request);
+    }
+
+    /**
      * If there are configured returnFields in the CMS element - they will be used
      *
      * @return array

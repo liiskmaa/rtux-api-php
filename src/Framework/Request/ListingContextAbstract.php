@@ -45,7 +45,7 @@ abstract class ListingContextAbstract
         foreach($request->getParams() as $param => $values)
         {
             //it`s a store property - has the allowed filters prefix
-            if(strpos($param, $this->getFacetPrefix())===0)
+            if(strpos((string)$param, $this->getFacetPrefix())===0)
             {
                 if (in_array($param, array_keys($this->getRangeProperties())))
                 {

@@ -443,7 +443,7 @@ class ResponseDefinition implements ResponseDefinitionInterface
         foreach($properties as $property)
         {
             $propertyName = $property->getName();
-            if(strpos($propertyName, $prefix) === 0)
+            if(strpos((string)$propertyName, $prefix) === 0)
             {
                 $element = $this->get()->advanced->$index->$propertyName;
                 $returnObject->offsetSet($element->name, $element->value);
