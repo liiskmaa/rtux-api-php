@@ -27,6 +27,11 @@ abstract class ItemContextAbstract
     /**
      * @var string
      */
+    protected $itemGroupBy = "id";
+
+    /**
+     * @var string
+     */
     protected $productId;
 
     /**
@@ -60,7 +65,7 @@ abstract class ItemContextAbstract
         $this->getApiRequest()
             ->addItems(
                 $this->parameterFactory->get(ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_ITEM)
-                    ->add($this->getGroupBy(), $this->getProductId())
+                    ->add($this->getItemGroupBy(), $this->getProductId())
             );
 
         /**
@@ -71,7 +76,7 @@ abstract class ItemContextAbstract
             $this->getApiRequest()
                 ->addItems(
                     $this->parameterFactory->get(ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_ITEM)
-                        ->add($this->getGroupBy(), $subProductId, "subProduct")
+                        ->add($this->getItemGroupBy(), $subProductId, "subProduct")
                 );
         }
 
@@ -175,6 +180,22 @@ abstract class ItemContextAbstract
     {
         $this->subProductIds = $ids;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getItemGroupBy(): string
+    {
+        return $this->itemGroupBy;
+    }
+
+    /**
+     * @param string $itemGroupBy
+     */
+    public function setItemGroupBy(string $itemGroupBy): void
+    {
+        $this->itemGroupBy = $itemGroupBy;
     }
 
     /**
