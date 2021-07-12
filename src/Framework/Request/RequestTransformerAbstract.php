@@ -153,10 +153,7 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
             return $request->getCookie(ApiCookieSubscriber::BOXALINO_API_COOKIE_SESSION);
         }
 
-        $cookieValue = Uuid::uuid4()->toString();
-        $request->setCookie(ApiCookieSubscriber::BOXALINO_API_INIT_SESSION, $cookieValue);
-
-        return $cookieValue;
+        return $this->_setCookieToRequest($request, ApiCookieSubscriber::BOXALINO_API_INIT_SESSION);
     }
 
     /**
@@ -164,21 +161,28 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
      */
     public function getProfileId(RequestInterface $request) : string
     {
-        if(is_null($this->profileId))
+        if($request->hasCookie(ApiCookieSubscriber::BOXALINO_API_COOKIE_VISITOR))
         {
-            if($request->hasCookie(ApiCookieSubscriber::BOXALINO_API_COOKIE_VISITOR))
-            {
-                return $request->getCookie(ApiCookieSubscriber::BOXALINO_API_COOKIE_VISITOR);
-            }
-
-            $cookieValue = Uuid::uuid4()->toString();
-            $request->setCookie(ApiCookieSubscriber::BOXALINO_API_INIT_VISITOR, $cookieValue);
-            $this->profileId = $cookieValue;
+            return $request->getCookie(ApiCookieSubscriber::BOXALINO_API_COOKIE_VISITOR);
         }
 
-        return $this->profileId;
+        return $this->_setCookieToRequest($request, ApiCookieSubscriber::BOXALINO_API_INIT_VISITOR);
     }
 
+    /**
+     * @param RequestInterface $request
+     * @param string $cookieName
+     * @return string
+     * @throws \Exception
+     */
+    protected function _setCookieToRequest(RequestInterface $request, string $cookieName) : string
+    {
+        $cookieValue = Uuid::uuid4()->toString();
+        $request->setCookie($cookieName, $cookieValue);
+        
+        return $cookieValue;
+    }
+    
     /**
      * Processing the RequestInterface parameters
      *
@@ -296,7 +300,7 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
     {
         return $this->sortingModel->getRequestSorting($key);
     }
-    
+
     /**
      * @return int
      */
