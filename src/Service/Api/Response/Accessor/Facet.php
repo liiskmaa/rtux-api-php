@@ -98,7 +98,7 @@ class Facet extends Accessor
      * Display number of products matching each facet value or not
      * @var bool
      */
-    protected $showCounter = false;
+    protected $showCounter = true;
 
     /**
      * If set, only the <enumDisplaySize> nr of facet value will be displayed, the other would appear under a link 'see other values'
