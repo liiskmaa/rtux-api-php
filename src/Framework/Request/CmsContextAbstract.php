@@ -93,11 +93,14 @@ abstract class CmsContextAbstract
     }
 
     /**
+     * Add the configured sort options only if there is not a selected sort option already
+     *
      * @param RequestInterface $request
      */
     public function addSort(RequestInterface $request) : void
     {
-        if($this->has("sort"))
+        $existingSortInRequest = $request->getParam($this->requestTransformer->getSortParameter(), null);
+        if($this->has("sort") && is_null($existingSortInRequest))
         {
             /** @var string $sortField */
             $sortKey= $this->getProperty("sort");
@@ -144,5 +147,6 @@ abstract class CmsContextAbstract
 
         return parent::getHitCount();
     }
+
 
 }

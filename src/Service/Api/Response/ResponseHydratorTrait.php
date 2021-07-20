@@ -4,6 +4,7 @@ namespace Boxalino\RealTimeUserExperienceApi\Service\Api\Response;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\Block;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Util\AccessorHandlerInterface;
+use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\UndefinedPropertyError;
 
 /**
  * Class ResponseHydratorTrait
@@ -99,6 +100,11 @@ trait ResponseHydratorTrait
                 {
                     $response = $block;
                 }
+
+                if(is_null($response))
+                {
+                    throw new UndefinedPropertyError("BoxalinoAPI Logical Branch switch.");
+                }
             } catch(\Throwable $exception) {
                 foreach($block->getBlocks() as $searchBlock)
                 {
@@ -106,6 +112,11 @@ trait ResponseHydratorTrait
                         if($searchBlock->get($property))
                         {
                             $response = $searchBlock;
+                        }
+
+                        if(is_null($response))
+                        {
+                            throw new UndefinedPropertyError("BoxalinoAPI Logical Branch switch.");
                         }
                     } catch (\Throwable $exception)
                     {

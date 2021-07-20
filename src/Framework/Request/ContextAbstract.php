@@ -7,7 +7,6 @@ use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestDefinitionInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestTransformerInterface;
-use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorFacetModelInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\MissingDependencyException;
 
 /**
@@ -92,6 +91,7 @@ abstract class ContextAbstract
     public function get(RequestInterface $request) : RequestDefinitionInterface
     {
         $this->validateRequest($request);
+
         $this->requestTransformer->setRequestDefinition($this->getApiRequest())
             ->setLimit($this->getHitCount())
             ->transform($request);
@@ -325,8 +325,13 @@ abstract class ContextAbstract
      */
     public function addRequestParameter(string $key, $value, $type=ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_HEADER)
     {
-        if(in_array($type, [ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_USER, ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_HEADER]))
-        {
+        if(in_array($type,
+            [
+                ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_USER,
+                ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_HEADER
+            ]
+        )
+        ) {
             $this->getApiRequest()->addHeaderParameters(
                 $this->parameterFactory->get($type)
                     ->add($key, $value)
@@ -335,5 +340,6 @@ abstract class ContextAbstract
 
         return $this;
     }
+
 
 }

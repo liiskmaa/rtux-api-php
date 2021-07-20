@@ -19,4 +19,10 @@ interface ApiEntityCollectionInterface extends AccessorModelInterface
      */
     public function getHitIds() : array;
 
+    /**
+     * @return array
+     */
+    public function getIds() : array;
+
+
 }

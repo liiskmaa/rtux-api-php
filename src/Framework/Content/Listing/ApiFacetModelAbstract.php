@@ -117,12 +117,13 @@ abstract class ApiFacetModelAbstract implements AccessorFacetModelInterface
         {
             $facet = $this->toObject($facet, $this->getAccessorHandler()->getAccessor("facet"));
             $facet->setFieldPrefix($this->getFacetPrefix());
-
-            $this->facets->append($facet);
-            if($facet->getLabel() === "")
+            $label = $facet->getLabel();
+            if(!$label || empty($label))
             {
                 $facet->setLabel($this->getLabel($facet->getField()));
             }
+
+            $this->facets->append($facet);
             if($facet->isSelected())
             {
                 $this->addSelectedFacet($facet);

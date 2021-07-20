@@ -20,7 +20,12 @@ class ApiEntityCollectionModel
     /**
      * @var array
      */
-    protected $hitIds;
+    protected $hitIds = [];
+
+    /**
+     * @var array
+     */
+    protected $ids = [];
 
     /**
      * @var \ArrayIterator
@@ -91,12 +96,38 @@ class ApiEntityCollectionModel
     }
 
     /**
+     * @param \ArrayIterator $blocks
+     * @param string $hitAccessor
+     * @param string $idField
+     */
+    public function setIds(\ArrayIterator $blocks, string $hitAccessor)
+    {
+        $ids = array_map(function(AccessorInterface $block) use ($hitAccessor) {
+            if(property_exists($block, $hitAccessor))
+            {
+                return $block->get($hitAccessor)->get("id");
+            }
+        }, $blocks->getArrayCopy());
+
+        $this->ids = $ids;
+    }
+
+    /**
+     * @return array
+     */
+    public function getIds() : array
+    {
+        return $this->ids;
+    }
+
+    /**
      * @param null | AccessorInterface $context
      * @return AccessorModelInterface
      */
     public function addAccessorContext(?AccessorInterface $context = null): AccessorModelInterface
     {
         $this->setApiCollection($context->getBlocks(), $context->getAccessorHandler()->getAccessorSetter("bx-hit"));
+        $this->setIds($context->getBlocks(), $context->getAccessorHandler()->getAccessorSetter('bx-hit'));
 
         $this->setHitIds($context->getBlocks(),
             $context->getAccessorHandler()->getAccessorSetter('bx-hit'),
