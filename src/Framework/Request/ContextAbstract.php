@@ -7,6 +7,7 @@ use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ParameterInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestDefinitionInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestTransformerInterface;
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorFacetModelInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\MissingDependencyException;
 
 /**
