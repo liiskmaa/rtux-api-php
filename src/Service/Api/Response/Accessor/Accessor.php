@@ -18,9 +18,9 @@ class Accessor implements AccessorInterface
     protected $accessorHandler;
 
     /**
-     * @var BxAttributeList
+     * @var BxAttributeList | \ArrayIterator | []
      */
-    protected $bxAttributes;
+    protected $bxAttributes = null;
 
     public function __construct(AccessorHandlerInterface $accessorHandler)
     {
@@ -45,6 +45,23 @@ class Accessor implements AccessorInterface
             } catch (\Exception $exception)
             {
                 throw new UndefinedPropertyError("BoxalinoAPI: the property $key is not available in the " . get_called_class());
+            }
+        }
+
+        if($methodPrefix == 'has')
+        {
+            try{
+                foreach (get_object_vars($this) as $property => $value)
+                {
+                   if($key === $property)
+                   {
+                       return true;
+                   }
+                }
+
+                return false;
+            } catch (\Exception $exception)
+            {
             }
         }
     }
@@ -104,5 +121,11 @@ class Accessor implements AccessorInterface
     {
         return $this->bxAttributes ?? new BxAttributeList();
     }
+
+    /**
+     * Loading content into accessor
+     */
+    public function load(): void {}
+
 
 }

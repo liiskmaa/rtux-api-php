@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 namespace Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor;
 
+use Boxalino\RealTimeUserExperienceApi\Framework\Content\LoadPropertiesTrait;
+
 /**
  * Class Facet
  *
@@ -14,26 +16,28 @@ class Facet extends Accessor
     implements AccessorInterface
 {
 
+    use LoadPropertiesTrait;
+
     /**
      * @var string
      */
-    protected $field;
+    public $field;
 
     /**
      * @var null | string
      */
-    protected $label = null;
+    public $label = null;
 
     /**
      * Facet values
      * @var \ArrayIterator
      */
-    protected $values;
+    public $values;
 
     /**
      * @var bool
      */
-    protected $isAndSelectedValues = false;
+    public $isAndSelectedValues = false;
 
     /**
      * @var bool
@@ -45,14 +49,14 @@ class Facet extends Accessor
      *
      * @var bool
      */
-    protected $isNumerical = false;
+    public $isNumerical = false;
 
     /**
      * Range facet (ex: price)
      *
      * @var bool
      */
-    protected $isRange = false;
+    public $isRange = false;
 
     /**
      * @var int
@@ -66,7 +70,7 @@ class Facet extends Accessor
      * @var string
      * alphabetical | counter | custom | 2 (store system order)
      */
-    protected $valueorderEnums = null;
+    public $valueorderEnums = null;
 
     /**
      * @var bool
@@ -82,23 +86,23 @@ class Facet extends Accessor
      * | multiselect-dropdown | search | stars | colorpicker | datepicker | sizepicker | checkbox | genderpicker
      * | thumbs | textarea | textfield
      */
-    protected $visualisation = null;
+    public $visualisation = null;
 
     /**
      * @var string (hidden |  expanded  | collapsed)
      */
-    protected $display = null;
+    public $display = null;
 
     /**
      * @var string ( top | inlist | only )
      */
-    protected $displaySelectedValues = null;
+    public $displaySelectedValues = null;
 
     /**
      * Display number of products matching each facet value or not
      * @var bool
      */
-    protected $showCounter = true;
+    public $showCounter = true;
 
     /**
      * If set, only the <enumDisplaySize> nr of facet value will be displayed, the other would appear under a link 'see other values'
@@ -130,12 +134,12 @@ class Facet extends Accessor
     /**
      * @var array|AccessorInterface[]
      */
-    protected $selectedValues = null;
+    public $selectedValues = null;
 
     /**
      * @var bool
      */
-    protected $selected = false;
+    public $selected = false;
 
     /**
      * If configured, facet position (left, top, bottom, right)
@@ -143,7 +147,7 @@ class Facet extends Accessor
      *
      * @var string | null
      */
-    protected $position = null;
+    public $position = null;
 
     /**
      * @var string | null
@@ -153,22 +157,22 @@ class Facet extends Accessor
     /**
      * @var bool
      */
-    protected $allowMultiselect = false;
+    public $allowMultiselect = false;
 
     /**
      * @var string
      */
-    protected $rangeFromField;
+    public $rangeFromField;
 
     /**
      * @var string
      */
-    protected $rangeToField;
+    public $rangeToField;
 
     /**
      * @var string | null
      */
-    protected $fieldPrefix;
+    public $fieldPrefix;
 
     /**
      * @return string
@@ -213,7 +217,7 @@ class Facet extends Accessor
     {
         return $this->values;
     }
-
+    
     /**
      * @param array $values
      * @return Facet
@@ -669,4 +673,31 @@ class Facet extends Accessor
         return $this->selectedValues;
     }
 
+    /**
+     * Call the loadedValues() in order to apply the propper content setters & getters on the facet options
+     * Use camelcase to reuse the API properties
+     */
+    public function load(): void
+    {
+        $this->_loadAccessors();
+        $this->loadPropertiesToObject($this, ["loadedValues"], ["_loadAccessors"], true);
+    }
+
+    /**
+     * @return \ArrayIterator
+     */
+    protected function _loadAccessors() : void
+    {
+        foreach($this->getValues() as $value)
+        {
+            $value->load();
+        }
+
+        foreach($this->getSelectedValues() as $value)
+        {
+            $value->load();
+        }
+    }
+
+    
 }

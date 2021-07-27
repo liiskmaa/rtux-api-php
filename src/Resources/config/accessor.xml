@@ -13,7 +13,7 @@
         <service class="Boxalino\RealTimeUserExperienceApi\Service\Api\Util\AccessorHandler" id="boxalino.api.accessor">
             <call method="addAccessor">
                 <argument>bx-sort</argument>
-                <argument>sorting</argument>
+                <argument>bxSort</argument>
                 <argument>Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\Sort</argument>
             </call>
             <call method="addAccessor">
@@ -28,17 +28,17 @@
             </call>
             <call method="addAccessor">
                 <argument>bx-acQuery</argument>
-                <argument>suggestion</argument>
+                <argument>bxAcQuery</argument>
                 <argument>Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AcQuery</argument>
             </call>
             <call method="addAccessor">
                 <argument>bx-pagination</argument>
-                <argument>pagination</argument>
+                <argument>bxPagination</argument>
                 <argument>Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\Pagination</argument>
             </call>
             <call method="addAccessor">
                 <argument>bx-hit</argument>
-                <argument>product</argument>
+                <argument>bxHit</argument>
                 <argument>Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\Hit</argument>
             </call>
             <call method="addAccessor">
@@ -48,17 +48,17 @@
             </call>
             <call method="addAccessor">
                 <argument>bx-hits</argument>
-                <argument>productsCollection</argument>
+                <argument>bxHits</argument>
                 <argument>Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\BxAccessor</argument>
             </call>
             <call method="addAccessor">
                 <argument>bx-acQueries</argument>
-                <argument>suggestionsCollection</argument>
+                <argument>bxAcQueries</argument>
                 <argument>Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\BxAccessor</argument>
             </call>
             <call method="addAccessor">
                 <argument>bx-facets</argument>
-                <argument>facetsList</argument>
+                <argument>bxFacets</argument>
                 <argument>Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\BxAccessor</argument>
             </call>
             <call method="addAccessor">

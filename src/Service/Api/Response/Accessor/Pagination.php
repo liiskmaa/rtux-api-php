@@ -13,27 +13,27 @@ class Pagination extends Accessor
     /**
      * @var int
      */
-    protected $totalHitCount = 0;
+    public $totalHitCount = 0;
 
     /**
      * @var int
      */
-    protected $pageSize = 0;
+    public $pageSize = 0;
 
     /**
      * @var int
      */
-    protected $offset = 0;
+    public $offset = 0;
 
     /**
      * @var int
      */
-    protected $currentPage = 1;
+    public $currentPage = 1;
 
     /**
      * @var int
      */
-    protected $lastPage = 1;
+    public $lastPage = 1;
 
     /**
      * @return int
@@ -116,5 +116,6 @@ class Pagination extends Accessor
 
         return 1;
     }
+
 
 }

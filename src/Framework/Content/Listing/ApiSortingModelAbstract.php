@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 namespace Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing;
 
+use Boxalino\RealTimeUserExperienceApi\Framework\Content\LoadPropertiesTrait;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorModelInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\Sort;
@@ -14,6 +15,8 @@ use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\MissingDependencyExc
 abstract class ApiSortingModelAbstract
     implements ApiSortingModelInterface
 {
+
+    use LoadPropertiesTrait;
 
     /**
      * List of key->field for available sortings (framework-dependent)
@@ -46,7 +49,6 @@ abstract class ApiSortingModelAbstract
         $this->sortingMapRequest = new \ArrayObject();
         $this->sortingMapResponse = new \ArrayObject();
     }
-
 
     /**
      * @return string
@@ -251,13 +253,36 @@ abstract class ApiSortingModelAbstract
     }
 
     /**
+     * @return array
+     */
+    public function getAvailableSortings() : array
+    {
+        $sortingOptions = [];
+        foreach($this->getSortings() as $key => $sortingOption)
+        {
+            $sortingOptions[$key] = $sortingOption->getData();
+        }
+
+        return $sortingOptions;
+    }
+
+    /**
+     * Preparing element for API preview (ex: pwa context)
+     */
+    public function load(): void
+    {
+        $this->loadPropertiesToObject($this, ["sortings"], ["addSortingOptionCollection", "getSortings"]);
+    }
+
+    /**
      * @param null | AccessorInterface $context
      * @return AccessorModelInterface
      */
     public function addAccessorContext(?AccessorInterface $context = null): AccessorModelInterface
     {
-        $this->setActiveSorting($context->getSorting());
+        $this->setActiveSorting($context->getBxSort());
         return $this;
     }
+
 
 }

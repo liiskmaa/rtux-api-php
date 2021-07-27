@@ -34,4 +34,10 @@ interface AccessorInterface
      */
     public function getBxAttributes() : \ArrayIterator;
 
+    /**
+     * Loading content into accessor
+     */
+    public function load() : void;
+
+
 }

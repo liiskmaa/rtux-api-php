@@ -14,18 +14,18 @@ class AcQuery extends Accessor
     /**
      * @var string
      */
-    protected $suggestion;
+    public $suggestion;
 
     /**
      * @var null | string
      */
-    protected $highlighted = null;
+    public $highlighted = null;
 
     /**
      * @var int
      */
-    protected $totalHitCount = 0;
-
+    public $totalHitCount = 0;
+    
     /**
      * @return string
      */
@@ -79,5 +79,6 @@ class AcQuery extends Accessor
         $this->totalHitCount = $totalHitCount;
         return $this;
     }
+
 
 }

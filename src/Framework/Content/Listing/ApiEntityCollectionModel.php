@@ -1,8 +1,11 @@
 <?php declare(strict_types=1);
 namespace Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing;
 
+use Boxalino\RealTimeUserExperienceApi\Framework\Content\LoadPropertiesTrait;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorModelInterface;
+use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\Hit;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
 
 /**
  * Class ApiEntityCollectionModel
@@ -16,6 +19,8 @@ use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorMod
 class ApiEntityCollectionModel
     implements AccessorModelInterface, ApiEntityCollectionInterface
 {
+
+    use LoadPropertiesTrait;
 
     /**
      * @var array
@@ -59,11 +64,15 @@ class ApiEntityCollectionModel
         $items = array_map(function(AccessorInterface $block) use ($hitAccessor) {
             if(property_exists($block, $hitAccessor))
             {
-                return $block->get($hitAccessor);
+                /** @var Hit $data */
+                $data = $block->get($hitAccessor);
+                $data->set("bxAttributes", $block->getBxAttributes());
+
+                return $data;
             }
         }, $blocks->getArrayCopy());
 
-        $this->apiCollection = $items;
+        $this->apiCollection = new \ArrayIterator($items);
     }
 
     /**
@@ -118,6 +127,15 @@ class ApiEntityCollectionModel
     public function getIds() : array
     {
         return $this->ids;
+    }
+
+    /**
+     * Preparing element for API preview (ex: pwa context)
+     * The protected properties are not public (for this purpose - create dedicated functions)
+     */
+    public function load(): void
+    {
+       $this->loadPropertiesToObject($this, [],[], true);
     }
 
     /**

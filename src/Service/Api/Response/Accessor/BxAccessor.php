@@ -13,24 +13,25 @@ class BxAccessor extends Accessor
     /**
      * @var int
      */
-    protected $totalHitCounts = 0;
+    public $totalHitCount = 0;
 
     /**
      * @return int
      */
-    public function getTotalHitCounts(): int
+    public function getTotalHitCount(): int
     {
-        return $this->totalHitCounts;
+        return $this->totalHitCount;
     }
 
     /**
      * @param int $totalHitCounts
      * @return BxAccessor
      */
-    public function setTotalHitCounts(int $totalHitCounts): BxAccessor
+    public function setTotalHitCount(int $totalHitCounts): BxAccessor
     {
-        $this->totalHitCounts = $totalHitCounts;
+        $this->totalHitCount = $totalHitCounts;
         return $this;
     }
+
 
 }

@@ -18,7 +18,7 @@ class BxAttributeList extends \ArrayIterator
     /**
      * @var \ArrayIterator
      */
-    protected $data;
+    public $data;
 
     public function __construct($array = array(), $flags = 0)
     {
@@ -72,5 +72,6 @@ class BxAttributeList extends \ArrayIterator
 
         return null;
     }
+
 
 }

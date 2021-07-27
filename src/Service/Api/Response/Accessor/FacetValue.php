@@ -1,6 +1,8 @@
 <?php  declare(strict_types=1);
 namespace Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor;
 
+use Boxalino\RealTimeUserExperienceApi\Framework\Content\LoadPropertiesTrait;
+
 /**
  * Class FacetValue
  *
@@ -14,60 +16,62 @@ class FacetValue extends Accessor
     implements AccessorInterface
 {
 
+    use LoadPropertiesTrait;
+
     /**
      * @var string
      */
-    protected $value = null;
+    public $value = null;
 
     /**
      * @var null | string
      */
-    protected $label = null;
+    public $label = null;
 
     /**
      * @var string
      */
-    protected $id;
+    public $id;
 
     /**
      * @var int
      */
-    protected $hitCount = 0;
+    public $hitCount = 0;
 
     /**
      * @var bool
      */
-    protected $show = true;
+    public $show = true;
 
     /**
      * @var bool
      */
-    protected $selected = false;
+    public $selected = false;
 
     /**
      * @var string
      */
-    protected $minValue = 0;
+    public $minValue = 0;
 
     /**
      * @var string
      */
-    protected $maxValue = 0;
+    public $maxValue = 0;
 
     /**
      * @var string|null
      */
-    protected $url;
+    public $url;
 
     /**
      * @var null | string
      */
-    protected $maxSelectedValue = null;
+    public $maxSelectedValue = null;
 
     /**
      * @var null | string
      */
-    protected $minSelectedValue = null;
+    public $minSelectedValue = null;
 
     /**
      * @return string
@@ -266,5 +270,11 @@ class FacetValue extends Accessor
         $this->minSelectedValue = $minSelectedValue;
         return $this;
     }
+
+    public function load(): void
+    {
+        $this->loadPropertiesToObject($this, [], [], true);
+    }
+
 
 }

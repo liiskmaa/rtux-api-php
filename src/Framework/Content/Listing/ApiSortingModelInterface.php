@@ -54,6 +54,13 @@ interface ApiSortingModelInterface extends AccessorModelInterface
     public function getSortings(): array;
 
     /**
+     * Accessing the sortings options as array instead of SortingOption data object
+     *
+     * @return array
+     */
+    public function getAvailableSortings(): array;
+
+    /**
      * Transform a request key to a valid API sort
      * @param string $key
      * @return array

@@ -14,12 +14,12 @@ class Sort extends Accessor
     /**
      * @var string
      */
-    protected $field;
+    public $field;
 
     /**
      * @var bool
      */
-    protected $reverse;
+    public $reverse;
 
     /**
      * @return mixed
@@ -59,5 +59,6 @@ class Sort extends Accessor
         $this->reverse = $reverse;
         return $this;
     }
+
 
 }

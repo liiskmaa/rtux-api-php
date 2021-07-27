@@ -16,12 +16,12 @@ class BxAttribute extends Accessor
     /**
      * @var string
      */
-    protected $name;
+    public $name;
 
     /**
      * @var string
      */
-    protected $value;
+    public $value;
 
     /**
      * @return string
@@ -58,5 +58,6 @@ class BxAttribute extends Accessor
         $this->value = $value;
         return $this;
     }
+
 
 }

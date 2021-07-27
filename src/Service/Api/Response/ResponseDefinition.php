@@ -115,7 +115,7 @@ class ResponseDefinition implements ResponseDefinitionInterface
                 foreach($this->getBlocks() as $block)
                 {
                     try{
-                        $object = $this->findObjectWithProperty($block, "productsCollection");
+                        $object = $this->findObjectWithProperty($block, "bxHits");
                         if(is_null($object))
                         {
                             return 0;

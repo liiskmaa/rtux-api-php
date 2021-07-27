@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 namespace Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor;
 
+use Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiEntityCollectionInterface;
+use Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing\ApiSortingModelInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Util\AccessorHandlerInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\WrongDependencyTypeException;
 
@@ -16,17 +18,17 @@ class Block extends Accessor
     /**
      * @var string
      */
-    protected $model;
+    public $model;
 
     /**
      * @var string
      */
-    protected $template;
+    public $template;
 
     /**
      * @var string | null
      */
-    protected $position;
+    public $position;
 
     /**
      * @var null | string
@@ -36,17 +38,22 @@ class Block extends Accessor
     /**
      * @var \ArrayIterator
      */
-    protected $blocks;
+    public $blocks;
 
     /**
      * @var int
      */
-    protected $index = 0;
+    public $index = 0;
 
     /**
      * @var \ArrayIterator
      */
     protected $facets;
+
+    /**
+     * @var BxAttributeList | \ArrayIterator | []
+     */
+    public $bxAttributes;
 
     /**
      * The load of the model is done on model request to ensure all other properties
@@ -161,7 +168,7 @@ class Block extends Accessor
         $this->position = $position[0] ?? null;
         return $this;
     }
-    
+
     /**
      * @return \ArrayIterator
      */
@@ -192,5 +199,26 @@ class Block extends Accessor
         $this->index = $index ?? 0;
         return $this;
     }
+
+    /**
+     * Loading the elements of the Block
+     */
+    public function load() : void
+    {
+        if($this->hasModel())
+        {
+            $model = $this->getModel();
+            if($model instanceof AccessorModelInterface)
+            {
+                $model->load();
+            }
+        }
+
+        foreach($this->getBlocks() as $block)
+        {
+            $block->load();
+        }
+    }
+
 
 }

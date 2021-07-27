@@ -10,5 +10,5 @@ namespace Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor;
  */
 class Hit extends Accessor
     implements AccessorInterface
-{
+{    
 }
