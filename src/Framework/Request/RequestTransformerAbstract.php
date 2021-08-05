@@ -179,10 +179,10 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
     {
         $cookieValue = Uuid::uuid4()->toString();
         $request->setCookie($cookieName, $cookieValue);
-        
+
         return $cookieValue;
     }
-    
+
     /**
      * Processing the RequestInterface parameters
      *
@@ -225,7 +225,7 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
             $value = is_array($value) ? $value : [$value];
             $this->requestDefinition->addParameters(
                 $this->parameterFactory->get(ParameterFactoryInterface::BOXALINO_API_REQUEST_PARAMETER_TYPE_USER)
-                    ->add($param, $value)
+                    ->add((string)$param, $value)
             );
         }
     }
@@ -347,4 +347,6 @@ abstract class RequestTransformerAbstract implements RequestTransformerInterface
 
         return $this;
     }
+
+
 }

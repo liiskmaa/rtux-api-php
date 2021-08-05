@@ -22,6 +22,10 @@ class Accessor implements AccessorInterface
      */
     protected $bxAttributes = null;
 
+    /** @var string | null */
+    protected $bxContent = null;
+
+    
     public function __construct(AccessorHandlerInterface $accessorHandler)
     {
         $this->accessorHandler = $accessorHandler;
@@ -83,11 +87,15 @@ class Accessor implements AccessorInterface
      * Sets either accessor objects or accessor fields to the response object
      *
      * @param string $propertyName
-     * @return $this
      */
     public function get(string $propertyName)
     {
-        return $this->$propertyName;
+        try{
+            return $this->$propertyName;
+        } catch (\Throwable $exception)
+        {
+            // do nothing
+        }
     }
 
     /**
@@ -120,6 +128,22 @@ class Accessor implements AccessorInterface
     public function getBxAttributes() : \ArrayIterator
     {
         return $this->bxAttributes ?? new BxAttributeList();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getBxContext() : ?string
+    {
+        return $this->bxContent;
+    }
+
+    /**
+     * @param \StdClass $element
+     */
+    public function setBxContext(\StdClass $element) : void
+    {
+        $this->bxContent = $element->widget ?? null;
     }
 
     /**

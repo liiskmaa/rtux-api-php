@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 namespace Boxalino\RealTimeUserExperienceApi\Framework\Content\Page;
 
+use Boxalino\RealTimeUserExperienceApi\Framework\Content\CreateFromTrait;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\ApiCallServiceInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\ContextInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Request\RequestInterface;
@@ -38,7 +39,7 @@ abstract class ApiLoaderAbstract
     protected $request;
 
     /**
-     * @var \ArrayIterator
+     * @var \ArrayObject
      */
     protected $apiContextInterfaceList;
 
@@ -47,13 +48,19 @@ abstract class ApiLoaderAbstract
      */
     protected $apiResponsePage;
 
+    /**
+     * @var \ArrayObject
+     */
+    protected $apiLoaderList;
+
     public function __construct(
         ApiCallServiceInterface $apiCallService,
         ConfigurationInterface $configuration
     ) {
         $this->configuration = $configuration;
         $this->apiCallService = $apiCallService;
-        $this->apiContextInterfaceList = new \ArrayIterator();
+        $this->apiContextInterfaceList = new \ArrayObject();
+        $this->apiLoaderList = new \ArrayObject();
     }
 
     /**
@@ -201,6 +208,39 @@ abstract class ApiLoaderAbstract
     }
 
     /**
+     * Create an ApiLoaderInterface element based on the object
+     *
+     * @return ApiLoaderInterface
+     */
+    public function create(string $widget) : ApiLoaderInterface
+    {
+        /** create a new API Loader, with an unset ApiResponsePage element */
+        $loader = $this->createFromApiLoaderObject($this, ["ApiResponsePage", "ApiContext"]);
+        $loader->setApiContext($this->createApiContext($widget));
+
+        $this->apiLoaderList->offsetSet($widget, $loader);
+
+        return $loader;
+    }
+
+    /**
+     * Create an API context from the existing one
+     *
+     * @param string $widget
+     */
+    public function createApiContext(string $widget) : ContextInterface
+    {
+        $apiContext = $this->getApiContextByWidget($widget) ?? $this->getApiContext();
+        if($apiContext instanceof ContextInterface)
+        {
+            $apiContext->setRequestDefinition($this->createEmptyFromObject($apiContext->getApiRequest()));
+            return $apiContext;
+        }
+
+        throw new MissingDependencyException("The ApiContext is not available. Backtrace your integration use-case");
+    }
+
+    /**
      * Used to create bundle requests
      *
      * @param ContextInterface $apiContextInterface
@@ -214,11 +254,38 @@ abstract class ApiLoaderAbstract
     }
 
     /**
-     * @return \ArrayIterator
+     * @return \ArrayObject
      */
-    public function getApiContextList() : \ArrayIterator
+    public function getApiContextList() : \ArrayObject
     {
         return $this->apiContextInterfaceList;
+    }
+
+    /**
+     * @return ContextInterface | null
+     */
+    public function getApiContextByWidget(string $widget) : ?ContextInterface
+    {
+        if($this->getApiContextList()->offsetExists($widget))
+        {
+            return $this->getApiContextList()->offsetGet($widget);
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $widget
+     * @return ApiLoaderInterface|null
+     */
+    public function getApiLoaderByWidget(string $widget) : ?ApiLoaderInterface
+    {
+        if($this->apiLoaderList->offsetExists($widget))
+        {
+            return $this->apiLoaderList->offsetGet($widget);
+        }
+
+        return null;
     }
 
     /**
@@ -256,5 +323,6 @@ abstract class ApiLoaderAbstract
     {
         return $this->apiCallService;
     }
+
 
 }

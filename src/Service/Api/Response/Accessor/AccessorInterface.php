@@ -35,6 +35,19 @@ interface AccessorInterface
     public function getBxAttributes() : \ArrayIterator;
 
     /**
+     * Access the Boxalino bx-context
+     * (It returns the WIDGET name)
+     *
+     * @return string | null
+     */
+    public function getBxContext() : ?string;
+
+    /**
+     * @param \StdClass $element
+     */
+    public function setBxContext(\StdClass $element) : void;
+
+    /**
      * Loading content into accessor
      */
     public function load() : void;
