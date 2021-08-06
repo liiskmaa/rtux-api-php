@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 namespace Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing;
 
+use Boxalino\RealTimeUserExperienceApi\Framework\Content\LoadPropertiesTrait;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorModelInterface;
 
@@ -16,6 +17,8 @@ use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorMod
 class ApiEntityCollectionModel
     implements AccessorModelInterface, ApiEntityCollectionInterface
 {
+
+    use LoadPropertiesTrait;
 
     /**
      * @var array
@@ -118,6 +121,15 @@ class ApiEntityCollectionModel
     public function getIds() : array
     {
         return $this->ids;
+    }
+
+    /**
+     * Preparing element for API preview (ex: pwa context)
+     * The protected properties are not public (for this purpose - create dedicated functions)
+     */
+    public function load(): void
+    {
+        $this->loadPropertiesToObject($this, [],[], true);
     }
 
     /**

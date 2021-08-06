@@ -34,7 +34,8 @@ trait ResponseHydratorTrait
         {
             $propertyName = $property->getName();
             $value = $data->$propertyName;
-            $setter = "set" . preg_replace('/\s+/', '', ucwords(implode(" ", explode("-", $propertyName))));
+//            $setter = "set" . preg_replace('/\s+/', '', ucwords(implode(" ", explode("-", $propertyName))));
+            $setter = "set" . preg_replace('/\s+/', '', ucwords(implode(" ", explode("_", implode(" ", explode("-", $propertyName))))));
             /**
              * accessor are informative Boxalino system variables which have no value to the integration system
              */

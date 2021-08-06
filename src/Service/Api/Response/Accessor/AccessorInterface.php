@@ -47,4 +47,9 @@ interface AccessorInterface
      */
     public function setBxContext(\StdClass $element) : void;
 
+    /**
+     * Loading content into accessor
+     */
+    public function load() : void;
+
 }

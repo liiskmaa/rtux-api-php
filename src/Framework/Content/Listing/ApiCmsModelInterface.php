@@ -32,5 +32,10 @@ interface ApiCmsModelInterface extends ApiResponseViewInterface
      * @return ApiCmsModelInterface
      */
     public function setNavigationId(?string $navigationId): ApiCmsModelInterface;
-    
+
+    /**
+     * Loads the API response elements (for ex: for store-api context)
+     */
+    public function load() : void;
+
 }

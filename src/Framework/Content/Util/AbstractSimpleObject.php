@@ -44,4 +44,13 @@ abstract class AbstractSimpleObject
         return $this;
     }
 
+    /**
+     * @return array
+     */
+    public function getData() : array
+    {
+        return $this->_data;
+    }
+
+
 }

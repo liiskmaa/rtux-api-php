@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 namespace Boxalino\RealTimeUserExperienceApi\Framework\Content\Listing;
 
+use Boxalino\RealTimeUserExperienceApi\Framework\Content\LoadPropertiesTrait;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorFacetModelInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor\AccessorModelInterface;
@@ -20,6 +21,7 @@ use Boxalino\RealTimeUserExperienceApi\Service\Api\Util\AccessorHandlerInterface
 abstract class ApiFacetModelAbstract implements AccessorFacetModelInterface
 {
     use ResponseHydratorTrait;
+    use LoadPropertiesTrait;
 
     /**
      * @var \ArrayIterator
@@ -207,5 +209,31 @@ abstract class ApiFacetModelAbstract implements AccessorFacetModelInterface
         $this->facetPrefix = $facetPrefix;
     }
 
+    /**
+     * Preparing element for API preview (ex: pwa context)
+     * Call the _loadAccessors() in order to apply the propper content setters & getters on the facet options
+     * Use camelcase to reuse the API properties
+     */
+    public function load(): void
+    {
+        $this->_loadAccessors();
+        $this->loadPropertiesToObject($this, [], ["getLabel", "addSelectedFacet", "getByPosition", "getFacetsPrefix", "_loadAccessors"], true);
+    }
+
+    /**
+     * @return \ArrayIterator
+     */
+    protected function _loadAccessors() : void
+    {
+        foreach($this->getFacets() as $facet)
+        {
+            $facet->load();
+        }
+
+        foreach($this->getSelectedFacets() as $facet)
+        {
+            $facet->load();
+        }
+    }
 
 }

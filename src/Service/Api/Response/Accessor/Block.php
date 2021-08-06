@@ -1,7 +1,6 @@
 <?php declare(strict_types=1);
 namespace Boxalino\RealTimeUserExperienceApi\Service\Api\Response\Accessor;
 
-use Boxalino\RealTimeUserExperienceApi\Service\Api\Util\AccessorHandlerInterface;
 use Boxalino\RealTimeUserExperienceApi\Service\ErrorHandler\WrongDependencyTypeException;
 
 /**
@@ -161,7 +160,7 @@ class Block extends Accessor
         $this->position = $position[0] ?? null;
         return $this;
     }
-    
+
     /**
      * @return \ArrayIterator
      */
