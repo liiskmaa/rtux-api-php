@@ -1,5 +1,5 @@
 {
-    "name": "boxalino/rtux-api-php",
+    "name": "liiskmaa/rtux-api-php",
     "description": "Boxalino Real Time User Experience (RTUX) API",
     "license": "MIT",
     "keywords": ["boxalino", "api", "real-time user experience"],
